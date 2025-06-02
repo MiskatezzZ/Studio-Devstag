@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
-    domains: [],
-    unoptimized: process.env.NODE_ENV !== 'production',
+    unoptimized: true
   },
-  // Enable output to work with both Vercel and static exports
-  output: 'standalone',
+  // Keep it simple for Vercel
+  distDir: '.next'
 };
 
 module.exports = nextConfig;
