@@ -19,7 +19,10 @@ export default function ThreeBackground() {
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    mountRef.current.appendChild(renderer.domElement);
+    
+    // Store a reference to the DOM element for cleanup
+    const rendererDomElement = renderer.domElement;
+    mountRef.current.appendChild(rendererDomElement);
     
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -105,10 +108,10 @@ export default function ThreeBackground() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       
-      // Store ref value to avoid issues with cleanup
+      // Use mountRef.current at cleanup time
       const currentMount = mountRef.current;
-      if (currentMount) {
-        currentMount.removeChild(renderer.domElement);
+      if (currentMount && currentMount.contains(rendererDomElement)) {
+        currentMount.removeChild(rendererDomElement);
       }
       
       scene.remove(particlesMesh);
