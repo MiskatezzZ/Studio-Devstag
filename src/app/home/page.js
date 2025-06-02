@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef, useEffect, useCallback, useMemo } from "react";
+import useLenis from "@/hooks/useLenis";
 
 // Testimonials data
 const testimonials = [
@@ -32,11 +33,17 @@ const testimonials = [
 ];
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import bgImage from "../../assests/bg.jpg";
 import cameraImg from "../../assests/camera.webp";
 import Image from "next/image";
 
 export default function Home() {
+  // Initialize Lenis for smooth scrolling
+  const lenis = useLenis({
+    autoRaf: true,
+  });
+  
   // Add background style to ensure no white space is visible
   useEffect(() => {
     // Set body background to match the deep indigo theme
@@ -85,23 +92,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    let ticking = false;
+    if (!lenis) return;
     
-    const scrollListener = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+    // Use Lenis for scroll events instead of native scroll
+    lenis.on('scroll', () => {
+      handleScroll();
+    });
     
-    window.addEventListener('scroll', scrollListener, { passive: true });
+    // Initial call to set up the scroll position
     handleScroll();
     
-    return () => window.removeEventListener('scroll', scrollListener);
-  }, [handleScroll]);
+    return () => {
+      if (lenis) {
+        lenis.off('scroll');
+      }
+    };
+  }, [handleScroll, lenis]);
 
   const projects = useMemo(() => [
     {
@@ -199,7 +205,7 @@ export default function Home() {
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tighter"
             >
               <span className="block">Introducing</span>
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">Studio Devstag</span>
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">DevStag Studio</span>
             </motion.h1>
             
             <motion.p 
@@ -325,7 +331,7 @@ export default function Home() {
                   className={`group ${colSpan} ${rowSpan} ${gridArea} relative overflow-hidden rounded-[20px] ${roundedEdges} cursor-pointer will-change-transform shadow-lg`}
                   whileHover={{ scale: 1.02, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }}
                 >
-              <div className="absolute inset-0 backdrop-blur-[8px] bg-white/10 border border-white/20 rounded-[20px] group-hover:bg-white/15 group-hover:border-white/30 group-hover:backdrop-blur-lg transition-all duration-300">
+              <div className="absolute inset-0 backdrop-blur-[8px] bg-white/10 border border-white/20 rounded-[20px] group-hover:bg-white/15 group-hover:border-white/30 group-hover:backdrop-blur-lg transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20">
                 <div className="absolute inset-0 opacity-20 mix-blend-soft-light">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
                 </div>
@@ -343,18 +349,18 @@ export default function Home() {
                       }} 
                       width="100%" 
                       height="100%" 
-                      src="https://embed.figma.com/design/Nc84ryFABkoemjQ498df3k/Untitled?node-id=1-8&embed-host=share" 
+                      src="https://embed.figma.com/design/Nc84ryFABkoemjQ498df3k/DevStag-Premium-UI?node-id=1-8&embed-host=share" 
                       allowFullScreen
                       className="w-full h-full absolute inset-0 group-hover:scale-110 transition-transform duration-[10000ms]"
                       loading="lazy"
                     ></iframe>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#8F5ECA]/80 via-[#8F5ECA]/30 to-transparent pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#4B0082]/80 via-[#8F5ECA]/30 to-transparent pointer-events-none"></div>
                   </div>
                 )}
 
                 <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-10">
                   <div>
-                    <span className="inline-block py-1 px-3 text-xs font-medium text-white/90 bg-white/10 backdrop-blur-sm rounded-full mb-3 border border-white/20 shadow-sm">
+                    <span className="inline-block py-1 px-3 text-xs font-medium text-yellow-300 bg-white/10 backdrop-blur-sm rounded-full mb-3 border border-white/20 shadow-sm">
                       {project.category}
                     </span>
                   </div>
@@ -362,12 +368,12 @@ export default function Home() {
                     <h3 className="text-xl md:text-2xl font-bold text-white mb-2 drop-shadow-md truncate">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-white/80 mb-4 line-clamp-2 max-w-[95%] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75">
+                    <p className="text-sm text-white/90 mb-4 line-clamp-2 max-w-[95%] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75">
                       {project.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center text-white/90 transform opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                        <span className="text-sm font-medium">View Project</span>
+                      <div className="flex items-center text-white transform opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                        <span className="text-sm font-medium">Explore Project</span>
                         <motion.svg 
                           className="ml-2 w-4 h-4" 
                           fill="none" 
@@ -390,7 +396,7 @@ export default function Home() {
         </div>
         {/* Connector element */}
         <div className="hidden md:block w-[80px] flex items-center justify-center">
-          <div className="w-[60px] h-[60px] rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
+          <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-r from-indigo-900 to-blue-800 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
             <div className="w-[30px] h-[4px] bg-white/40 rounded-full"></div>
           </div>
         </div>
@@ -406,7 +412,7 @@ export default function Home() {
               className="max-w-full h-auto object-contain"
               priority
             />
-            <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-400 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">FEATURED PROJECT</span>
+            <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">PREMIUM PROJECT</span>
           </div>
         </div>
       </div>
@@ -735,6 +741,9 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+
+      {/* Footer Section */}
+      <Footer />
     </>
   );
 }
