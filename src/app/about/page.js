@@ -156,7 +156,7 @@ export default function About() {
                 <div className="flex-1">
                   <h2 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">Our Approach</h2>
                   <p className="text-white/80 leading-relaxed">
-                    We approach each project with a blend of artistic vision and technical precision. Our team works collaboratively to push the boundaries of what's possible, while ensuring that every line of code serves a purpose.
+                    We approach each project with a blend of artistic vision and technical precision. Our team works collaboratively to push the boundaries of what&apos;s possible, while ensuring that every line of code serves a purpose.
                   </p>
                 </div>
               </div>

@@ -34,6 +34,7 @@ const testimonials = [
 import Navbar from "@/components/Navbar";
 import bgImage from "../../assests/bg.jpg";
 import cameraImg from "../../assests/camera.webp";
+import Image from "next/image";
 
 export default function Home() {
   // Add background style to ensure no white space is visible
@@ -397,11 +398,13 @@ export default function Home() {
         {/* Right: Featured Image */}
         <div className="w-full md:w-[45%] flex items-center justify-center pl-4">
           <div className="relative">
-            <img
+            <Image
               src={cameraImg.src}
               alt="Featured Project"
+              width={500}
+              height={500}
               className="max-w-full h-auto object-contain"
-              loading="lazy"
+              priority
             />
             <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-400 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">FEATURED PROJECT</span>
           </div>
@@ -613,7 +616,7 @@ export default function Home() {
                   </div>
                   
                   <p className="text-white/80 leading-relaxed mb-6 italic group-hover:text-white/90 transition-colors duration-300">
-                    "{testimonial.quote}"
+                    &ldquo;{testimonial.quote}&rdquo;
                   </p>
                   
                   <div className="flex items-center">

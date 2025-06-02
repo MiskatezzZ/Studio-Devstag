@@ -104,7 +104,13 @@ export default function ThreeBackground() {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
-      mountRef.current?.removeChild(renderer.domElement);
+      
+      // Store ref value to avoid issues with cleanup
+      const currentMount = mountRef.current;
+      if (currentMount) {
+        currentMount.removeChild(renderer.domElement);
+      }
+      
       scene.remove(particlesMesh);
       particlesGeometry.dispose();
       particlesMaterial.dispose();
