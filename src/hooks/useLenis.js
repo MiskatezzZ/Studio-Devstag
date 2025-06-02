@@ -7,6 +7,7 @@ const useLenis = (options = {}) => {
 
   useEffect(() => {
     const lenis = new Lenis({
+      duration: 2,
       autoRaf: true,
       ...options,
     });
