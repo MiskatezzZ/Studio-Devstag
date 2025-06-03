@@ -633,14 +633,14 @@ export default function Home() {
           className="w-full max-w-6xl mx-auto px-4 relative z-10"
         >
           <div className="text-center mb-16">
-            <span className="inline-block py-1 px-4 text-xs font-medium text-[#101849] bg-gray-100 tracking-widest uppercase rounded-full mb-4">
+            <span className="inline-block py-1 px-4 text-xs font-medium text-[#FDBD10] bg-[#22273D] tracking-widest uppercase rounded-full mb-4">
               PARTNERS
             </span>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-[#101849]"
+              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-white"
             >
               Technology Partners
             </motion.h2>
@@ -648,7 +648,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-md md:text-lg text-gray-600 max-w-2xl mx-auto mb-12"
+              className="text-md md:text-lg text-white/70 max-w-2xl mx-auto mb-12"
             >
               Powering innovation together with industry leaders
             </motion.p>
