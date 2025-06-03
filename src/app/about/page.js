@@ -88,6 +88,18 @@ export default function About() {
             <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">About Us</span>
           </motion.h1>
 
+          {/* Figma Embed */}
+          <div className="flex justify-center mb-10">
+            <iframe 
+              style={{ border: "1px solid rgba(0, 0, 0, 0.1)" }} 
+              width="800" 
+              height="450" 
+              src="https://embed.figma.com/design/Eb3cMSxld8tL0nkcyvWNes/DevStag?node-id=3-13&embed-host=share" 
+              allowFullScreen
+              title="DevStag Figma Design Preview"
+            />
+          </div>
+
           {/* Mountain Glow Animation */}
           <div className="relative w-[400px] h-[300px] mx-auto mt-12 flex items-center justify-center">
             {/* Core Glow Line (Source) */}

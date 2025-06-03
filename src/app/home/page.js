@@ -49,9 +49,41 @@ export default function Home() {
     // Set body background to match the deep indigo theme
     document.body.style.backgroundColor = '#0A0F2C';
     
+    // Add CSS to ensure solid background colors
+    const style = document.createElement('style');
+    style.textContent = `
+      .overlap-section {
+        margin-top: 50px;
+        position: relative;
+        z-index: 20;
+        background-color: #8F5ECA !important;
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      section {
+        position: relative;
+        background-color: inherit;
+      }
+      @media (max-width: 768px) {
+        .sticky-header-section {
+          position: static;
+        }
+        .overlap-section {
+          margin-top: -20px;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
     return () => {
       // Cleanup when component unmounts
       document.body.style.backgroundColor = '';
+      document.head.removeChild(style);
     };
   }, []);
   const worksRef = useRef(null);
@@ -69,25 +101,31 @@ export default function Home() {
     const distanceToSection = sectionTop - scrollPosition;
     const viewportHeight = window.innerHeight;
     
+    // Always ensure the background color is solid
+    worksRef.current.style.backgroundColor = '#8558BD';
+    worksRef.current.style.opacity = 1;
+    worksRef.current.style.width = '100vw';
+    worksRef.current.style.maxWidth = '100%';
+    worksRef.current.style.marginLeft = '0';
+    worksRef.current.style.marginRight = '0';
+    worksRef.current.style.overflowX = 'hidden';
+    
     if (scrollPosition > triggerPosition) {
       // Move section upward as user scrolls down
       const moveUpAmount = Math.min(100, (scrollPosition - triggerPosition) * 0.4);
-      const scaleValue = 0.97 + (Math.min(scrollPosition - triggerPosition, 300) * 0.0001);
-      const opacityValue = 0.95 + (Math.min(scrollPosition - triggerPosition, 300) * 0.00017);
+      const scaleValue = 1 + (Math.min(scrollPosition - triggerPosition, 300) * 0.0001);
       
-      // Apply transformations
+      // Apply transformations (keeping opacity at 1)
       worksRef.current.style.transform = `translateY(-${moveUpAmount}px) scale(${scaleValue})`;
-      worksRef.current.style.opacity = opacityValue;
       worksRef.current.style.boxShadow = `0px -${moveUpAmount/2}px ${moveUpAmount * 1.5}px rgba(10, 15, 44, ${moveUpAmount/300})`;
       
       // Add margin adjustment to create gap closing effect
-      worksRef.current.style.marginTop = `${-20 - moveUpAmount/3}px`;
+      worksRef.current.style.marginTop = `${50 - moveUpAmount/3}px`;
     } else {
-      // Reset to initial state
-      worksRef.current.style.transform = 'translateY(0) scale(0.97)';
-      worksRef.current.style.opacity = '0.95';
+      // Reset to initial state (keeping opacity at 1)
+      worksRef.current.style.transform = 'translateY(0) scale(1)';
       worksRef.current.style.boxShadow = '0px 0px 0px rgba(10, 15, 44, 0)';
-      worksRef.current.style.marginTop = '-20px';
+      worksRef.current.style.marginTop = '50px';
     }
   }, []);
 
@@ -168,9 +206,10 @@ export default function Home() {
   ], []);
 
   return (
-    <>
-      {/* Header Section */}
-      <section className="relative min-h-screen w-full overflow-hidden">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        {/* Header Section */}
+      <section className="relative min-h-screen w-full overflow-hidden" style={{position: 'sticky', top: 0, zIndex: 10}}>
         <div 
           className="absolute inset-0 w-full h-full z-0"
           style={{
@@ -255,18 +294,29 @@ export default function Home() {
       {/* Works Section with Improved Scroll Animation */}
       <section 
     ref={worksRef}
-    className="relative w-full bg-[#8F5ECA] py-20 px-4 mt-[-20px] rounded-t-[40px] z-20 shadow-2xl will-change-transform"
+    className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] shadow-2xl will-change-transform overlap-section bg-[#8F5ECA]"
     style={{
-      transform: "translateY(0) scale(0.97)", 
-      opacity: "0.92",
-      transition: "transform 0.1s ease-out, opacity 0.1s ease-out, box-shadow 0.1s ease-out",
+      transform: "translateY(0) scale(1)", 
+      opacity: 1,
+      transition: "transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.3s ease-out",
+      zIndex: 20,
+      position: "relative",
+      backgroundColor: "#8F5ECA",
+      backdropFilter: "none",
+      marginLeft: 0,
+      marginRight: 0,
+      width: "100vw",
+      maxWidth: "100%",
+      overflowX: "hidden"  
     }}
   >
+    {/* Additional solid background layer */}
+    <div className="absolute inset-0 bg-[#8F5ECA] rounded-t-[40px] -z-10"></div>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2, duration: 1 }}
-      className="w-full max-w-6xl mx-auto px-4 relative z-10"
+      className="w-full max-w-6xl mx-auto px-6 md:px-8 relative z-10"
     >
       <div className="text-center mb-16">
         <span className="inline-block py-1 px-4 text-xs font-medium text-[#0A0F2C] bg-white tracking-widest uppercase rounded-full mb-4">
@@ -420,7 +470,7 @@ export default function Home() {
   </section>
 
       {/* Featured In Section with Infinite Horizontal Scrolling */}
-      <section className="bg-gradient-to-b from-[#101849] to-[#0A0F2C] py-20 w-full overflow-hidden">
+      <section className="bg-gradient-to-b from-[#101849] to-[#0A0F2C] py-20 w-full overflow-hidden relative" style={{zIndex: 21, position: "relative"}}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -451,8 +501,8 @@ export default function Home() {
                     key={index} 
                     className="flex-shrink-0 w-[180px] mx-3"
                   >
-                    <div className="h-14 w-full flex items-center justify-center rounded-lg p-3 backdrop-blur-md bg-white/10 border border-white/10 hover:border-white/30 hover:bg-white/20 transition-all duration-300 group">
-                      <div className="text-white font-bold text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105 transform">
+                    <div className="h-14 w-full flex items-center justify-center rounded-lg p-3 backdrop-blur-md bg-white/10 border border-white/20 hover:border-white/30 hover:bg-white/20 transition-all duration-300 group">
+                      <div className="text-white font-bold text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                         Publication {index + 1}
                       </div>
                     </div>
@@ -464,8 +514,8 @@ export default function Home() {
                     key={`dup-${index}`} 
                     className="flex-shrink-0 w-[180px] mx-3"
                   >
-                    <div className="h-14 w-full flex items-center justify-center rounded-lg p-3 backdrop-blur-md bg-white/10 border border-white/10 hover:border-white/30 hover:bg-white/20 transition-all duration-300 group">
-                      <div className="text-white font-bold text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105 transform">
+                    <div className="h-14 w-full flex items-center justify-center rounded-lg p-3 backdrop-blur-md bg-white/10 border border-white/20 hover:border-white/30 hover:bg-white/20 transition-all duration-300 group">
+                      <div className="text-white font-bold text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                         Publication {index + 1}
                       </div>
                     </div>
@@ -478,7 +528,7 @@ export default function Home() {
       </section>
       
       {/* Clients Section with Infinite Horizontal Scrolling */}
-      <section className="bg-white py-24 w-full">
+      <section className="bg-white py-24 w-full relative" style={{zIndex: 22, position: "relative", backgroundColor: "white"}}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -574,8 +624,60 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Technology Partners Section */}
+      <section className="bg-gradient-to-b from-[#0A0F2C] to-[#050811] py-24 w-full overflow-hidden relative" style={{zIndex: 23, position: "relative"}}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 1 }}
+          className="w-full max-w-6xl mx-auto px-4 relative z-10"
+        >
+          <div className="text-center mb-16">
+            <span className="inline-block py-1 px-4 text-xs font-medium text-[#101849] bg-gray-100 tracking-widest uppercase rounded-full mb-4">
+              PARTNERS
+            </span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-[#101849]"
+            >
+              Technology Partners
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-md md:text-lg text-gray-600 max-w-2xl mx-auto mb-12"
+            >
+              Powering innovation together with industry leaders
+            </motion.p>
+          </div>
+
+          {/* Partner Logos Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
+                className="group"
+                whileHover={{ y: -5 }}
+              >
+                <div className="h-32 flex items-center justify-center rounded-xl p-6 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="text-[#101849] font-bold text-xl opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                    Tech Partner {index + 1}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
       {/* Testimonials Section */}
-      <section className="bg-gradient-to-b from-[#050811] to-[#0A0F2C] py-24 w-full">
+      <section className="bg-gradient-to-b from-[#050811] to-[#0A0F2C] py-24 w-full relative mb-0 pb-0" style={{zIndex: 24, position: "relative"}}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -614,7 +716,7 @@ export default function Home() {
                 className="group relative"
                 whileHover={{ y: -5 }}
               >
-                <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-2xl p-8 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/8 relative z-10">
+                <div className="backdrop-blur-sm bg-white/10 border border-white/10 rounded-2xl p-8 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/15 relative z-10" style={{backgroundColor: "rgba(25, 30, 70, 0.8)"}}>
                   <div className="mb-6">
                     <svg className="w-10 h-10 text-white/30 group-hover:text-white/40 transition-colors duration-300" fill="currentColor" viewBox="0 0 32 32">
                       <path d="M10 8v12H6v-8c0-2.21 1.79-4 4-4zm12 0v12h-4v-8c0-2.21 1.79-4 4-4z" />
@@ -646,104 +748,13 @@ export default function Home() {
       </section>
 
       {/* Technology Partners Section with Infinite Horizontal Scrolling */}
-      <section className="bg-gradient-to-b from-[#0A0F2C] to-[#050811] py-24 w-full overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 1 }}
-          className="w-full max-w-6xl mx-auto px-4 relative z-10"
-        >
-          <div className="text-center mb-16">
-            <span className="inline-block py-1 px-4 text-xs font-medium text-yellow-400 bg-white/10 tracking-widest uppercase rounded-full mb-4">
-              PARTNERS
-            </span>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-white"
-            >
-              Technology Partners
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-md md:text-lg text-white/70 max-w-2xl mx-auto mb-12"
-            >
-              Powering our premium solutions with cutting-edge technology
-            </motion.p>
-          </div>
-
-          {/* Infinite Scroll Container */}
-          <div className="relative w-full overflow-hidden">
-            {/* First Marquee - Left to Right */}
-            <div className="group">
-              <div className="flex animate-marquee group-hover:pause-animation">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="flex-shrink-0 w-[220px] mx-5"
-                  >
-                    <div className="h-20 w-full flex items-center justify-center rounded-xl p-4 backdrop-blur-lg bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20">
-                      <div className="text-white font-bold text-xl opacity-70 hover:opacity-100 transition-opacity duration-300 hover:scale-105 transform">
-                        Tech {index + 1}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {/* Duplicate set for seamless loop */}
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div 
-                    key={`dup-${index}`} 
-                    className="flex-shrink-0 w-[220px] mx-5"
-                  >
-                    <div className="h-20 w-full flex items-center justify-center rounded-xl p-4 backdrop-blur-lg bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20">
-                      <div className="text-white font-bold text-xl opacity-70 hover:opacity-100 transition-opacity duration-300 hover:scale-105 transform">
-                        Tech {index + 1}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Second Marquee - Right to Left (opposite direction) */}
-            <div className="group mt-10">
-              <div className="flex animate-marquee-reverse group-hover:pause-animation">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="flex-shrink-0 w-[220px] mx-5"
-                  >
-                    <div className="h-20 w-full flex items-center justify-center rounded-xl p-4 backdrop-blur-lg bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20">
-                      <div className="text-white font-bold text-xl opacity-70 hover:opacity-100 transition-opacity duration-300 hover:scale-105 transform">
-                        Stack {index + 1}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {/* Duplicate set for seamless loop */}
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div 
-                    key={`dup-${index}`} 
-                    className="flex-shrink-0 w-[220px] mx-5"
-                  >
-                    <div className="h-20 w-full flex items-center justify-center rounded-xl p-4 backdrop-blur-lg bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20">
-                      <div className="text-white font-bold text-xl opacity-70 hover:opacity-100 transition-opacity duration-300 hover:scale-105 transform">
-                        Stack {index + 1}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
+  
 
       {/* Footer Section */}
-      <Footer />
-    </>
+      </div>
+      <footer style={{width: '100%', background: '#0A0F2C', marginTop: 0, paddingTop: 0}}>
+        <Footer />
+      </footer>
+    </div>
   );
 }
