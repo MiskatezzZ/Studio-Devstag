@@ -1,7 +1,7 @@
 "use client";
 
 import Image from 'next/image';
-import bgImage from '../assests/bg.jpg';
+import bgImage from '../assets/bg.jpg';
 
 export default function GradientBackground() {
   return (

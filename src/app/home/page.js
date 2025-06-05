@@ -34,8 +34,8 @@ const testimonials = [
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import bgImage from "../../assests/bg.jpg";
-import cameraImg from "../../assests/camera.webp";
+import bgImage from "../../assets/bg.jpg";
+import cameraImg from "../../assets/camera.webp";
 import Image from "next/image";
 
 export default function Home() {

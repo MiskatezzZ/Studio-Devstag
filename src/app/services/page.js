@@ -1,13 +1,16 @@
 "use client";
 
+import Navbar from '@/components/Navbar';
 import { useState, useRef, useEffect } from 'react';
 
 // Animated background grid lines with enhanced visibility
 const GridBackground = () => {
   return (
+    
     <div className="fixed inset-0 w-screen h-screen pointer-events-none z-0 overflow-hidden bg-black">
       {/* Solid black background to ensure contrast */}
       <div className="absolute inset-0 bg-black z-0"></div>
+      {/* <Navbar/> */}
       
       {/* Radial gradients - always visible, never overflow */}
       <div className="absolute inset-0 flex items-center justify-center z-1">
