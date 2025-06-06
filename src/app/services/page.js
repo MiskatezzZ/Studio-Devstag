@@ -260,6 +260,7 @@ export default function Services() {
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
+      <Navbar/>
       <GridBackground />
       <div className="relative z-10">
         <FloatingOrbs />
