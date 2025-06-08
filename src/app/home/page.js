@@ -13,7 +13,7 @@ import { StickyScroll } from "@/components/ui/stcikyreveal";
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import bgImage from "../../assets/bg.jpg";
 import cameraImg from "../../assets/back.png";
-import cameraWebpImg from "../../assets/camera.webp";
+import cameraWebpImg from "../../assets/vrback.png";
 import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
@@ -479,7 +479,7 @@ export default function Home() {
 
           {/* StickyScroll placed between heading and marquee, inside container */}
           <div className="mb-10">
-            <StickyScroll content={[
+            <StickyScroll contentClassName="w-full" content={[
               { title: "Sticky Card 1", description: "This is the first sticky card." },
               { title: "Sticky Card 2", description: "This is the second sticky card." },
               { title: "Sticky Card 3", description: "This is the third sticky card." }
