@@ -7,6 +7,7 @@ import useLenis from "@/hooks/useLenis";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+<<<<<<< HEAD
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
 import { Spotlight } from "@/components/ui/spotlight";
@@ -15,6 +16,10 @@ import { HeroParallax } from "@/components/ui/hero-parallax";
 import bgImage from "../../assests/bg.jpg";
 import cameraImg from "../../assests/back.png";
 import cameraWebpImg from "../../assests/camera.webp";
+=======
+import bgImage from "../../assets/bg.jpg";
+import cameraImg from "../../assets/camera.webp";
+>>>>>>> 79bf23da6971bf1aab8a94c73cb47cdb5b0c4325
 import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
