@@ -3,14 +3,28 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { FloatingDock } from "@/components/ui/floating-dock";
+import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="w-full py-10 mt-20 border-t border-white/10 backdrop-blur-lg bg-gradient-to-b from-[#0A0F2C]/80 to-[#4B0082]/20">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+    <footer className="relative w-full pt-0 pb-10 mt-0 backdrop-blur-lg overflow-hidden" style={{ padding: '50px', background: '#000000' }} >
+      {/* Top radial gradient to blend with testimonial section */}
+      <div style={{
+        position: 'absolute',
+        left: '50%',
+        top: '-34vw',
+        transform: 'translateX(-50%)',
+        width: '44vw',
+        height: '44vw',
+        pointerEvents: 'none',
+        zIndex: 1,
+        background: 'radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 70%)'
+      }} />
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="relative flex flex-col md:flex-row md:justify-start md:items-start justify-between items-center gap-12 w-full">
           {/* Logo and Copyright */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -33,7 +47,7 @@ const Footer = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-3 gap-8"
+            className="grid grid-cols-2 md:grid-cols-3 gap-50 md:ml-90"
           >
             <div>
               <h3 className="text-white font-semibold mb-3">Services</h3>
@@ -53,23 +67,38 @@ const Footer = () => {
               </ul>
             </div>
             
-            <div className="col-span-2 md:col-span-1">
+            <div className="col-span-2 md:col-span-1 flex flex-col items-center md:items-end md:absolute md:right-0 md:top-0" >
               <h3 className="text-white font-semibold mb-3">Connect</h3>
-              <div className="flex space-x-4">
-                <Link href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300">
-                  <span className="text-white">X</span>
-                </Link>
-                <Link href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300">
-                  <span className="text-white">IG</span>
-                </Link>
-                <Link href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300">
-                  <span className="text-white">LI</span>
-                </Link>
+              {/* Reserve space for FloatingDock at max hover size so layout never shifts */}
+              <div className="w-full max-w-xs h-32 flex items-center justify-center">
+                <FloatingDock
+                  items={[
+                    {
+                      title: "GitHub",
+                      icon: <IconBrandGithub className="w-6 h-6 text-white" />,
+                      href: "https://github.com/",
+                    },
+                    {
+                      title: "LinkedIn",
+                      icon: <IconBrandLinkedin className="w-6 h-6 text-white" />,
+                      href: "https://linkedin.com/",
+                    },
+                    {
+                      title: "Email",
+                      icon: <IconMail className="w-6 h-6 text-white" />,
+                      href: "mailto:hello@example.com",
+                    },
+                  ]}
+                  desktopClassName="bg-[#18181b] border border-white/10 shadow-lg w-full"
+                  mobileClassName="bg-[#18181b] border border-white/10 shadow-lg w-full"
+                  maxIconSize={56}
+                  minIconSize={32}
+                />
               </div>
             </div>
           </motion.div>
         </div>
-        
+
         {/* Bottom Bar */}
         <motion.div 
           initial={{ opacity: 0 }}

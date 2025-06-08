@@ -4,39 +4,19 @@ import { motion } from "framer-motion";
 import { useRef, useEffect, useCallback, useMemo } from "react";
 import useLenis from "@/hooks/useLenis";
 
-// Testimonials data
-const testimonials = [
-  {
-    quote: "DevStag Studio transformed our digital presence with their premium design and development services. The attention to detail and modern aesthetics exceeded our expectations.",
-    author: "Sarah Johnson",
-    role: "CEO, TechVision Inc.",
-    delay: 0.3
-  },
-  {
-    quote: "Working with DevStag was a game-changer for our brand. Their team delivered a stunning website that perfectly captures our premium identity in the market.",
-    author: "Michael Chen",
-    role: "Marketing Director, Luxe Brands",
-    delay: 0.5
-  },
-  {
-    quote: "The glassmorphism effects and animations DevStag implemented on our site have significantly increased user engagement and conversion rates.",
-    author: "Priya Sharma",
-    role: "Product Manager, NexGen Solutions",
-    delay: 0.7
-  },
-  {
-    quote: "DevStag's ability to blend cutting-edge design with flawless functionality made them the perfect partner for our website redesign project.",
-    author: "David Rodriguez",
-    role: "CTO, Innovate Systems",
-    delay: 0.9
-  }
-];
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FloatingDock } from "@/components/ui/floating-dock";
+import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
+import { Spotlight } from "@/components/ui/spotlight";
+import { StickyScroll } from "@/components/ui/stcikyreveal";
+import { HeroParallax } from "@/components/ui/hero-parallax";
 import bgImage from "../../assests/bg.jpg";
-import cameraImg from "../../assests/camera.webp";
+import cameraImg from "../../assests/back.png";
+import cameraWebpImg from "../../assests/camera.webp";
 import Image from "next/image";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 export default function Home() {
   // Initialize Lenis for smooth scrolling
@@ -56,7 +36,7 @@ export default function Home() {
         margin-top: 50px;
         position: relative;
         z-index: 20;
-        background-color: #8F5ECA !important;
+        background-color: #000000 !important;
         width: 100vw !important;
         margin-left: calc(-50vw + 50%) !important;
         margin-right: calc(-50vw + 50%) !important;
@@ -208,8 +188,8 @@ export default function Home() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Header Section */}
-      <section className="relative min-h-screen w-full overflow-hidden" style={{position: 'sticky', top: 0, zIndex: 10}}>
+ {/* Header Section */}
+     <section className="relative min-h-screen w-full overflow-hidden" style={{position: 'sticky', top: 0, zIndex: 10}}>
         <div 
           className="absolute inset-0 w-full h-full z-0"
           style={{
@@ -294,14 +274,14 @@ export default function Home() {
       {/* Works Section with Improved Scroll Animation */}
       <section 
     ref={worksRef}
-    className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] shadow-2xl will-change-transform overlap-section bg-[#8F5ECA]"
+    className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] shadow-2xl will-change-transform overlap-section"
     style={{
       transform: "translateY(0) scale(1)", 
       opacity: 1,
       transition: "transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.3s ease-out",
       zIndex: 20,
       position: "relative",
-      backgroundColor: "#8F5ECA",
+
       backdropFilter: "none",
       marginLeft: 0,
       marginRight: 0,
@@ -310,8 +290,48 @@ export default function Home() {
       overflowX: "hidden"  
     }}
   >
+
+    {/* Glowing white ellipse above the purple gradient */}
+    <div style={{
+      position: 'absolute',
+      left: '50%',
+      top: '-50vw',
+      transform: 'translateX(-50%)',
+      width: '80vw',
+      height: '90vw',
+      pointerEvents: 'none',
+      zIndex: 30,
+      background: 'radial-gradient(ellipse 5% 40% at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(0,255,0,0) 70%)',
+      filter: 'blur(8px)',
+    }} />
+
+    {/* Glowing white ellipse above the purple gradient number 2*/}
+    <div style={{
+      position: 'absolute',
+      left: '50%',
+      top: '-50vw',
+      transform: 'translateX(-50%)',
+      width: '80vw',
+      height: '90vw',
+      pointerEvents: 'none',
+      zIndex: 31,
+      background: 'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,255,255,0.4) 0%, rgba(0,255,0,0) 70%)',
+      filter: 'blur(8px)',
+    }} />
+
+    {/* Top radial gradient background (matching TestimonialBackground.js) */}
+    <div style={{
+      position: 'absolute',
+      left: '50%',
+      top: '-40vw',
+      transform: 'translateX(-50%)',
+      width: '100vw',
+      height: '100vw',
+      pointerEvents: 'none',
+      zIndex: 1,
+      background: 'radial-gradient(ellipse 60% 90% at 50% 0%, #7B3FE4 0%, #000 100%)'
+    }} />
     {/* Additional solid background layer */}
-    <div className="absolute inset-0 bg-[#8F5ECA] rounded-t-[40px] -z-10"></div>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -342,106 +362,11 @@ export default function Home() {
 
       {/* Two-column layout: left = bento boxes, right = image */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-8 mx-4 lg:mx-0">
-        {/* Left: Bento Boxes (smaller) */}
-        <div className="w-full md:w-[45%] pr-4">
-          <div className="relative grid grid-cols-12 gap-3 grid-rows-[50px_auto_auto_auto] h-[520px]">
-            {projects.map((project, index) => {
-              // Custom layout for each project based on index
-              let colSpan, rowSpan, gridArea, roundedEdges = '';
-              
-              if (index === 0) { // Top bar
-                colSpan = 'col-span-12';
-                rowSpan = 'row-span-1';
-                gridArea = 'grid-row-start-1 grid-row-end-2 grid-col-start-1 grid-col-end-13';
-              } else if (index === 1) { // Main content left
-                colSpan = 'col-span-8';
-                rowSpan = 'row-span-2';
-                gridArea = 'grid-row-start-2 grid-row-end-4 grid-col-start-1 grid-col-end-9';
-                roundedEdges = 'rounded-bl-[40px]';
-              } else if (index === 2) { // Right sidebar
-                colSpan = 'col-span-4';
-                rowSpan = 'row-span-3';
-                gridArea = 'grid-row-start-2 grid-row-end-5 grid-col-start-9 grid-col-end-13';
-                roundedEdges = 'rounded-tr-[40px]';
-              } else if (index === 3) { // Bottom left
-                colSpan = 'col-span-5';
-                rowSpan = 'row-span-1';
-                gridArea = 'grid-row-start-4 grid-row-end-5 grid-col-start-1 grid-col-end-6';
-              } else { // Bottom middle
-                colSpan = 'col-span-3';
-                rowSpan = 'row-span-1';
-                gridArea = 'grid-row-start-4 grid-row-end-5 grid-col-start-6 grid-col-end-9';
-              }
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: project.delay, duration: 0.8 }}
-                  className={`group ${colSpan} ${rowSpan} ${gridArea} relative overflow-hidden rounded-[20px] ${roundedEdges} cursor-pointer will-change-transform shadow-lg`}
-                  whileHover={{ scale: 1.02, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }}
-                >
-              <div className="absolute inset-0 backdrop-blur-[8px] bg-white/10 border border-white/20 rounded-[20px] group-hover:bg-white/15 group-hover:border-white/30 group-hover:backdrop-blur-lg transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20">
-                <div className="absolute inset-0 opacity-20 mix-blend-soft-light">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
-                </div>
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-                {index === 1 && (
-                  <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[20px]">
-                    <iframe 
-                      style={{ 
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        transform: "scale(1.3)",
-                        transformOrigin: "center center",
-                        transition: "transform 10s ease-in-out"
-                      }} 
-                      width="100%" 
-                      height="100%" 
-                      src="https://embed.figma.com/design/Nc84ryFABkoemjQ498df3k/DevStag-Premium-UI?node-id=1-8&embed-host=share" 
-                      allowFullScreen
-                      className="w-full h-full absolute inset-0 group-hover:scale-110 transition-transform duration-[10000ms]"
-                      loading="lazy"
-                    ></iframe>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#4B0082]/80 via-[#8F5ECA]/30 to-transparent pointer-events-none"></div>
-                  </div>
-                )}
-
-                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between z-10">
-                  <div>
-                    <span className="inline-block py-1 px-3 text-xs font-medium text-yellow-300 bg-white/10 backdrop-blur-sm rounded-full mb-3 border border-white/20 shadow-sm">
-                      {project.category}
-                    </span>
-                  </div>
-                  <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2 drop-shadow-md truncate">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-white/90 mb-4 line-clamp-2 max-w-[95%] opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75">
-                      {project.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-white transform opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                        <span className="text-sm font-medium">Explore Project</span>
-                        <motion.svg 
-                          className="ml-2 w-4 h-4" 
-                          fill="none" 
-                          viewBox="0 0 24 24" 
-                          stroke="currentColor"
-                          whileHover={{ x: 3 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </motion.svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
+        {/* Left: Placeholder for future video */}
+        <div className="w-full md:w-[45%] pr-4 flex items-center justify-center">
+          <div className="w-full h-[320px] md:h-[400px] bg-black/40 border border-white/20 rounded-2xl flex items-center justify-center">
+            {/* Place your video here later */}
+            <span className="text-white/60 text-lg">Video Coming Soon</span>
           </div>
         </div>
         {/* Connector element */}
@@ -466,11 +391,73 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Duplicate Section with camera.webp (image left, video right) */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-8 mx-4 lg:mx-0 mt-12">
+        {/* Left: Featured Image (camera.webp) */}
+        <div className="w-full md:w-[45%] pr-4 flex items-center justify-center">
+          <div className="relative">
+            <Image
+              src={cameraWebpImg.src}
+              alt="Featured Project 2"
+              width={500}
+              height={500}
+              className="max-w-full h-auto object-contain"
+              priority
+            />
+            <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">PREMIUM PROJECT 2</span>
+          </div>
+        </div>
+        {/* Connector element */}
+        <div className="hidden md:block w-[80px] flex items-center justify-center">
+          <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-r from-indigo-900 to-blue-800 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
+            <div className="w-[30px] h-[4px] bg-white/40 rounded-full"></div>
+          </div>
+        </div>
+        {/* Right: Placeholder for future video */}
+        <div className="w-full md:w-[45%] flex items-center justify-center pl-4">
+          <div className="w-full h-[320px] md:h-[400px] bg-black/40 border border-white/20 rounded-2xl flex items-center justify-center">
+            {/* Place your video here later */}
+            <span className="text-white/60 text-lg">Video Coming Soon</span>
+          </div>
+        </div>
+      </div>
     </motion.div>
-  </section>
+      </section>
+
+      {/* Hero Parallax Section */}
+      <section className="relative z-20">
+        <HeroParallax products={[
+          { title: "Moonbeam", link: "https://gomoonbeam.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/moonbeam.png" },
+          { title: "Cursor", link: "https://cursor.so", thumbnail: "https://aceternity.com/images/products/thumbnails/new/cursor.png" },
+          { title: "Rogue", link: "https://userogue.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/rogue.png" },
+          { title: "Editorially", link: "https://editorially.org", thumbnail: "https://aceternity.com/images/products/thumbnails/new/editorially.png" },
+          { title: "Editrix AI", link: "https://editrix.ai", thumbnail: "https://aceternity.com/images/products/thumbnails/new/editrix.png" },
+          { title: "Pixel Perfect", link: "https://app.pixelperfect.quest", thumbnail: "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png" },
+          { title: "Algochurn", link: "https://algochurn.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/algochurn.png" },
+          { title: "Aceternity UI", link: "https://ui.aceternity.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/aceternityui.png" },
+          { title: "Tailwind Master Kit", link: "https://tailwindmasterkit.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png" },
+          { title: "SmartBridge", link: "https://smartbridgetech.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/smartbridge.png" },
+          { title: "Renderwork Studio", link: "https://renderwork.studio", thumbnail: "https://aceternity.com/images/products/thumbnails/new/renderwork.png" },
+          { title: "Creme Digital", link: "https://cremedigital.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/cremedigital.png" },
+          { title: "Golden Bells Academy", link: "https://goldenbellsacademy.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png" },
+          { title: "Invoker Labs", link: "https://invoker.lol", thumbnail: "https://aceternity.com/images/products/thumbnails/new/invoker.png" },
+          { title: "E Free Invoice", link: "https://efreeinvoice.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png" }
+        ]} />
+      </section>
+
+      {/* Why Choose Us Section */}
+      
 
       {/* Featured In Section with Infinite Horizontal Scrolling */}
-      <section className="bg-gradient-to-b from-[#101849] to-[#0A0F2C] py-20 w-full overflow-hidden relative" style={{zIndex: 21, position: "relative"}}>
+      <section 
+        style={{ background: '#000000', zIndex: 21, position: 'relative', paddingTop: '80px', paddingBottom: '80px', overflowX: 'clip' }}
+      >
+        {/* Spotlight Background Layer */}
+        <Spotlight />
+        {/* Bottom left and right radial gradient balls */}
+        {/* <div style={{position: 'absolute', left: '-10vw', bottom: '-25vw', width: '40vw', height: '40vw', pointerEvents: 'none', zIndex: 1, background: 'radial-gradient(circle, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0) 70%)'}} /> */}
+        <div style={{position: 'absolute', right: '-10vw', bottom: '-42vw', width: '40vw', height: '40vw', pointerEvents: 'none', zIndex: 1, background: 'radial-gradient(circle, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0) 70%)'}} />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -489,6 +476,15 @@ export default function Home() {
             >
               As Seen In
             </motion.h2>
+          </div>
+
+          {/* StickyScroll placed between heading and marquee, inside container */}
+          <div className="mb-10">
+            <StickyScroll content={[
+              { title: "Sticky Card 1", description: "This is the first sticky card." },
+              { title: "Sticky Card 2", description: "This is the second sticky card." },
+              { title: "Sticky Card 3", description: "This is the third sticky card." }
+            ]} />
           </div>
 
           {/* Infinite Scroll Container */}
@@ -525,10 +521,8 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
-      </section>
-      
-      {/* Clients Section with Infinite Horizontal Scrolling */}
-      <section className="bg-white py-24 w-full relative" style={{zIndex: 22, position: "relative", backgroundColor: "white"}}>
+
+        {/* Clients Section with Infinite Horizontal Scrolling */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -543,7 +537,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-[#101849]"
+              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-[#ffffff]"
             >
               Our Clients
             </motion.h2>
@@ -551,7 +545,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-md md:text-lg text-gray-600 max-w-2xl mx-auto mb-12"
+              className="text-md md:text-lg text-white max-w-2xl mx-auto mb-12"
             >
               Trusted by industry leaders worldwide
             </motion.p>
@@ -624,137 +618,15 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Technology Partners Section */}
-      <section className="bg-gradient-to-b from-[#0A0F2C] to-[#050811] py-24 w-full overflow-hidden relative" style={{zIndex: 23, position: "relative"}}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 1 }}
-          className="w-full max-w-6xl mx-auto px-4 relative z-10"
-        >
-          <div className="text-center mb-16">
-            <span className="inline-block py-1 px-4 text-xs font-medium text-[#FDBD10] bg-[#22273D] tracking-widest uppercase rounded-full mb-4">
-              PARTNERS
-            </span>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-white"
-            >
-              Technology Partners
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-md md:text-lg text-white/70 max-w-2xl mx-auto mb-12"
-            >
-              Powering innovation together with industry leaders
-            </motion.p>
-          </div>
 
-          {/* Partner Logos Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
-                className="group"
-                whileHover={{ y: -5 }}
-              >
-                <div className="h-32 flex items-center justify-center rounded-xl p-6 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="text-[#101849] font-bold text-xl opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                    Tech Partner {index + 1}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="bg-gradient-to-b from-[#050811] to-[#0A0F2C] py-24 w-full relative mb-0 pb-0" style={{zIndex: 24, position: "relative"}}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 1 }}
-          className="w-full max-w-6xl mx-auto px-4 relative z-10"
-        >
-          <div className="text-center mb-16">
-            <span className="inline-block py-1 px-4 text-xs font-medium text-[#0A0F2C] bg-white tracking-widest uppercase rounded-full mb-4">
-              TESTIMONIALS
-            </span>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-white"
-            >
-              Client Reviews
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-md md:text-lg text-white/70 max-w-2xl mx-auto mb-12"
-            >
-              What our clients have to say about our services
-            </motion.p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: testimonial.delay, duration: 0.8 }}
-                className="group relative"
-                whileHover={{ y: -5 }}
-              >
-                <div className="backdrop-blur-sm bg-white/10 border border-white/10 rounded-2xl p-8 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/15 relative z-10" style={{backgroundColor: "rgba(25, 30, 70, 0.8)"}}>
-                  <div className="mb-6">
-                    <svg className="w-10 h-10 text-white/30 group-hover:text-white/40 transition-colors duration-300" fill="currentColor" viewBox="0 0 32 32">
-                      <path d="M10 8v12H6v-8c0-2.21 1.79-4 4-4zm12 0v12h-4v-8c0-2.21 1.79-4 4-4z" />
-                    </svg>
-                  </div>
-                  
-                  <p className="text-white/80 leading-relaxed mb-6 italic group-hover:text-white/90 transition-colors duration-300">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </p>
-                  
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0A0F2C] font-bold group-hover:scale-105 transition-transform duration-300">
-                      {testimonial.author.charAt(0)}
-                    </div>
-                    <div className="ml-3">
-                      <h4 className="font-bold text-white group-hover:text-blue-100 transition-colors duration-300">
-                        {testimonial.author}
-                      </h4>
-                      <p className="text-xs text-blue-300 group-hover:text-blue-200 transition-colors duration-300">
-                        {testimonial.role}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Technology Partners Section with Infinite Horizontal Scrolling */}
-  
+      
+      {/* Dedicated section for Testimonials after 'Our Clients' */}
+      <TestimonialsSection />
 
       {/* Footer Section */}
       </div>
-      <footer style={{width: '100%', background: '#0A0F2C', marginTop: 0, paddingTop: 0}}>
-        <Footer />
-      </footer>
+
+      <Footer />
     </div>
   );
 }
