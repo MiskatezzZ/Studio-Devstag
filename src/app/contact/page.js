@@ -94,7 +94,7 @@ export default function ContactPage() {
             CONNECT WITH OUR STUDIO
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-            Let's Create Together
+            Let&apos;s Create Together
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Film directors, VFX supervisors, and game studios—reach out to discuss your next immersive project.

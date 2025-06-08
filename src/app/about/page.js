@@ -106,7 +106,7 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">VR-First Design Philosophy</h2>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                At Devstag, we don't just create visuals—we engineer immersive experiences. Every project begins with spatial thinking, considering how users will navigate and interact in three-dimensional environments.
+                At Devstag, we don&apos;t just create visuals—we engineer immersive experiences. Every project begins with spatial thinking, considering how users will navigate and interact in three-dimensional environments.
               </p>
               <p className="text-gray-300 leading-relaxed">
                 Our approach combines cinematic storytelling with game-engine technology, resulting in digital experiences that are as functional as they are breathtaking.
@@ -194,7 +194,7 @@ export default function AboutPage() {
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Create Something Extraordinary?</h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Film directors, VFX supervisors, and game studios—let's discuss your next immersive project.
+            Film directors, VFX supervisors, and game studios—let&apos;s discuss your next immersive project.
           </p>
           <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-8 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
             Contact Our Studio

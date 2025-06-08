@@ -377,7 +377,7 @@ export default function Services() {
               </div>
               <h3 className="text-lg md:text-xl font-bold mb-3 text-white font-semibold tracking-tight">Free level 1 data</h3>
               <p className="text-gray-300 text-sm md:text-base leading-relaxed font-light">
-                Even when you get funded with our plans, you'll have access to premium data.
+                Even when you get funded with our plans, you&apos;ll have access to premium data.
               </p>
             </div>
           </ModernCard>
