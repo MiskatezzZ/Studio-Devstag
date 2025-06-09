@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef, useEffect, useCallback, useMemo } from "react";
-import useLenis from "@/hooks/useLenis";
+
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -19,10 +19,7 @@ import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
 export default function Home() {
-  // Initialize Lenis for smooth scrolling
-  const lenis = useLenis({
-    autoRaf: true,
-  });
+
   
   // Add background style to ensure no white space is visible
   useEffect(() => {
@@ -110,22 +107,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (!lenis) return;
-    
-    // Use Lenis for scroll events instead of native scroll
-    lenis.on('scroll', () => {
-      handleScroll();
-    });
-    
+    // Use native scroll event
+    window.addEventListener('scroll', handleScroll);
     // Initial call to set up the scroll position
     handleScroll();
-    
     return () => {
-      if (lenis) {
-        lenis.off('scroll');
-      }
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [handleScroll, lenis]);
+  }, [handleScroll]);
 
   const projects = useMemo(() => [
     {
