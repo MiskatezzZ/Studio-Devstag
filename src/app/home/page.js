@@ -10,6 +10,7 @@ import { FloatingDock } from "@/components/ui/floating-dock";
 import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
 import { Spotlight } from "@/components/ui/spotlight";
 import { StickyScroll } from "@/components/ui/stcikyreveal";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import bgImage from "../../assets/bg.jpg";
 import cameraImg from "../../assets/back.png";
@@ -479,11 +480,13 @@ export default function Home() {
 
           {/* StickyScroll placed between heading and marquee, inside container */}
           <div className="mb-10">
-            <StickyScroll contentClassName="w-full" content={[
+            <TracingBeam>
+              <StickyScroll contentClassName="w-full" content={[
               { title: "Sticky Card 1", description: "This is the first sticky card." },
               { title: "Sticky Card 2", description: "This is the second sticky card." },
               { title: "Sticky Card 3", description: "This is the third sticky card." }
             ]} />
+            </TracingBeam>
           </div>
 
         </motion.div>
