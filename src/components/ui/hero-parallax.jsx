@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import useLenis from "@/hooks/useLenis";
+
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 
@@ -8,8 +8,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 export const HeroParallax = ({
   products
 }) => {
-  // Initialize Lenis for smooth scrolling
-  const lenis = useLenis({ autoRaf: true });
+
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
