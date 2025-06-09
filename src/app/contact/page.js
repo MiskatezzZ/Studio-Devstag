@@ -1,6 +1,8 @@
 "use client";
 
 import Navbar from '@/components/Navbar';
+import { TracingBeam } from '@/components/ui/tracing-beam';
+import { AuroraBackground } from "@/components/ui/aurora-background";
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faMapMarkerAlt, faHeadset } from '@fortawesome/free-solid-svg-icons';
@@ -8,8 +10,8 @@ import { useState } from 'react';
 
 const GridBackground = () => {
   return (
-    <div className="fixed inset-0 w-screen h-screen pointer-events-none z-0 overflow-hidden bg-black">
-      <div className="absolute inset-0 bg-black z-0"></div>
+    <div className="fixed inset-0 w-screen h-screen pointer-events-none z-0 overflow-hidden bg-black/0">
+      <div className="absolute inset-0 bg-black/0 z-0"></div>
       <div className="absolute inset-0 flex items-center justify-center z-1">
         <div className="w-[80vw] h-[80vw] max-w-[900px] max-h-[900px] bg-purple-700/40 rounded-full blur-3xl opacity-70 absolute top-[-20vw] left-[-20vw]"></div>
         <div className="w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] bg-blue-600/30 rounded-full blur-2xl opacity-60 absolute bottom-[-15vw] right-[-15vw]"></div>
@@ -78,11 +80,11 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+    <AuroraBackground className="bg-[#18181B]">
+    <div className="relative min-h-screen text-white overflow-hidden">
       <Navbar />
-      <GridBackground />
-      
-      <div className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto">
+
+      <div className="relative z-10 pt-32 pb-20 w-screen">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -138,83 +140,76 @@ export default function ContactPage() {
         </motion.div>
 
         {/* Contact Form */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="bg-gradient-to-br from-blue-500/10 to-purple-600/10 rounded-2xl p-8 md:p-12 border border-white/10"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Project Inquiry</h2>
-          
-          <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  required
-                />
+        <TracingBeam className="w-full max-w-3xl mx-auto border-2 border-blue-400">
+          <div className="py-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Project Inquiry</h2>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    required
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                <label htmlFor="projectType" className="block text-sm font-medium text-gray-300 mb-2">Project Type</label>
+                <select
+                  id="projectType"
+                  name="projectType"
+                  value={formData.projectType}
+                  onChange={handleChange}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none"
+                  required
+                >
+                  <option value="">Select project type</option>
+                  {projectTypes.map(type => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">Project Details</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  value={formData.message}
                   onChange={handleChange}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  placeholder="Tell us about your project goals, timeline, and any specific requirements..."
                   required
-                />
+                ></textarea>
               </div>
-            </div>
-            
-            <div>
-              <label htmlFor="projectType" className="block text-sm font-medium text-gray-300 mb-2">Project Type</label>
-              <select
-                id="projectType"
-                name="projectType"
-                value={formData.projectType}
-                onChange={handleChange}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none"
-                required
-              >
-                <option value="">Select project type</option>
-                {projectTypes.map(type => (
-                  <option key={type} value={type}>{type}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">Project Details</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="Tell us about your project goals, timeline, and any specific requirements..."
-                required
-              ></textarea>
-            </div>
-            
-            <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
-              >
-                Submit Inquiry
-              </button>
-            </div>
-          </form>
-        </motion.div>
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+                >
+                  Submit Inquiry
+                </button>
+              </div>
+            </form>
+          </div>
+        </TracingBeam>
 
         {/* Social Links */}
         <motion.div 
@@ -239,5 +234,6 @@ export default function ContactPage() {
         </motion.div>
       </div>
     </div>
+    </AuroraBackground>
   );
 }
