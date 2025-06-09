@@ -486,39 +486,6 @@ export default function Home() {
             ]} />
           </div>
 
-          {/* Infinite Scroll Container */}
-          <div className="relative w-full overflow-hidden py-6">
-            {/* Featured Publications Marquee */}
-            <div className="group">
-              <div className="flex animate-marquee group-hover:pause-animation">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <div 
-                    key={index} 
-                    className="flex-shrink-0 w-[180px] mx-3"
-                  >
-                    <div className="h-14 w-full flex items-center justify-center rounded-lg p-3 backdrop-blur-md bg-white/10 border border-white/20 hover:border-white/30 hover:bg-white/20 transition-all duration-300 group">
-                      <div className="text-white font-bold text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                        Publication {index + 1}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {/* Duplicate set for seamless loop */}
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <div 
-                    key={`dup-${index}`} 
-                    className="flex-shrink-0 w-[180px] mx-3"
-                  >
-                    <div className="h-14 w-full flex items-center justify-center rounded-lg p-3 backdrop-blur-md bg-white/10 border border-white/20 hover:border-white/30 hover:bg-white/20 transition-all duration-300 group">
-                      <div className="text-white font-bold text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                        Publication {index + 1}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </motion.div>
 
         {/* Clients Section with Infinite Horizontal Scrolling */}
