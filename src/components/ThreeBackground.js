@@ -119,7 +119,6 @@ export default function ThreeBackground() {
       particlesMaterial.dispose();
     };
   }, [mountRef]);
-  }, []);
 
   return (
     <div 
