@@ -7,6 +7,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { logoData } from "@/lib/intropath";
+import Project from "@/components/Project";
 
 const ScrollHero = () => {
   useEffect(() => {
@@ -297,7 +298,7 @@ const ScrollHero = () => {
 
 
     <section className="outro">
-      <p>Outro Section</p>
+      <Project />
     </section>
   </div>
   );

@@ -440,7 +440,7 @@ export default function Home() {
       </section>
 
       {/* Hero Parallax Section */}
-      <section className="relative z-20">
+      {/* <section className="relative z-20">
 
 
         
@@ -465,7 +465,7 @@ export default function Home() {
           { title: "Invoker Labs", link: "https://invoker.lol", thumbnail: "https://aceternity.com/images/products/thumbnails/new/invoker.png" },
           { title: "E Free Invoice", link: "https://efreeinvoice.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png" }
         ]} />
-      </section>
+      </section> */}
 
       {/* Why Choose Us Section */}
       
