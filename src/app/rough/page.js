@@ -21,7 +21,7 @@ const PortalScrollExperience = ({
 
   useEffect(() => {
     const handleWheel = (e) => {
-      if (isTransitioned && e.deltaY < 0 && window.scrollY <= 5) {
+      if (isTransitioned && e.deltaY < 0 && typeof window !== 'undefined' && window.scrollY <= 5) {
         setIsTransitioned(false);
         setScrollProgress(0.95);
         e.preventDefault();
@@ -47,7 +47,7 @@ const PortalScrollExperience = ({
       const touchY = e.touches[0].clientY;
       const deltaY = touchStartY - touchY;
 
-      if (isTransitioned && deltaY < -30 && window.scrollY <= 5) {
+      if (isTransitioned && deltaY < -30 && typeof window !== 'undefined' && window.scrollY <= 5) {
         setIsTransitioned(false);
         setScrollProgress(0.95);
         e.preventDefault();
@@ -72,13 +72,19 @@ const PortalScrollExperience = ({
 
     const handleScroll = () => {
       if (!isTransitioned) {
-        window.scrollTo(0, 0);
+        if (typeof window !== 'undefined') {
+          window.scrollTo(0, 0);
+        }
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    if (typeof window !== 'undefined') {
+      window.addEventListener('wheel', handleWheel, { passive: false });
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('touchstart', handleTouchStart, { passive: false });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('touchend', handleTouchEnd);
+    }
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('touchend', handleTouchEnd);
 
