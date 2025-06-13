@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef, useEffect, useCallback, useMemo } from "react";
-
+import useLenis from "@/hooks/useLenis";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,9 +17,14 @@ import cameraImg from "../../assets/back.png";
 import cameraWebpImg from "../../assets/vrback.png";
 import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import Sticky from "@/components/Sticky";
+import Intro from "@/components/Intro";
 
 export default function Home() {
-
+  // Initialize Lenis for smooth scrolling
+  const lenis = useLenis({
+    autoRaf: true,
+  });
   
   // Add background style to ensure no white space is visible
   useEffect(() => {
@@ -107,14 +112,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Use native scroll event
-    window.addEventListener('scroll', handleScroll);
+    if (!lenis) return;
+    
+    // Use Lenis for scroll events instead of native scroll
+    lenis.on('scroll', () => {
+      handleScroll();
+    });
+    
     // Initial call to set up the scroll position
     handleScroll();
+    
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (lenis) {
+        lenis.on('scroll');
+      }
     };
-  }, [handleScroll]);
+  }, [handleScroll, lenis]);
 
   const projects = useMemo(() => [
     {
@@ -177,6 +190,13 @@ export default function Home() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+
+      <section style={{ position: 'relative', zIndex: 2000 }}>
+        <Intro/>
+      </section>
+
+
+
  {/* Header Section */}
      <section className="relative min-h-screen w-full overflow-hidden" style={{position: 'sticky', top: 0, zIndex: 10}}>
         <div 
@@ -414,9 +434,21 @@ export default function Home() {
     </motion.div>
       </section>
 
+
+      <section style={{ position: 'relative', zIndex: 2000 }}>
+        <Sticky />
+      </section>
+
       {/* Hero Parallax Section */}
       <section className="relative z-20">
-        <HeroParallax products={[
+
+
+        
+        <HeroParallax
+            // ...props
+
+        
+           products={[
           { title: "Moonbeam", link: "https://gomoonbeam.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/moonbeam.png" },
           { title: "Cursor", link: "https://cursor.so", thumbnail: "https://aceternity.com/images/products/thumbnails/new/cursor.png" },
           { title: "Rogue", link: "https://userogue.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/rogue.png" },
@@ -473,7 +505,7 @@ export default function Home() {
               <StickyScroll contentClassName="w-full" content={[
               { title: "Sticky Card 1", description: "This is the first sticky card." },
               { title: "Sticky Card 2", description: "This is the second sticky card." },
-              { title: "Sticky Card 3", description: "This is the third sticky card." }
+              { title: "Sticky Card 3", description: "This is the third sticky card." },
             ]} />
             </TracingBeam>
           </div>
