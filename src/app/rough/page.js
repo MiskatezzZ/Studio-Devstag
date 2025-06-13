@@ -89,16 +89,26 @@ const PortalScrollExperience = ({
     window.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('wheel', handleWheel);
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
+      }
     };
+
   }, [scrollProgress, isTransitioned, touchStartY]);
 
   // Portal size calculation
-  const currentPortalSize = portalSize + (scrollProgress * (window.innerWidth * 2));
+  const [currentPortalSize, setCurrentPortalSize] = useState(portalSize);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPortalSize(portalSize + (scrollProgress * (window.innerWidth * 2)));
+    } else {
+      setCurrentPortalSize(portalSize);
+    }
+  }, [portalSize, scrollProgress]);
   
   // Tunnel effect calculations
   const tunnelScale = 1 + (scrollProgress * 5);
