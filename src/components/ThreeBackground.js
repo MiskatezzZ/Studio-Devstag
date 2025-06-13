@@ -8,6 +8,7 @@ export default function ThreeBackground() {
   const mountRef = useRef(null);
 
   useEffect(() => {
+  const mountNode = mountRef.current;
     if (!mountRef.current) return;
     
     // Scene setup

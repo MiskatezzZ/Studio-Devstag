@@ -81,7 +81,7 @@ export default function ContactPage() {
         <section className="section gradient-blue" style={{ width: '100vw', height: '100vh', zIndex: 1, background: 'linear-gradient(135deg, #43cea2 0%, #185a9d 100%)' }}></section>
       </div>
       <div className="image-container" style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
-        <img
+        <Image width={400} height={300} 
           ref={imgRef}
           src={moonbg.src}
           alt="Background"
