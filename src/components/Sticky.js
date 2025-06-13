@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -159,7 +160,7 @@ export default function ScrollPage() {
         <div className="card-description"><p>A futuristic residence that plays with curvature and flow, blending bold geometry with natural topography.</p></div>
       </div>
       <div className="card-img">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Card 1" />
+        <Image src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Card 1" width={400} height={300} />
       </div>
     </div>
   </div>
@@ -170,7 +171,7 @@ export default function ScrollPage() {
         <div className="card-description"><p>Modern living space inspired by the night sky, with deep indigo tones and serene lines for relaxation.</p></div>
       </div>
       <div className="card-img">
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Card 2" />
+        <Image src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Card 2" width={400} height={300} />
       </div>
     </div>
   </div>
@@ -181,7 +182,7 @@ export default function ScrollPage() {
         <div className="card-description"><p>Eco-friendly design with lush green accents, merging indoor comfort and outdoor freshness seamlessly.</p></div>
       </div>
       <div className="card-img">
-        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=crop&w=400&q=80" alt="Card 3" />
+        <Image src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=crop&w=400&q=80" alt="Card 3" width={400} height={300} />
       </div>
     </div>
   </div>
@@ -192,7 +193,7 @@ export default function ScrollPage() {
         <div className="card-description"><p>Minimalist black space for creative minds, where simplicity and contrast spark inspiration.</p></div>
       </div>
       <div className="card-img">
-        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Card 4" />
+        <Image src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Card 4" width={400} height={300} />
       </div>
     </div>
   </div>

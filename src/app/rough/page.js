@@ -242,7 +242,7 @@ const PortalScrollExperience = ({
               transition={{ delay: 0.3, duration: 0.8 }}
             >
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                You've Entered the Portal
+                You&apos;ve Entered the Portal
               </h1>
               <p className="text-xl md:text-2xl opacity-80 max-w-3xl mx-auto">
                 Experience the seamless transition from one dimension to another. 
@@ -300,7 +300,7 @@ const PortalScrollExperience = ({
               <h2 className="text-3xl font-bold text-center mb-8">Continue Your Journey</h2>
               <div className="max-w-4xl mx-auto space-y-6 text-lg leading-relaxed opacity-80">
                 <p>
-                  Now that you've successfully traveled through the portal, you can scroll normally 
+                  Now that you&apos;ve successfully traveled through the portal, you can scroll normally 
                   through this section. The transition creates a sense of depth and movement that 
                   enhances the user experience.
                 </p>
