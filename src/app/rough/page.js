@@ -2,363 +2,225 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const PortalScrollExperience = ({
-  portalSize = 80,
-  glowIntensity = 0.8,
-  tunnelDepth = 1000,
-  backgroundColor = '#0a0a0a',
-  portalColor = '#4f46e5',
-  secondSectionBg = '#1a1a2e',
-  children
-}) => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [isTransitioned, setIsTransitioned] = useState(false);
-  const [touchStartY, setTouchStartY] = useState(0);
-  
-  const containerRef = useRef(null);
-  const portalRef = useRef(null);
+gsap.registerPlugin(ScrollTrigger);
 
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (isTransitioned && e.deltaY < 0 && typeof window !== 'undefined' && window.scrollY <= 5) {
-        setIsTransitioned(false);
-        setScrollProgress(0.95);
-        e.preventDefault();
-      } else if (!isTransitioned) {
-        e.preventDefault();
-        const scrollDelta = e.deltaY * 0.001;
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1);
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setIsTransitioned(true);
-        }
-      }
-    };
-
-    const handleTouchStart = (e) => {
-      setTouchStartY(e.touches[0].clientY);
-    };
-
-    const handleTouchMove = (e) => {
-      if (!touchStartY) return;
-
-      const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
-
-      if (isTransitioned && deltaY < -30 && typeof window !== 'undefined' && window.scrollY <= 5) {
-        setIsTransitioned(false);
-        setScrollProgress(0.95);
-        e.preventDefault();
-      } else if (!isTransitioned) {
-        e.preventDefault();
-        const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
-        const scrollDelta = deltaY * scrollFactor;
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1);
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setIsTransitioned(true);
-        }
-
-        setTouchStartY(touchY);
-      }
-    };
-
-    const handleTouchEnd = () => {
-      setTouchStartY(0);
-    };
-
-    const handleScroll = () => {
-      if (!isTransitioned) {
-        if (typeof window !== 'undefined') {
-          window.scrollTo(0, 0);
-        }
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('wheel', handleWheel, { passive: false });
-      window.addEventListener('scroll', handleScroll);
-      window.addEventListener('touchstart', handleTouchStart, { passive: false });
-      window.addEventListener('touchmove', handleTouchMove, { passive: false });
-      window.addEventListener('touchend', handleTouchEnd);
-    }
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('wheel', handleWheel);
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('touchstart', handleTouchStart);
-        window.removeEventListener('touchmove', handleTouchMove);
-        window.removeEventListener('touchend', handleTouchEnd);
-      }
-    };
-
-  }, [scrollProgress, isTransitioned, touchStartY]);
-
-  // Portal size calculation
-  const [currentPortalSize, setCurrentPortalSize] = useState(portalSize);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentPortalSize(portalSize + (scrollProgress * (window.innerWidth * 2)));
-    } else {
-      setCurrentPortalSize(portalSize);
-    }
-  }, [portalSize, scrollProgress]);
-  
-  // Tunnel effect calculations
-  const tunnelScale = 1 + (scrollProgress * 5);
-  const tunnelOpacity = Math.max(0, 1 - (scrollProgress * 1.5));
-  const portalGlow = glowIntensity * (1 + scrollProgress * 2);
-  
-  // Background transition
-  const backgroundOpacity = Math.max(0, 1 - (scrollProgress * 1.2));
-  
-  // Perspective effect for the glimpse through portal
-  const glimpseScale = 0.8 + (scrollProgress * 0.4);
-  const glimpseOpacity = 0.3 + (scrollProgress * 0.7);
-
-  return (
-    <div 
-      ref={containerRef}
-      className="relative w-full overflow-hidden"
-      style={{ 
-        height: isTransitioned ? 'auto' : '100vh',
-        minHeight: '100vh'
-      }}
-    >
-      {/* Initial dark background */}
-      <motion.div
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundColor,
-          opacity: backgroundOpacity,
-        }}
-      />
-
-      {/* Portal container */}
-      {!isTransitioned && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center">
-          {/* Portal hole with glow effect */}
-          <motion.div
-            ref={portalRef}
-            className="relative rounded-full overflow-hidden"
-            style={{
-              width: `${currentPortalSize}px`,
-              height: `${currentPortalSize}px`,
-              boxShadow: `
-                0 0 ${portalGlow * 50}px ${portalColor}40,
-                0 0 ${portalGlow * 100}px ${portalColor}20,
-                0 0 ${portalGlow * 200}px ${portalColor}10,
-                inset 0 0 ${portalGlow * 30}px ${portalColor}30
-              `,
-              border: `2px solid ${portalColor}60`,
-            }}
-          >
-            {/* Glimpse of second section through portal */}
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              style={{
-                backgroundColor: secondSectionBg,
-                transform: `scale(${glimpseScale}) perspective(${tunnelDepth}px) rotateX(${scrollProgress * 10}deg)`,
-                opacity: glimpseOpacity,
-              }}
-            >
-              {/* Preview content visible through portal */}
-              <div className="text-center text-white p-8">
-                <motion.h2 
-                  className="text-2xl md:text-4xl font-bold mb-4"
-                  style={{
-                    transform: `translateZ(${scrollProgress * 100}px)`,
-                  }}
-                >
-                  Welcome to the Other Side
-                </motion.h2>
-                <motion.p 
-                  className="text-lg opacity-80"
-                  style={{
-                    transform: `translateZ(${scrollProgress * 50}px)`,
-                  }}
-                >
-                  Scroll to enter the portal
-                </motion.p>
-              </div>
-            </motion.div>
-
-            {/* Tunnel rings effect */}
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute inset-0 rounded-full border"
-                style={{
-                  borderColor: `${portalColor}${Math.floor((1 - i * 0.1) * 255).toString(16).padStart(2, '0')}`,
-                  borderWidth: '1px',
-                  transform: `scale(${tunnelScale + i * 0.1}) translateZ(${-i * 100}px)`,
-                  opacity: tunnelOpacity * (1 - i * 0.1),
-                }}
-              />
-            ))}
-          </motion.div>
-
-          {/* Scroll instruction */}
-          <motion.div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-center"
-            style={{
-              opacity: Math.max(0, 1 - scrollProgress * 2),
-            }}
-          >
-            <p className="text-lg mb-2">Scroll to zoom through the portal</p>
-            <motion.div
-              className="w-6 h-10 border-2 border-white rounded-full mx-auto relative"
-              animate={{
-                opacity: [1, 0.3, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <motion.div
-                className="w-1 h-3 bg-white rounded-full absolute left-1/2 top-2 transform -translate-x-1/2"
-                animate={{
-                  y: [0, 12, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Second section - revealed after transition */}
-      {isTransitioned && (
-        <motion.div
-          className="relative z-20 min-h-screen"
-          style={{
-            backgroundColor: secondSectionBg,
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="container mx-auto px-6 py-20">
-            <motion.div
-              className="text-center text-white mb-16"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                You&apos;ve Entered the Portal
-              </h1>
-              <p className="text-xl md:text-2xl opacity-80 max-w-3xl mx-auto">
-                Experience the seamless transition from one dimension to another. 
-                This is where your journey truly begins.
-              </p>
-            </motion.div>
-
-            {/* Content sections */}
-            <div className="grid md:grid-cols-2 gap-12 mb-20">
-              <motion.div
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-8"
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              >
-                <h3 className="text-2xl font-bold text-white mb-4">Immersive Experience</h3>
-                <p className="text-white/80 leading-relaxed">
-                  The portal effect creates a cinematic transition that draws users into your content. 
-                  Perfect for storytelling and creating memorable first impressions.
-                </p>
-              </motion.div>
-
-              <motion.div
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-8"
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-              >
-                <h3 className="text-2xl font-bold text-white mb-4">Smooth Animations</h3>
-                <p className="text-white/80 leading-relaxed">
-                  Built with Framer Motion for buttery smooth animations that work across all devices. 
-                  The scroll-based interaction feels natural and responsive.
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Custom children content */}
-            {children && (
-              <motion.div
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 0.8 }}
-              >
-                {children}
-              </motion.div>
-            )}
-
-            {/* Additional content to demonstrate scrolling */}
-            <motion.div
-              className="text-white space-y-8"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-            >
-              <h2 className="text-3xl font-bold text-center mb-8">Continue Your Journey</h2>
-              <div className="max-w-4xl mx-auto space-y-6 text-lg leading-relaxed opacity-80">
-                <p>
-                  Now that you&apos;ve successfully traveled through the portal, you can scroll normally 
-                  through this section. The transition creates a sense of depth and movement that 
-                  enhances the user experience.
-                </p>
-                <p>
-                  This component is perfect for landing pages, product showcases, or any application 
-                  where you want to create a memorable entrance to your content. The portal effect 
-                  can be customized with different colors, sizes, and animations to match your brand.
-                </p>
-                <p>
-                  The scroll-based interaction works on both desktop and mobile devices, providing 
-                  a consistent experience across all platforms. Users can scroll back up to return 
-                  to the portal view if needed.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </div>
-  );
-};
-
-// Usage example
 const PortalScrollDemo = () => {
+  const modelRef = useRef();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    
+    if (typeof window === 'undefined') return;
+
+    // Dynamically import Three.js only on client side
+    import('three').then(THREE => {
+      // Import GLTFLoader from the correct path
+      import('three/examples/jsm/loaders/GLTFLoader').then(({ GLTFLoader }) => {
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xfefdfd);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+          antialias: true,
+          alpha: true,
+        });
+        
+        renderer.setClearColor(0xffffff, 1);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.physicallyCorrectLights = true;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 2.5;
+
+        if (modelRef.current) {
+          modelRef.current.appendChild(renderer.domElement);
+        }
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // Load model
+        const loader = new GLTFLoader();
+        loader.load(
+          '/vr_headset_simple.glb',
+          (gltf) => {
+            const model = gltf.scene;
+            scene.add(model);
+
+            // Center model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            model.position.sub(center);
+            
+            // Scale model
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            camera.position.z = maxDim * 2;
+            
+            model.scale.set(0.5, 0.5, 0.5);
+            
+            // Animation functions
+            let animationFrameId;
+            let isFloating = false;
+            
+            const playInitAnimation = () => {
+              if (model) {
+                // Initial scale animation
+                gsap.to(model.scale, { 
+                  x: 1,
+                  y: 1,
+                  z: 1,
+                  duration: 1,
+                  ease: 'power2.out'
+                });
+
+                // Continuous rotation
+                gsap.to(model.rotation, { 
+                  y: Math.PI * 2, 
+                  duration: 8, 
+                  repeat: -1,
+                  ease: 'none'
+                });
+              }
+            };
+            
+            const animate = () => {
+              renderer.render(scene, camera);
+              animationFrameId = requestAnimationFrame(animate);
+            };
+            
+            playInitAnimation();
+            animate();
+            
+            // Handle window resize
+            const handleResize = () => {
+              camera.aspect = window.innerWidth / window.innerHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+
+            ScrollTrigger.create({
+              trigger: "body",
+              start: 'top top',
+              end: 'top -10',
+              onEnterBack: () => {
+                if (model) {
+                  gsap.to(model.rotation, 
+                    { 
+                      x: 1,
+                      y: 1,
+                      z: 1,
+                      duration: 1,
+                      ease: 'power2.out'
+                    }
+                  );
+
+                  // Update floating state
+                  isFloating = true;
+                }
+                gsap.to(scanContainer, 
+                  { 
+                    scale: 1,
+                    duration: 1,
+                    ease: 'power2.out'
+                  }
+                );
+              }
+            });
+            
+            
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Cleanup function
+            return () => {
+              cancelAnimationFrame(animationFrameId);
+              window.removeEventListener('resize', handleResize);
+              if (modelRef.current && modelRef.current.contains(renderer.domElement)) {
+                modelRef.current.removeChild(renderer.domElement);
+              }
+              renderer.dispose();
+            };
+          },
+          undefined,
+          (error) => {
+            console.error('Error loading model:', error);
+          }
+        );
+      });
+    });
+  }, []);
+
   return (
-    <div className="w-full">
-      <PortalScrollExperience
-        portalSize={100}
-        glowIntensity={1.2}
-        backgroundColor="#000011"
-        portalColor="#6366f1"
-        secondSectionBg="#1e1b4b"
+    <>
+        <style jsx>{`
+            canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+            h1 {
+                text-align: center;
+                font-size: 4rem;
+                font-weight: bold;
+                color: #fff;
+            }
+            .model {
+                position: fixed;
+                width: 100%;
+                height: 100vh;
+                background-color: #171e3a;
+            }
+            section {
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                background: #171e3a;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+        `}</style>
+
+
+      <div 
+        ref={modelRef} 
+        className="model min-h-screen flex items-center justify-center bg-gray-100"
+        style={{ position: 'relative', width: '100%', height: '100vh' }}
       >
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">Custom Content Area</h3>
-          <p className="text-white/80">
-            This is where you can add your own custom content after the portal transition.
-          </p>
-        </div>
-      </PortalScrollExperience>
-    </div>
+        <h1 className="absolute z-10 text-5xl font-bold text-gray-800">3D Model Showcase</h1>
+      </div>
+
+      <section className='hero min-h-screen flex items-center justify-center bg-blue-600 text-white'>
+        <h1 className="text-5xl font-bold">Discover Amazing Features</h1>
+      </section>
+
+      <section className='info min-h-screen flex items-center justify-center bg-white'>
+        <h1 className="text-5xl font-bold text-gray-800">Detailed Information</h1>
+      </section>
+
+      <section className='scanner min-h-screen flex items-center justify-center bg-gray-900 text-white'>
+        <h1 className="text-5xl font-bold">Scan & Explore</h1>
+      </section>
+
+      <section className='outro min-h-screen flex items-center justify-center bg-indigo-700 text-white'>
+        <h1 className="text-5xl font-bold">Start Your Journey</h1>
+      </section>
+    </>
   );
 };
+
 
 export default PortalScrollDemo;

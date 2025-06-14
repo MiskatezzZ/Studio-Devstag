@@ -3,7 +3,7 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-export function Model(props) {
+export function VR(props) {
   const { nodes, materials } = useGLTF('/vr_headset_simple.glb')
   return (
     <group scale={[1.5, 1.5, 1.5]}{...props} dispose={null}>

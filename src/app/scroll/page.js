@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
 
+
 const Scene = dynamic(() => import("@/components/3D/Scene"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
@@ -28,19 +29,19 @@ const ScrollPage = () => {
       }
     })
     .to(sceneRef.current, {
-      ease: "none",
       x: '-25vw',
       y: '100vh',
+      ease: "none",
     })
     .to(sceneRef.current, {
-      ease: "none",
       x: '25vw',
       y: '200vh',
+      ease: "none",
     })
     .to(sceneRef.current, {
-      ease: "none",
       x: '-25vw',
       y: '300vh',
+      ease: "none",
     })
     
   }, []);
@@ -56,13 +57,13 @@ const ScrollPage = () => {
       >
         <section className="relative grid place-items-center h-[100vh]">
           <p className="text-white text-center absolute top-[5%] mx-4 w-fit text-8xl font-bold">
-            Apple Watchqw
+            Apple Watch
           </p>
           <p className="text-white text-center absolute bottom-[5%] mx-4 w-fit text-8xl font-bold">
             Ultra 2
           </p>
 
-          <div ref={sceneRef} className="h-[100vh] w-[100vw] text-white">
+          <div ref={sceneRef} className="h-[100vh] w-[100vw] text-white border-2 border-red-700">
             <Canvas>
               <Scene />
             </Canvas>
