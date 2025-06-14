@@ -6,7 +6,7 @@ import { useGLTF } from '@react-three/drei'
 export function Model(props) {
   const { nodes, materials } = useGLTF('/vr_headset_simple.glb')
   return (
-    <group {...props} dispose={null}>
+    <group scale={[1.5, 1.5, 1.5]}{...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow

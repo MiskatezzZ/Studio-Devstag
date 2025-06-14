@@ -1,16 +1,52 @@
 "use client";
 
-
 import { useState, useRef, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Scene from "@/components/3D/Scene";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/3D/Scene"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
+
 const ScrollPage = () => {
+
+  const mainRef = useRef(null);
+  const sceneRef = useRef(null);
+
+  useEffect(() => {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: mainRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          // sceneRef.current.style.transform = `translateY(${self.progress * 100}vh)`;
+        }
+      }
+    })
+    .to(sceneRef.current, {
+      ease: "none",
+      x: '-25vw',
+      y: '100vh',
+    })
+    .to(sceneRef.current, {
+      ease: "none",
+      x: '25vw',
+      y: '200vh',
+    })
+    .to(sceneRef.current, {
+      ease: "none",
+      x: '-25vw',
+      y: '300vh',
+    })
+    
+  }, []);
+
   return (
-    <main className="overflow-x-hidden">
+    <main ref={mainRef} className="overflow-x-hidden">
       <Suspense
         fallback={
           <div className="fixed inset-0 grid place-items-center bg-black text-white">
@@ -20,19 +56,19 @@ const ScrollPage = () => {
       >
         <section className="relative grid place-items-center h-[100vh]">
           <p className="text-white text-center absolute top-[5%] mx-4 w-fit text-8xl font-bold">
-            Apple Watch
+            Apple Watchqw
           </p>
           <p className="text-white text-center absolute bottom-[5%] mx-4 w-fit text-8xl font-bold">
             Ultra 2
           </p>
 
-          <div  className="h-[100vh] w-[100vw] text-white">
+          <div ref={sceneRef} className="h-[100vh] w-[100vw] text-white">
             <Canvas>
               <Scene />
             </Canvas>
           </div>
-        </section>
 
+        </section>
         <section className=" relative flex items-center justify-evenly h-[100vh]">
           <p className="w-[50%] border-0 border-red-700"></p>
 
@@ -61,6 +97,6 @@ const ScrollPage = () => {
       </Suspense>
     </main>
   );
-}
+};
 
 export default ScrollPage;
