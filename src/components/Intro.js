@@ -5,8 +5,10 @@ import intro from "@/assets/introbg.png";
 import studioDevstag from "@/assets/logo.png";
 import mountain from "@/assets/mountain.png";
 import gsap from "gsap";
+import { FaArrowUpRightFromSquare, FaGlobe } from "react-icons/fa6";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import Navbar from "@/components/Navbar";
 import { logoData } from "@/lib/intropath";
 
 const ScrollHero = () => {
@@ -20,7 +22,7 @@ const ScrollHero = () => {
     const heroImgCopy = document.querySelector(".hero-img-copy");
     const fadeOverlay = document.querySelector(".fade-overlay");
     const svgOverlay = document.querySelector(".overlay");
-    const overlayCopy = document.querySelector("h1");
+    const overlayCopy = document.querySelector(".overlay-copy div");
 
     // Overlay and logo mask logic
     const initialOverlayScale = 350;
@@ -279,6 +281,32 @@ const ScrollHero = () => {
             <rect width="100%" height="100vh" fill="white" />
             <path id="logoMask"></path>
           </mask>
+          <radialGradient id="pinkLeft" cx="15%" cy="35%" r="40%">
+  <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+  <stop offset="10%" stop-color="#f3eaff" stop-opacity="0.9" />
+  <stop offset="20%" stop-color="#e0cfff" stop-opacity="0.8" />
+  <stop offset="30%" stop-color="#cdb5ff" stop-opacity="0.7" />
+  <stop offset="40%" stop-color="#b99cff" stop-opacity="0.6" />
+  <stop offset="50%" stop-color="#a683ff" stop-opacity="0.5" />
+  <stop offset="60%" stop-color="#946bff" stop-opacity="0.4" />
+  <stop offset="70%" stop-color="#8254ff" stop-opacity="0.3" />
+  <stop offset="80%" stop-color="#713eff" stop-opacity="0.2" />
+  <stop offset="90%" stop-color="#652fff" stop-opacity="0.1" />
+  <stop offset="100%" stop-color="#7f3cff" stop-opacity="0" />
+</radialGradient>
+          <radialGradient id="whiteRight" cx="80%" cy="40%" r="65%">
+          <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+  <stop offset="10%" stop-color="#f3eaff" stop-opacity="0.9" />
+  <stop offset="20%" stop-color="#e0cfff" stop-opacity="0.8" />
+  <stop offset="30%" stop-color="#cdb5ff" stop-opacity="0.7" />
+  <stop offset="40%" stop-color="#b99cff" stop-opacity="0.6" />
+  <stop offset="50%" stop-color="#a683ff" stop-opacity="0.5" />
+  <stop offset="60%" stop-color="#946bff" stop-opacity="0.4" />
+  <stop offset="70%" stop-color="#8254ff" stop-opacity="0.3" />
+  <stop offset="80%" stop-color="#713eff" stop-opacity="0.2" />
+  <stop offset="90%" stop-color="#652fff" stop-opacity="0.1" />
+  <stop offset="100%" stop-color="#7f3cff" stop-opacity="0" />
+          </radialGradient>
           <pattern id="mountainPattern" patternUnits="userSpaceOnUse" width="100%" height="100%">
             <image
               href={mountain.src}
@@ -289,13 +317,50 @@ const ScrollHero = () => {
               preserveAspectRatio="xMidYMid slice"
             />
           </pattern>
+        {/* <linearGradient id="tabGradient" x1="0" y1="0" x2="1" y2="1" gradientTransform="rotate(120)">
+          <stop offset="0%" stop-color="rgba(109, 79, 232, 0.3)" />
+          <stop offset="100%" stop-color="rgba(121, 76, 225, 0.2)" />
+        </linearGradient> */}
+          <radialGradient id="whiteInner" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.4" />
+  <stop offset="10%" stop-color="#fff" stop-opacity="0.3" />
+  <stop offset="20%" stop-color="#fff" stop-opacity="0.2" />
+  <stop offset="30%" stop-color="#fff" stop-opacity="0.1" />
+  <stop offset="40%" stop-color="#fff" stop-opacity="0.05" />
+  <stop offset="50%" stop-color="#fff" stop-opacity="0.02" />
+  <stop offset="60%" stop-color="#fff" stop-opacity="0.01" />
+  <stop offset="70%" stop-color="#fff" stop-opacity="0.005" />
+  <stop offset="80%" stop-color="#fff" stop-opacity="0.002" />
+  <stop offset="90%" stop-color="#fff" stop-opacity="0.001" />
+          </radialGradient>
         </defs>
         <rect
               x="0"
               y="0"
               width="100vw"
               height="100vh"
-          fill="#000000"
+          fill="#000"
+          mask="url(#logoRevealMask)"
+        />
+        <circle
+          cx="10%"
+          cy="38%"
+          r="35%"
+          fill="url(#pinkLeft)"
+          mask="url(#logoRevealMask)"
+        />
+        <circle
+          cx="85%"
+          cy="15%"
+          r="35%"
+          fill="url(#whiteRight)"
+          mask="url(#logoRevealMask)"
+        />
+        <circle
+          cx="95%"
+          cy="12%"
+          r="28%"
+          fill="url(#whiteInner)"
           mask="url(#logoRevealMask)"
         />
       </svg>
@@ -304,7 +369,100 @@ const ScrollHero = () => {
      <div className="logo-container"></div>
 
      <div className="overlay-copy">
-      <h1>Discover The AI Through Your Vision</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+        
+      <div style={{
+          margin: '0px auto 0 auto',
+          width: '100vw',
+          height: '118vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 16,
+          backgroundColor: 'rgba(255,255,255,0.04)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          backgroundImage: 'linear-gradient(120deg, rgba(255,255,255,0.22), rgba(127,60,255,0.11), rgba(0,0,0,0.09))',
+          backgroundSize: '30px',
+          boxShadow: '0 4px 32px 0 rgba(127,60,255,0.10)',
+          border: '1.5px solid rgba(255,255,255,0.13)',
+          marginBottom: 160,
+        }} >
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90 }}>
+          <Navbar />
+        </div>
+
+        <button style={{
+          marginTop: 200,
+          marginLeft: 100,
+          padding: '10px 26px 10px 20px',
+          borderRadius: '999px',
+          fontWeight: 700,
+          fontSize: '1.1rem',
+          background: '#fff',
+          color: '#181818',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          boxShadow: '0 2px 16px 0 rgba(0,0,0,0.06)',
+          cursor: 'pointer',
+          gap: '12px',
+        }}>
+          LETS GET STARTED
+          <span style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: 12,
+            width: 22,
+            height: 22,
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg,#ff4ecd 0%,#b983ff 100%)',
+            boxShadow: '0 2px 8px 0 rgba(186,131,255,0.10)',
+          }}>
+            <FaArrowUpRightFromSquare style={{ color: '#fff', width: 13, height: 13 }} />
+          </span>
+        </button>
+
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: 60, marginTop: 200}}>
+          <p style={{ margin: 0, marginBottom: 10, fontSize: '1.08rem', color: '#fff', maxWidth: 320, textAlign: 'right', fontWeight: 400 }}>
+            Explore how we transform digital brands with our creative vision.
+            We craft unique digital experiences that captivate.
+          </p>
+          <div style={{
+            padding: '3px 22px',
+            borderRadius: '999px',
+            background: 'rgba(255,255,255,0.12)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1.5px solid rgba(255, 255, 255, 0.25)',
+            color: '#fff',
+            fontWeight: 400,
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            fontSize: '1.02rem',
+            boxShadow: '0 2px 12px 0 rgba(186,131,255,0.10)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 4,
+            cursor: 'default',
+            userSelect: 'none',
+          }}>
+            <FaGlobe style={{ color: '#fff', fontSize: '1.2em', marginRight: 10 }} />
+            WORLD CLASS AGENCY
+          </div>
+        </div>
+
+          </div>
+
+        
+
+      
+
+
+      </div>
      </div>
     </section>
 

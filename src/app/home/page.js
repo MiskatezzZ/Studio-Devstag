@@ -162,7 +162,7 @@ export default function Home() {
         <div 
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            backgroundImage: `url(${bgImage.src})`,
+            background: "#000",
             backgroundSize: "cover",
             backgroundPosition: "center"
           }}
