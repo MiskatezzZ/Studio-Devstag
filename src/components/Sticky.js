@@ -17,7 +17,7 @@ export default function ScrollPage() {
       const isLastCard = index === cards.length - 1;
       ScrollTrigger.create({
         trigger: card,
-        start: "top 7%",
+        start: "top 10%",
         end: isLastCard ? "+=100vh" : "top top",
         endTrigger: isLastCard ? null : cards[cards.length - 1],
         pin: true,

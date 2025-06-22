@@ -1,7 +1,7 @@
 import { Inter, Montserrat, Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import Loader from "../components/Loader";
-import SmoothScroll from "../components/SmoothScroll";
+// import SmoothScroll from "../components/SmoothScroll";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,7 +38,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${montserrat.variable} ${playfair.variable} ${outfit.variable} antialiased bg-black font-outfit`}
       >
-        <SmoothScroll>{children}</SmoothScroll>
+        {/* <SmoothScroll></SmoothScroll>
+         */}
+        {children}
       </body>
     </html>
   );
