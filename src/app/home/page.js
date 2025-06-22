@@ -20,7 +20,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import Sticky from "@/components/Sticky";
 import Intro from "@/components/Intro";
 // import Loader from "@/components/Loader";
-import PortalScrollDemo from "@/components/3D/vrmodel.jsx";
+import PortalScrollDemo from "@/components/3D/vrmodel";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
