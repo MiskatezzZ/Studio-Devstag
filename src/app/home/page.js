@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, useEffect, useCallback, useMemo } from "react";
+import { useRef, useEffect, useCallback, useMemo, useState } from "react";
 import useLenis from "@/hooks/useLenis";
 
 import Navbar from "@/components/Navbar";
@@ -19,13 +19,27 @@ import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Sticky from "@/components/Sticky";
 import Intro from "@/components/Intro";
+// import Loader from "@/components/Loader";
+import PortalScrollDemo from "@/components/3D/vrmodel";
 
 export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  const handleLoaderComplete = () => {
+    setIsLoaded(true);
+  };
+
   // Initialize Lenis for smooth scrolling
   const lenis = useLenis({
     autoRaf: true,
   });
-  
+
+  const worksRef = useRef(null);
+
+  // useEffect(() => {
+    
+  // }, [isLoaded]);
+
   // Add background style to ensure no white space is visible
   useEffect(() => {
     // Set body background to match the deep indigo theme
@@ -68,7 +82,6 @@ export default function Home() {
       document.head.removeChild(style);
     };
   }, []);
-  const worksRef = useRef(null);
   
   // Enhanced scroll handler for upward animation
   const handleScroll = useCallback(() => {
@@ -129,71 +142,18 @@ export default function Home() {
     };
   }, [handleScroll, lenis]);
 
-  const projects = useMemo(() => [
-    {
-      title: "Nebula Dashboard",
-      category: "Web Application",
-      description: "Interactive analytics platform with real-time data visualization",
-      size: "large",
-      color: "from-indigo-900 to-blue-800",
-      delay: 0.5
-    },
-    {
-      title: "Quantum Analytics", 
-      category: "UI/UX Design",
-      description: "Award-winning interface design for enterprise solutions",
-      size: "small",
-      color: "from-purple-900 to-indigo-800",
-      delay: 0.6
-    },
-    {
-      title: "Aurora Platform",
-      category: "Full Stack Development", 
-      description: "Scalable cloud infrastructure with AI-powered insights",
-      size: "small",
-      color: "from-blue-900 to-indigo-800",
-      delay: 0.7
-    },
-    {
-      title: "Polaris E-commerce",
-      category: "Website & Branding",
-      description: "Premium shopping experience with seamless checkout flow",
-      size: "medium",
-      color: "from-indigo-800 to-blue-700",
-      delay: 0.8
-    },
-    {
-      title: "Celestial VR Experience",
-      category: "Immersive Media",
-      description: "Virtual reality showcase for architectural visualization",
-      size: "medium",
-      color: "from-violet-900 to-indigo-800",
-      delay: 0.9
-    },
-  ], []);
-
-  const testimonials = useMemo(() => [
-    {
-      quote: "DevStag Studio transformed our digital presence. Their attention to detail and innovative approach exceeded our expectations.",
-      author: "Sarah Johnson",
-      role: "CEO, Nexus Technologies",
-      delay: 0.5
-    },
-    {
-      quote: "Working with DevStag was an incredible experience. They delivered a premium website that perfectly captures our brand identity.",
-      author: "Michael Chen", 
-      role: "Marketing Director, Quantum Brands",
-      delay: 0.6
-    },
-  ], []);
+  // Early return moved after all hooks
+//   if (!isLoaded) {
+//     return <Loader onComplete={handleLoaderComplete} />;
+//   }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
-      <section style={{ position: 'relative', zIndex: 2000 }}>
+       <section style={{ position: 'relative', zIndex: 2000 }}>
         <Intro/>
-      </section>
+      </section> 
 
 
 
@@ -282,9 +242,9 @@ export default function Home() {
       
       {/* Works Section with Improved Scroll Animation */}
       <section 
-    ref={worksRef}
-    className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] shadow-2xl will-change-transform overlap-section"
-    style={{
+      ref={worksRef}
+      className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] shadow-2xl will-change-transform overlap-section"
+      style={{
       transform: "translateY(0) scale(1)", 
       opacity: 1,
       transition: "transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.3s ease-out",
@@ -347,7 +307,7 @@ export default function Home() {
       transition={{ delay: 0.2, duration: 1 }}
       className="w-full max-w-6xl mx-auto px-6 md:px-8 relative z-10"
     >
-      <div className="text-center mb-16">
+      {/* <div className="text-center mb-16">
         <span className="inline-block py-1 px-4 text-xs font-medium text-[#0A0F2C] bg-white tracking-widest uppercase rounded-full mb-4">
           PORTFOLIO
         </span>
@@ -367,70 +327,15 @@ export default function Home() {
         >
           Discover our portfolio of premium digital experiences
         </motion.p>
-      </div>
+      </div> */}
 
-      {/* Two-column layout: left = bento boxes, right = image */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-8 mx-4 lg:mx-0">
-        {/* Left: Placeholder for future video */}
-        <div className="w-full md:w-[45%] pr-4 flex items-center justify-center">
-          <div className="w-full h-[320px] md:h-[400px] bg-black/40 border border-white/20 rounded-2xl flex items-center justify-center">
-            {/* Place your video here later */}
-            <span className="text-white/60 text-lg">Video Coming Soon</span>
-          </div>
-        </div>
-        {/* Connector element */}
-        <div className="hidden md:block w-[80px] flex items-center justify-center">
-          <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-r from-indigo-900 to-blue-800 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
-            <div className="w-[30px] h-[4px] bg-white/40 rounded-full"></div>
-          </div>
-        </div>
-        
-        {/* Right: Featured Image */}
-        <div className="w-full md:w-[45%] flex items-center justify-center pl-4">
-          <div className="relative">
-            <Image
-              src={cameraImg.src}
-              alt="Featured Project"
-              width={500}
-              height={500}
-              className="max-w-full h-auto object-contain"
-              priority
-            />
-            <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">PREMIUM PROJECT</span>
-          </div>
-        </div>
+      <div className="relative w-full">
+            <PortalScrollDemo />
+            <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">
+              PREMIUM PROJECT 2
+            </span>
       </div>
-
-      {/* Duplicate Section with camera.webp (image left, video right) */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-8 mx-4 lg:mx-0 mt-12">
-        {/* Left: Featured Image (camera.webp) */}
-        <div className="w-full md:w-[45%] pr-4 flex items-center justify-center">
-          <div className="relative">
-            <Image
-              src={cameraWebpImg.src}
-              alt="Featured Project 2"
-              width={500}
-              height={500}
-              className="max-w-full h-auto object-contain"
-              priority
-            />
-            <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">PREMIUM PROJECT 2</span>
-          </div>
-        </div>
-        {/* Connector element */}
-        <div className="hidden md:block w-[80px] flex items-center justify-center">
-          <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-r from-indigo-900 to-blue-800 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
-            <div className="w-[30px] h-[4px] bg-white/40 rounded-full"></div>
-          </div>
-        </div>
-        {/* Right: Placeholder for future video */}
-        <div className="w-full md:w-[45%] flex items-center justify-center pl-4">
-          <div className="w-full h-[320px] md:h-[400px] bg-black/40 border border-white/20 rounded-2xl flex items-center justify-center">
-            {/* Place your video here later */}
-            <span className="text-white/60 text-lg">Video Coming Soon</span>
-          </div>
-        </div>
-      </div>
+      
     </motion.div>
       </section>
 
