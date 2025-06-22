@@ -13,8 +13,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ScrollPage = () => {
 
-  const mainRef = useRef(null);
-  const sceneRef = useRef(null);
+  const mainRef = useRef();
+  const sceneRef = useRef();
 
   useEffect(() => {
     gsap.timeline({

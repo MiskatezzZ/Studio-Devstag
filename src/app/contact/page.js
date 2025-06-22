@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import moonbg from "../../assets/moonbg.png";
+import Intro from "@/components/Intro";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -79,7 +80,7 @@ export default function ContactPage() {
           zIndex: 1,
         }}></section>
         <section className="section gradient-purple" style={{ width: '100vw', height: '100vh', zIndex: 1, background: 'linear-gradient(135deg, #a4508b 0%, #5f0a87 100%)' }}></section>
-        <section className="section gradient-blue" style={{ width: '100vw', height: '100vh', zIndex: 1, background: 'linear-gradient(135deg, #43cea2 0%, #185a9d 100%)' }}></section>
+        <section className="section gradient-purple" style={{ width: '100vw', height: '100vh', zIndex: 1, background: 'linear-gradient(135deg,rgb(237, 237, 237) 0%,rgb(0, 0, 0) 100%)' }}></section>
       </div>
       <div className="image-container" style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
         <Image width={400} height={300} 

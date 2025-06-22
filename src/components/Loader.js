@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
 gsap.registerPlugin(CSSPlugin);
 
-function App() {
+function Loader({ onComplete }) {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function App() {
   const reveal = () => {
     const t1 = gsap.timeline({
       onComplete: () => {
-        console.log("completed");
+        if (onComplete) onComplete();
       },
     });
     t1.to(".follow", {
@@ -64,16 +64,16 @@ function App() {
       </Loading>
 
       <Content className="content">
-        <p className="title-lines">The greatest glory in living lies</p>
+        {/* <p className="title-lines">The greatest glory in living lies</p>
         <p className="title-lines">not in never falling,</p>
         <p className="title-lines">but in rising every time we fall.</p>
-        <p className="title-lines">-Nelson Mandela</p>
+        <p className="title-lines">-Nelson Mandela</p> */}
       </Content>
     </AppContainer>
   );
 }
 
-export default App;
+export default Loader;
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -93,7 +93,7 @@ const Loading = styled.div`
 `;
 const Follow = styled.div`
   position: absolute;
-  background-color: #f48049;
+  background-color:rgb(22, 7, 152);
   height: 2px;
   width: 0;
   left: 0;

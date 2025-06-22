@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import intro from "@/assets/figmapart.webp";
+import intro from "@/assets/introbg.png";
 import studioDevstag from "@/assets/logo.png";
+import mountain from "@/assets/mountain.png";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -42,7 +43,7 @@ const ScrollHero = () => {
         logoDimensions.left +
         (logoDimensions.width - logoBoundingBox.width * logoScaleFactor) / 2 -
         logoBoundingBox.x * logoScaleFactor
-        + 25;
+        + 5;
 
       const logoVerticalPosition =
         logoDimensions.top +
@@ -134,7 +135,7 @@ const ScrollHero = () => {
     }
 
     function raf(time) {
-      lenis.raf(time * 1000);
+      lenis.raf(time * 500);
     }
 
     lenis.on("scroll", ScrollTrigger.update);
@@ -143,7 +144,7 @@ const ScrollHero = () => {
 
     return () => {
       gsap.ticker.remove(raf);
-      lenis.off("scroll", ScrollTrigger.update);
+      lenis.on("scroll", ScrollTrigger.update);
       lenis.destroy();
     };
   }, []);
@@ -256,7 +257,7 @@ const ScrollHero = () => {
     <section className="hero">
 
     <div className="hero-img-container">
-      <Image src={intro} alt="Intro All" style={{ width: '100vw', height: '100vh', objectFit: 'cover' }} />
+      <Image src={intro} alt="Intro All" style={{ width: '100vw', height: '100vh', objectFit: 'fill' }} />
 
       <div className="hero-img-logo">
         <Image src={studioDevstag} alt="Studio DevStag" width={500} height={120} />
@@ -275,23 +276,35 @@ const ScrollHero = () => {
       <svg width="100%" height="100%">
         <defs>
           <mask id="logoRevealMask">
-            <rect width="100%" height="100%" fill="white" />
+            <rect width="100%" height="100vh" fill="white" />
             <path id="logoMask"></path>
           </mask>
+          <pattern id="mountainPattern" patternUnits="userSpaceOnUse" width="100%" height="100%">
+            <image
+              href={mountain.src}
+              x="0"
+              y="0"
+              width="100vw"
+              height="100vh"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </pattern>
         </defs>
         <rect
-          width="100%"
-          height="100%"
-          fill="#111117"
+              x="0"
+              y="0"
+              width="100vw"
+              height="100vh"
+          fill="#000000"
           mask="url(#logoRevealMask)"
         />
       </svg>
-     </div>
+    </div>
 
      <div className="logo-container"></div>
 
      <div className="overlay-copy">
-      <h1>Animation Experiment 452</h1>
+      <h1>Discover The AI Through Your Vision</h1>
      </div>
     </section>
 
