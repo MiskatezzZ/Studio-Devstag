@@ -5,40 +5,19 @@ import { Canvas } from "@react-three/fiber";
 
 const ScrollPage = () => {
   return (
-    <>
-      <style jsx global>{`
-        body {
-          background: black;
-          background-image:
-            radial-gradient(circle at 10% 40%, rgba(127,60,255,0.4) 0%, rgba(127,60,255,0) 35%),
-            radial-gradient(circle at 90% 60%, rgba(127,60,255,0.4) 0%, rgba(127,60,255,0) 50%);
-          background-repeat: no-repeat;
-          background-size: cover;
-        }
-      `}</style>
-      <div className="tab"></div>
-      <style jsx>{`
-        .tab {
-          margin: 32px auto 0 auto;
-          width: 100vw;
-          height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 16px;
-          background-color: transparent;
-          backdrop-filter: blur(20px);
-          background-image: linear-gradient(
-            120deg,
-            rgba(255, 255, 255, 0.3),
-            rgba(0, 0, 0, 0.2)
-          );
-          background-size: 30px;
-        }
-      `}</style>
-    </>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        position: "relative",
+        background: "linear-gradient(180deg, rgba(25, 13, 66, 0) 4%, #190D42 33%, #4F34C7 67%, #BAB9F8 100%)",
+        backgroundColor: "#0A133D",
+        overflow: "hidden",
+      }}
+    >
+      {/* Your content goes here */}
+    </div>
   );
-
 };
 
 export default ScrollPage;

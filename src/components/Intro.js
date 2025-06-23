@@ -369,12 +369,13 @@ const ScrollHero = () => {
      <div className="logo-container"></div>
 
      <div className="overlay-copy">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%' }}>
         
       <div style={{
           margin: '0px auto 0 auto',
           width: '100vw',
-          height: '118vh',
+          height: '90vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -382,19 +383,22 @@ const ScrollHero = () => {
           backgroundColor: 'rgba(255,255,255,0.04)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          backgroundImage: 'linear-gradient(120deg, rgba(255,255,255,0.22), rgba(127,60,255,0.11), rgba(0,0,0,0.09))',
+          backgroundImage: 'linear-gradient(120deg, rgba(4, 4, 4, 0.22), rgba(127,60,255,0.11), rgba(0,0,0,0.09))',
+          // backgroundImage: "linear-gradient(180deg, rgba(25, 13, 66, 0) 4%, #190D42 33%, #4F34C7 67%, #7A6ECA 100%)",
           backgroundSize: '30px',
-          boxShadow: '0 4px 32px 0 rgba(127,60,255,0.10)',
-          border: '1.5px solid rgba(255,255,255,0.13)',
-          marginBottom: 160,
+          // boxShadow: '0 4px 32px 0 rgba(127,60,255,0.10)',
+          // border: '1.5px solid rgba(255,255,255,0.13)',
+          marginBottom: 250,
         }} >
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90 }}>
           <Navbar />
         </div>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90, gap: 700 }}>
 
         <button style={{
-          marginTop: 200,
+          marginTop: 285,
           marginLeft: 100,
           padding: '10px 26px 10px 20px',
           borderRadius: '999px',
@@ -455,15 +459,14 @@ const ScrollHero = () => {
           </div>
         </div>
 
-          </div>
-
-        
-
-      
-
+        </div>
 
       </div>
+
+      </div>
+
      </div>
+
     </section>
 
 

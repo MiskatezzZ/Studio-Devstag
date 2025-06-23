@@ -160,8 +160,9 @@ export default function Home() {
  {/* Header Section */}
      <section className="relative min-h-screen w-full overflow-hidden" style={{position: 'sticky', top: 0, zIndex: 10}}>
         <div 
-          className="absolute inset-0 w-full h-full z-0"
+          className="absolute inset-0 w-full h-[105vh] z-0"
           style={{
+            // background: "linear-gradient(0deg, rgba(0, 0, 0, 0) 4%, #190D42 33%, #4F34C7 67%, #7A6ECA 100%)",
             background: "#000",
             backgroundSize: "cover",
             backgroundPosition: "center"
