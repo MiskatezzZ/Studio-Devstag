@@ -398,11 +398,12 @@ const ScrollHero = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90, gap: 700 }}>
 
         <button style={{
-          marginTop: 285,
+          marginTop: 295,
           marginLeft: 100,
-          padding: '10px 26px 10px 20px',
+          padding: '5px 20px 5px 20px',
           borderRadius: '999px',
           fontWeight: 700,
+          width: '300px',
           fontSize: '1.1rem',
           background: '#fff',
           color: '#181818',
@@ -429,12 +430,14 @@ const ScrollHero = () => {
           </span>
         </button>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: 60, marginTop: 200}}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: 60, marginTop: 200, maxWidth: 340}}>
           <p style={{ margin: 0, marginBottom: 10, fontSize: '1.08rem', color: '#fff', maxWidth: 320, textAlign: 'right', fontWeight: 400 }}>
             Explore how we transform digital brands with our creative vision.
             We craft unique digital experiences that captivate.
           </p>
           <div style={{
+            boxSizing: 'border-box',
+            width: '220px',
             padding: '3px 22px',
             borderRadius: '999px',
             background: 'rgba(255,255,255,0.12)',
@@ -443,6 +446,7 @@ const ScrollHero = () => {
             border: '1.5px solid rgba(255, 255, 255, 0.25)',
             color: '#fff',
             fontWeight: 400,
+            
             textTransform: 'uppercase',
             letterSpacing: '1px',
             fontSize: '1.02rem',
@@ -451,6 +455,7 @@ const ScrollHero = () => {
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: 4,
+            // marginRight: 30,
             cursor: 'default',
             userSelect: 'none',
           }}>

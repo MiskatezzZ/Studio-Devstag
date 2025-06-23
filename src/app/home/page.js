@@ -161,20 +161,22 @@ export default function Home() {
      <section className="relative min-h-screen w-full overflow-hidden" style={{position: 'sticky', top: 0, zIndex: 10}}>
         <div 
           className="absolute inset-0 w-full h-[105vh] z-0"
-          style={{
-            // background: "linear-gradient(0deg, rgba(0, 0, 0, 0) 4%, #190D42 33%, #4F34C7 67%, #7A6ECA 100%)",
-            background: "#000",
-            backgroundSize: "cover",
-            backgroundPosition: "center"
-          }}
-        />
-        <Navbar />
-        <div className="min-h-screen flex flex-col items-center justify-center text-white text-center px-4 pt-0 pb-20 container mx-auto max-w-7xl relative z-10">
+           style={{
+             background: "#000",
+             backgroundImage: "url('/hands.png')",
+             backgroundRepeat: "no-repeat",
+             backgroundPosition: "center",
+             backgroundSize: "cover",
+             backgroundBlendMode: "normal"
+           }}
+         />
+        
+        <div className="min-h-screen flex flex-col items-start justify-center text-white text-left px-4 pt-0 pb-20 container mx-auto max-w-7xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto relative z-10 mt-[130px]"
+            className="max-w-4xl relative z-10 mt-[130px] ml-0 md:ml-2 lg:ml-6"
           >
             <motion.div 
               initial={{ opacity: 0 }}
@@ -211,7 +213,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="flex flex-col sm:flex-row justify-center gap-5"
+              className="flex flex-col sm:flex-row justify-start gap-5 ml-0 md:ml-1 lg:ml-1"
             >
               <motion.button 
                 whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(56, 189, 248, 0.4)" }}
@@ -308,29 +310,8 @@ export default function Home() {
       transition={{ delay: 0.2, duration: 1 }}
       className="w-full max-w-6xl mx-auto px-6 md:px-8 relative z-10"
     >
-      {/* <div className="text-center mb-16">
-        <span className="inline-block py-1 px-4 text-xs font-medium text-[#0A0F2C] bg-white tracking-widest uppercase rounded-full mb-4">
-          PORTFOLIO
-        </span>
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter"
-        >
-          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-[#0A0F2C] via-white to-[#0A0F2C]">Our Recent Works</span>
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-md md:text-lg text-white/70 max-w-2xl mx-auto mb-12"
-        >
-          Discover our portfolio of premium digital experiences
-        </motion.p>
-      </div> */}
 
-      <div className="relative w-full">
+      <div className="relative w-full" >
             <PortalScrollDemo />
             <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">
               PREMIUM PROJECT 2
@@ -341,39 +322,9 @@ export default function Home() {
       </section>
 
 
-      <section style={{ position: 'relative', zIndex: 2000 }}>
+      <section style={{ position: 'relative', zIndex: 2000, }}>
         <Sticky />
       </section>
-
-      {/* Hero Parallax Section */}
-      {/* <section className="relative z-20">
-
-
-        
-        <HeroParallax
-            // ...props
-
-        
-           products={[
-          { title: "Moonbeam", link: "https://gomoonbeam.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/moonbeam.png" },
-          { title: "Cursor", link: "https://cursor.so", thumbnail: "https://aceternity.com/images/products/thumbnails/new/cursor.png" },
-          { title: "Rogue", link: "https://userogue.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/rogue.png" },
-          { title: "Editorially", link: "https://editorially.org", thumbnail: "https://aceternity.com/images/products/thumbnails/new/editorially.png" },
-          { title: "Editrix AI", link: "https://editrix.ai", thumbnail: "https://aceternity.com/images/products/thumbnails/new/editrix.png" },
-          { title: "Pixel Perfect", link: "https://app.pixelperfect.quest", thumbnail: "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png" },
-          { title: "Algochurn", link: "https://algochurn.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/algochurn.png" },
-          { title: "Aceternity UI", link: "https://ui.aceternity.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/aceternityui.png" },
-          { title: "Tailwind Master Kit", link: "https://tailwindmasterkit.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png" },
-          { title: "SmartBridge", link: "https://smartbridgetech.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/smartbridge.png" },
-          { title: "Renderwork Studio", link: "https://renderwork.studio", thumbnail: "https://aceternity.com/images/products/thumbnails/new/renderwork.png" },
-          { title: "Creme Digital", link: "https://cremedigital.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/cremedigital.png" },
-          { title: "Golden Bells Academy", link: "https://goldenbellsacademy.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png" },
-          { title: "Invoker Labs", link: "https://invoker.lol", thumbnail: "https://aceternity.com/images/products/thumbnails/new/invoker.png" },
-          { title: "E Free Invoice", link: "https://efreeinvoice.com", thumbnail: "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png" }
-        ]} />
-      </section> */}
-
-      {/* Why Choose Us Section */}
       
 
       {/* Featured In Section with Infinite Horizontal Scrolling */}
