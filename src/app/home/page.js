@@ -370,7 +370,7 @@ export default function Home() {
           </motion.div>
 
           {/* Clients Section with Infinite Horizontal Scrolling */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 1 }}
@@ -462,7 +462,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          {/* </motion.div> */}
+
         </section>
 
         {/* Violet 3 boxes section */}
