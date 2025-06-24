@@ -329,7 +329,7 @@ export default function Home() {
 
         {/* As Seen in & Our clients section */}
         <section
-          style={{ background: 'linear-gradient(180deg, rgb(14, 2, 42) 0%, #190D42 33%, #4F34C7 67%, #7A6ECA 100%)', zIndex: 21, position: 'relative', paddingTop: '80px', paddingBottom: '80px', overflowX: 'clip' }}
+          style={{ background: 'linear-gradient(180deg, rgb(14, 2, 42) 0%, #190D42 33%, #4F34C7 67%,rgb(1, 1, 1) 100%)', zIndex: 21, position: 'relative', paddingTop: '80px', paddingBottom: '80px', overflowX: 'clip' }}
         >
           {/* Spotlight Background Layer */}
 
