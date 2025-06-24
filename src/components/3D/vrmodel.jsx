@@ -47,7 +47,7 @@ const PortalScrollDemo = () => {
 }, [mainRef]);
 
   return (
-    <>
+    <div style={{ backgroundImage: 'linear-gradient(180deg, rgba(25, 13, 66, 0) 4%, #190D42 33%, #4F34C7 67%,rgb(14, 2, 42) 100%)', minHeight: '100vh', width: '100%', padding: '0 10vw' }}>
 
       <section ref={mainRef} className="relative grid place-items-center h-[100vh]">
         <p className="text-white text-center absolute top-[5%] mx-4 w-fit text-8xl font-bold">
@@ -94,7 +94,7 @@ const PortalScrollDemo = () => {
   </div>
   <div className="w-[50%]"></div>
 </section>
-    </>
+    </div>
   );
 };
 

@@ -172,10 +172,10 @@ export default function ScrollPage() {
         }
       `}</style>
 
-    <div className="cards" style={{ minHeight: '100vh', padding: 0, margin: 0, background: '#000' }}>
+    <div className="cards" style={{ minHeight: '100vh', padding: 0, margin: 0, background: 'rgb(14, 2, 42)' }}>
 
   <div className="card ek" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: '#000000', borderRadius: 32 }}>
+    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
       <div className="card-content">
         <div className="card-title"><h1>Curved Horizon</h1></div>
         <div className="card-description"><p>A futuristic residence that plays with curvature and flow, blending bold geometry with natural topography.</p></div>
@@ -186,7 +186,7 @@ export default function ScrollPage() {
     </div>
   </div>
   <div className="card doo" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: '#000000', borderRadius: 32 }}>
+    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
       <div className="card-content">
         <div className="card-title"><h1>Indigo Vista</h1></div>
         <div className="card-description"><p>Modern living space inspired by the night sky, with deep indigo tones and serene lines for relaxation.</p></div>
@@ -197,7 +197,7 @@ export default function ScrollPage() {
     </div>
   </div>
   <div className="card tin" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: '#000000', borderRadius: 32 }}>
+    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
       <div className="card-content">
         <div className="card-title"><h1>Green Capsule</h1></div>
         <div className="card-description"><p>Eco-friendly design with lush green accents, merging indoor comfort and outdoor freshness seamlessly.</p></div>
@@ -208,7 +208,7 @@ export default function ScrollPage() {
     </div>
   </div>
   <div className="card char" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: '#000000', borderRadius: 32 }}>
+    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
       <div className="card-content">
         <div className="card-title"><h1>Midnight Minimal</h1></div>
         <div className="card-description"><p>Minimalist black space for creative minds, where simplicity and contrast spark inspiration.</p></div>

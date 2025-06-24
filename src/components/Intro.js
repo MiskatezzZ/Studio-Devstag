@@ -370,7 +370,7 @@ const ScrollHero = () => {
 
      <div className="overlay-copy">
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%' }}>
+      <div className="shadow-2xl rounded-2xl" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%', boxShadow: '0 8px 48px 0 rgba(0,0,0,0.45), 0 1.5px 12px 0 rgba(0,0,0,0.25)', borderRadius: '1.25rem' }}>
         
       <div style={{
           margin: '0px auto 0 auto',
