@@ -399,8 +399,8 @@ export default function Home() {
             </div>
 
             {/* Infinite Scroll Container */}
-            <div className="relative w-full overflow-hidden">
-              {/* First Marquee - Left to Right */}
+            {/* <div className="relative w-full overflow-hidden">
+              
               <div className="group">
                 <div className="flex animate-marquee group-hover:pause-animation">
                   {Array.from({ length: 8 }).map((_, index) => (
@@ -415,7 +415,7 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
-                  {/* Duplicate set for seamless loop */}
+            
                   {Array.from({ length: 8 }).map((_, index) => (
                     <div
                       key={`dup-${index}`}
@@ -431,7 +431,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Second Marquee - Right to Left (opposite direction) */}
+              
               <div className="group mt-8">
                 <div className="flex animate-marquee-reverse group-hover:pause-animation">
                   {Array.from({ length: 8 }).map((_, index) => (
@@ -446,7 +446,7 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
-                  {/* Duplicate set for seamless loop */}
+                  
                   {Array.from({ length: 8 }).map((_, index) => (
                     <div
                       key={`dup-${index}`}
@@ -461,7 +461,7 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
           {/* </motion.div> */}
 
         </section>
