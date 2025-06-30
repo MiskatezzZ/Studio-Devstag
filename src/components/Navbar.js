@@ -59,32 +59,32 @@ export default function Navbar() {
         >
           <Link href="/" className="group relative">
             <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
-              Home
+              [  Home  ]
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link href="/about" className="group relative">
             <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
-              About
+              [  About  ]
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link href="/services" className="group relative">
             <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
-              Services
+              [  Services  ]
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link href="/contact" className="group relative">
             <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
-              Contact
+              [  Contact  ]
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
         </motion.div>
         
         {/* Right Icons */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
@@ -99,7 +99,7 @@ export default function Navbar() {
             <FontAwesomeIcon icon={faShoppingCart} className="w-5 h-5 group-hover:text-cyan-300 transition-colors duration-200" />
             <span className="absolute top-0 right-0 -mt-1 -mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-[10px] font-bold text-white">3</span>
           </button>
-        </motion.div>
+        </motion.div> */}
         
         {/* Mobile Menu Button */}
         <motion.button 

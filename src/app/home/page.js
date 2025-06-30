@@ -263,7 +263,7 @@ export default function Home() {
         >
 
           {/* Glowing white ellipse above the purple gradient */}
-          <div style={{
+          {/* <div style={{
             position: 'absolute',
             left: '50%',
             top: '-50vw',
@@ -274,10 +274,10 @@ export default function Home() {
             zIndex: 30,
             background: 'radial-gradient(ellipse 5% 40% at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(0,255,0,0) 70%)',
             filter: 'blur(8px)',
-          }} />
+          }} /> */}
 
           {/* Glowing white ellipse above the purple gradient number 2*/}
-          <div style={{
+          {/* <div style={{
             position: 'absolute',
             left: '50%',
             top: '-50vw',
@@ -288,7 +288,7 @@ export default function Home() {
             zIndex: 31,
             background: 'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,255,255,0.4) 0%, rgba(0,255,0,0) 70%)',
             filter: 'blur(8px)',
-          }} />
+          }} /> */}
 
           {/* Top radial gradient background (matching TestimonialBackground.js) */}
           <div style={{
@@ -300,8 +300,9 @@ export default function Home() {
             height: '100vw',
             pointerEvents: 'none',
             zIndex: 1,
-            background: 'radial-gradient(ellipse 60% 90% at 50% 0%, #7B3FE4 0%, #000 100%)'
+            background: 'radial-gradient(ellipse 60% 90% at 50% 0%,rgb(0, 0, 0) 0%, #000 100%)'
           }} />
+
           {/* Additional solid background layer */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -310,11 +311,11 @@ export default function Home() {
             className="w-full relative z-10"
           >
 
-            <div className="relative w-full" >
+            <div className="relative w-[100vw]" >
               <PortalScrollDemo />
-              <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">
+              {/* <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">
                 PREMIUM PROJECT 2
-              </span>
+              </span> */}
             </div>
 
           </motion.div>
