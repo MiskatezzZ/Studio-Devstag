@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,34 +21,12 @@ export default function Navbar() {
           className="flex items-center"
         >
           <Link href="/" className="flex items-center group">
-            <div className="relative w-12 h-12 mr-3 overflow-hidden">
-              <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                <defs>
-                  <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#FF6B6B" />
-                    <stop offset="50%" stopColor="#4ECDC4" />
-                    <stop offset="100%" stopColor="#1A535C" />
-                  </linearGradient>
-                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="2" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-                </defs>
-                <g filter="url(#glow)">
-                  <path d="M25,5 L45,15 L45,35 L25,45 L5,35 L5,15 Z" fill="url(#logoGradient)" stroke="white" strokeWidth="0.5" strokeOpacity="0.8" />
-                  <path d="M25,10 L38,17 L38,31 L25,38 L12,31 L12,17 Z" fill="black" fillOpacity="0.3" />
-                  <path d="M18,18 L18,25 L22,25 L22,32 L32,32 L32,25 L28,25 L28,18 Z" fill="white" />
-                </g>
-              </svg>
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-600/20 blur-sm group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white font-bold text-xl tracking-tight font-montserrat">
-                DEVSTAG
-              </span>
-              <span className="text-xs text-cyan-300/80 tracking-widest uppercase font-light">STUDIO</span>
+            <div>
+            <Image src="/logo.png" alt="Logo" width={50} height={50} className="w-12 h-12 mr-3 overflow-hidden mt-2 ml-4" />
             </div>
           </Link>
+
+
         </motion.div>
         
         {/* Desktop Navigation - Centered */}

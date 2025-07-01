@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FloatingDock } from "@/components/ui/floating-dock";
-import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
+import { IconBrandYoutube, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -74,9 +74,9 @@ const Footer = () => {
                 <FloatingDock
                   items={[
                     {
-                      title: "GitHub",
-                      icon: <IconBrandGithub className="w-6 h-6 text-white" />,
-                      href: "https://github.com/",
+                      title: "YouTube",
+                      icon: <IconBrandYoutube className="w-6 h-6 text-white" />,
+                      href: "https://youtube.com/",
                     },
                     {
                       title: "LinkedIn",

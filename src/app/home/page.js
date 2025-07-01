@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect, useCallback, useMemo, useState } from "react";
 import useLenis from "@/hooks/useLenis";
+import intro from "@/assets/introbg.png";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -19,15 +20,27 @@ import Image from "next/image";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Sticky from "@/components/Sticky";
 import Intro from "@/components/Intro";
-// import Loader from "@/components/Loader";
+import Loader from "@/components/Loader";
 import PortalScrollDemo from "@/components/3D/vrmodel";
 
-export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
+// import gsap from "gsap";
+// import { CustomEase } from "gsap/CustomEase";
+// import { SplitText } from "gsap/SplitText";
 
-  const handleLoaderComplete = () => {
-    setIsLoaded(true);
-  };
+
+// import { useRef, useEffect, useCallback, useMemo, useState } from "react";
+import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+import { SplitText } from "gsap/SplitText";
+
+
+
+export default function Home() {
+  // const [isLoaded, setIsLoaded] = useState(false);
+
+  // const handleLoaderComplete = () => {
+  //   setIsLoaded(true);
+  // };
 
   // Initialize Lenis for smooth scrolling
   const lenis = useLenis({
@@ -143,9 +156,9 @@ export default function Home() {
   }, [handleScroll, lenis]);
 
   // Early return moved after all hooks
-  //   if (!isLoaded) {
-  //     return <Loader onComplete={handleLoaderComplete} />;
-  //   }
+    // if (!isLoaded) {
+    //   return <Loader onComplete={handleLoaderComplete} />;
+    // }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -157,7 +170,7 @@ export default function Home() {
         </section>
 
         {/* Introducing Studio Devstag Section */}
-        <section className="relative min-h-screen w-full overflow-hidden" style={{ position: 'sticky', top: 0, zIndex: 10 }}>
+        <section id="studio" className="relative min-h-screen w-full overflow-hidden" style={{ position: 'sticky', top: 0, zIndex: 10 }}>
           <div
             className="absolute inset-0 w-full h-[105vh] z-0"
             style={{
@@ -245,11 +258,11 @@ export default function Home() {
         {/* 3d VR rotation section */}
         <section
           ref={worksRef}
-          className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] shadow-2xl will-change-transform overlap-section"
+          className="relative w-full py-20 px-0 mt-[50px] rounded-t-[40px] ml-4 shadow-2xl will-change-transform overlap-section"
           style={{
-            transform: "translateY(0) scale(1)",
+            // transform: "translateY(0) scale(1)",
             opacity: 1,
-            transition: "transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.3s ease-out",
+            // transition: "transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 0.3s ease-out",
             zIndex: 20,
             position: "relative",
 
@@ -257,40 +270,11 @@ export default function Home() {
             marginLeft: 0,
             marginRight: 0,
             width: "100vw",
-            maxWidth: "100%",
+            maxWidth: "110%",
             overflowX: "hidden"
+            // overflowY: "hidden"
           }}
         >
-
-          {/* Glowing white ellipse above the purple gradient */}
-          {/* <div style={{
-            position: 'absolute',
-            left: '50%',
-            top: '-50vw',
-            transform: 'translateX(-50%)',
-            width: '80vw',
-            height: '90vw',
-            pointerEvents: 'none',
-            zIndex: 30,
-            background: 'radial-gradient(ellipse 5% 40% at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(0,255,0,0) 70%)',
-            filter: 'blur(8px)',
-          }} /> */}
-
-          {/* Glowing white ellipse above the purple gradient number 2*/}
-          {/* <div style={{
-            position: 'absolute',
-            left: '50%',
-            top: '-50vw',
-            transform: 'translateX(-50%)',
-            width: '80vw',
-            height: '90vw',
-            pointerEvents: 'none',
-            zIndex: 31,
-            background: 'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,255,255,0.4) 0%, rgba(0,255,0,0) 70%)',
-            filter: 'blur(8px)',
-          }} /> */}
-
-          {/* Top radial gradient background (matching TestimonialBackground.js) */}
           <div style={{
             position: 'absolute',
             left: '50%',
@@ -370,102 +354,7 @@ export default function Home() {
 
           </motion.div>
 
-          {/* Clients Section with Infinite Horizontal Scrolling */}
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 1 }}
-            className="w-full max-w-6xl mx-auto px-4 relative z-10"
-          >
-            <div className="text-center mb-16">
-              <span className="inline-block py-1 px-4 text-xs font-medium text-[#101849] bg-gray-100 tracking-widest uppercase rounded-full mb-4">
-                CLIENTS
-              </span>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tighter text-[#ffffff]"
-              >
-                Our Clients
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-md md:text-lg text-white max-w-2xl mx-auto mb-12"
-              >
-                Trusted by industry leaders worldwide
-              </motion.p>
-            </div>
-
-            {/* Infinite Scroll Container */}
-            {/* <div className="relative w-full overflow-hidden">
-              
-              <div className="group">
-                <div className="flex animate-marquee group-hover:pause-animation">
-                  {Array.from({ length: 8 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex-shrink-0 w-[200px] mx-4"
-                    >
-                      <div className="h-16 w-full flex items-center justify-center rounded-lg p-4 backdrop-blur-sm bg-white/80 border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 hover:bg-white">
-                        <div className="text-[#101849] font-bold text-xl opacity-60 hover:opacity-100 transition-opacity duration-300">
-                          Client {index + 1}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-            
-                  {Array.from({ length: 8 }).map((_, index) => (
-                    <div
-                      key={`dup-${index}`}
-                      className="flex-shrink-0 w-[200px] mx-4"
-                    >
-                      <div className="h-16 w-full flex items-center justify-center rounded-lg p-4 backdrop-blur-sm bg-white/80 border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 hover:bg-white">
-                        <div className="text-[#101849] font-bold text-xl opacity-60 hover:opacity-100 transition-opacity duration-300">
-                          Client {index + 1}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              
-              <div className="group mt-8">
-                <div className="flex animate-marquee-reverse group-hover:pause-animation">
-                  {Array.from({ length: 8 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex-shrink-0 w-[200px] mx-4"
-                    >
-                      <div className="h-16 w-full flex items-center justify-center rounded-lg p-4 backdrop-blur-sm bg-white/80 border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 hover:bg-white">
-                        <div className="text-[#101849] font-bold text-xl opacity-60 hover:opacity-100 transition-opacity duration-300">
-                          Partner {index + 1}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  
-                  {Array.from({ length: 8 }).map((_, index) => (
-                    <div
-                      key={`dup-${index}`}
-                      className="flex-shrink-0 w-[200px] mx-4"
-                    >
-                      <div className="h-16 w-full flex items-center justify-center rounded-lg p-4 backdrop-blur-sm bg-white/80 border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 hover:bg-white">
-                        <div className="text-[#101849] font-bold text-xl opacity-60 hover:opacity-100 transition-opacity duration-300">
-                          Partner {index + 1}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div> */}
-          {/* </motion.div> */}
-
-        </section>
+        </section>  
 
         {/* Violet 3 boxes section */}
         <TestimonialsSection />

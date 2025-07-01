@@ -388,7 +388,7 @@ const ScrollHero = () => {
           backgroundSize: '30px',
           // boxShadow: '0 4px 32px 0 rgba(127,60,255,0.10)',
           // border: '1.5px solid rgba(255,255,255,0.13)',
-          marginBottom: 250,
+          marginBottom: 320,
         }} >
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90 }}>
@@ -397,7 +397,33 @@ const ScrollHero = () => {
         
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90, gap: 700 }}>
 
-        <button style={{
+        <button onClick={() => {
+          const target = document.getElementById('studio');
+          if (target) {
+            const startPosition = window.pageYOffset;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1500; // 1.5 seconds
+            let start = null;
+
+            function step(timestamp) {
+              if (!start) start = timestamp;
+              const progress = timestamp - start;
+              const percentage = Math.min(progress / duration, 1);
+              
+              // Easing function (easeInOutQuad)
+              const easeInOutQuad = t => t<.5 ? 2*t*t : -1+(4-2*t)*t;
+              
+              window.scrollTo(0, startPosition + distance * easeInOutQuad(percentage));
+              
+              if (progress < duration) {
+                window.requestAnimationFrame(step);
+              }
+            }
+            
+            window.requestAnimationFrame(step);
+          }
+        }} style={{
           marginTop: 295,
           marginLeft: 100,
           padding: '5px 20px 5px 20px',
