@@ -2,41 +2,6 @@
 
 import TestimonialBackground from './TestimonialBackground';
 
-const testimonialsData = [
-  {
-    id: 1,
-    quote: "Working with DevStag Studio was a game-changer for our business. Their innovative solutions and attention to detail are unparalleled.",
-    name: "Jane Doe",
-    title: "CEO, Tech Solutions Inc."
-  },
-  {
-    id: 2,
-    quote: "The team at DevStag is incredibly talented and professional. They delivered beyond our expectations and helped us achieve our goals.",
-    name: "John Smith",
-    title: "Marketing Director, Creative Co."
-  },
-  {
-    id: 3,
-    quote: "I'm thoroughly impressed with the quality of work and the seamless communication throughout the project. Highly recommended!",
-    name: "Alice Brown",
-    title: "Founder, Innovate Hub"
-  }
-];
-
-const TestimonialCard = ({ quote, name, title }) => {
-  return (
-    <div className="bg-slate-800/70 backdrop-blur-sm p-12 rounded-2xl shadow-2xl border border-slate-700 hover:border-slate-500 transition-colors duration-300">
-      <p className="text-gray-300 italic text-xl md:text-2xl mb-8 leading-relaxed font-light">
-        “{quote}”
-      </p>
-      <div className="mt-auto">
-        <p className="text-white font-semibold text-md">{name}</p>
-        <p className="text-gray-400 text-sm font-light">{title}</p>
-      </div>
-    </div>
-  );
-};
-
 const TestimonialsSection = () => {
   return (
     <section className="relative z-20 bg-indigo-950 py-32 md:py-48 overflow-hidden">

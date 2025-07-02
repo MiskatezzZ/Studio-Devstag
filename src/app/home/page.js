@@ -22,6 +22,7 @@ import Sticky from "@/components/Sticky";
 import Intro from "@/components/Intro";
 import Loader from "@/components/Loader";
 import PortalScrollDemo from "@/components/3D/vrmodel";
+import FloatingGallery from "@/components/FloatingGallery";
 
 // import gsap from "gsap";
 // import { CustomEase } from "gsap/CustomEase";
@@ -161,7 +162,7 @@ export default function Home() {
     // }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ maxWidth: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* Intro Section */}
@@ -357,7 +358,26 @@ export default function Home() {
         </section>  
 
         {/* Violet 3 boxes section */}
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
+
+        <section style={{
+          background: "black",
+          width: "100vw",
+          marginLeft: "calc(50% - 50vw)",
+          marginRight: "calc(50% - 50vw)",
+          padding: 0,
+          border: "none",
+          position: "relative",
+          zIndex: 30
+        }}>
+          <svg style={{ display: "none" }}>
+            <filter id="wavy-distort">
+              <feTurbulence id="turb" baseFrequency="0.02 0.03" numOctaves="2" seed="2" type="fractalNoise" result="turb"/>
+              <feDisplacementMap in2="turb" in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </svg>
+          <FloatingGallery />
+        </section>
 
         {/* Footer Section */}
       </div>

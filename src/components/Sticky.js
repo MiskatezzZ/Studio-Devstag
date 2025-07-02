@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,13 +7,15 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ScrollPage() {
   useEffect(() => {
     const cardClasses = [".ek", ".doo", ".tin", ".char"];
-    const cards = cardClasses.map(cls => document.querySelector(cls)).filter(Boolean);
+    const cards = cardClasses.map((cls) => document.querySelector(cls)).filter(Boolean);
 
+    const iframes = [];
 
-    
-    // Sticky pin logic (as before)
     cards.forEach((card, index) => {
       const isLastCard = index === cards.length - 1;
+      const iframe = card.querySelector("iframe");
+      iframes.push(iframe);
+
       ScrollTrigger.create({
         trigger: card,
         start: "top 10%",
@@ -22,14 +23,15 @@ export default function ScrollPage() {
         endTrigger: isLastCard ? null : cards[cards.length - 1],
         pin: true,
         pinSpacing: isLastCard,
-        scrub: true
+        scrub: true,
+        onEnter: () => iframe?.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*'),
+        onLeave: () => iframe?.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'),
+        onEnterBack: () => iframe?.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*'),
+        onLeaveBack: () => iframe?.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
       });
-    });
 
-    // --- Animate previous card's wrapper as next card enters (scale/opacity) ---
-    cards.forEach((card, index) => {
       if (index < cards.length - 1) {
-        const cardWrapper = card.querySelector('.card-wrapper');
+        const cardWrapper = card.querySelector(".card-wrapper");
         const nextCard = cards[index + 1];
         if (cardWrapper && nextCard) {
           ScrollTrigger.create({
@@ -42,17 +44,14 @@ export default function ScrollPage() {
                 scale: 1 - progress * 0.25,
                 opacity: 1 - progress,
               });
-            }
+            },
           });
         }
       }
-    });
 
-    // --- Animate card image and container (scale, borderRadius) ---
-    cards.forEach((card, index) => {
       if (index > 0) {
-        const cardImg = card.querySelector('.card-img img');
-        const imgContainer = card.querySelector('.card-img');
+        const cardImg = card.querySelector(".card-img iframe");
+        const imgContainer = card.querySelector(".card-img");
         if (cardImg && imgContainer) {
           ScrollTrigger.create({
             trigger: card,
@@ -61,58 +60,68 @@ export default function ScrollPage() {
             onUpdate: (self) => {
               const progress = self.progress;
               gsap.set(cardImg, { scale: 2 - progress });
-              gsap.set(imgContainer, { borderRadius: 150 - progress * 125 + "px" });
-            }
+              gsap.set(imgContainer, {
+                borderRadius: 150 - progress * 125 + "px",
+              });
+            },
           });
         }
       }
     });
 
-    // Cleanup triggers on unmount
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
-  // Merged global CSS from scrollPageStyles.css
+  const videoSrc = (autoplay = false) =>
+    `https://www.youtube.com/embed/pXJ2qoGU88g?enablejsapi=1&autoplay=${autoplay ? 1 : 0}&mute=1&loop=1&playlist=pXJ2qoGU88g&modestbranding=1&rel=0&controls=0`;
+
+  const cardsData = [
+    {
+      class: "ek",
+      title: "Curved Horizon",
+      desc:
+        "A futuristic residence that plays with curvature and flow, blending bold geometry with natural topography.",
+    },
+    {
+      class: "doo",
+      title: "Indigo Vista",
+      desc:
+        "Modern living space inspired by the night sky, with deep indigo tones and serene lines for relaxation.",
+    },
+    {
+      class: "tin",
+      title: "Green Capsule",
+      desc:
+        "Eco-friendly design with lush green accents, merging indoor comfort and outdoor freshness seamlessly.",
+    },
+    {
+      class: "char",
+      title: "Midnight Minimal",
+      desc:
+        "Minimalist black space for creative minds, where simplicity and contrast spark inspiration.",
+    },
+  ];
+
   return (
     <>
       <style jsx global>{`
-        .ek, .doo, .tin, .char, .panch {
-          border-radius: 32px;
-          overflow: hidden;
-        }
-         section {
-          position: relative;
-          background-color: inherit;
-        }
-
-        .intro {
-          height: 100vh;
-          padding: 1.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #000;
-        } 
-      
         .cards {
           min-height: 100vh;
           padding: 0;
           margin: 0;
-          background: #000;
+          background: #0e022a;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
         }
-        
         .card {
           width: 90%;
-          margin: 0 auto 2vh auto;
-          height: 90%;
+          height: 90vh;
+          margin: 2vh auto;
           border-radius: 32px;
-          box-shadow: 0 10px 32px 0 rgba(0,0,0,0.25);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -121,106 +130,58 @@ export default function ScrollPage() {
           position: relative;
           width: 100%;
           height: 100%;
-          will-change: transform, opacity;
-          transition: box-shadow 0.3s;
+          border-radius: 32px;
+          background: #0e022a;
+          padding: 24px 16px;
           display: flex;
           flex-direction: column;
-          align-items: center;
           justify-content: center;
-          padding: 24px 16px;
-          background: inherit;
+          gap: 20px;
+        }
+        .card-content {
+          z-index: 2;
+          text-align: center;
+          color: white;
+          display: none;
         }
         .card-img {
           position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
-          border-radius: 150px;
+          border-radius: 32px;
           overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
-        .card-img img {
+        .card-img iframe {
           width: 100%;
           height: 100%;
+          border: none;
+          border-radius: 32px;
           object-fit: cover;
-          will-change: transform;
-          border-radius: inherit;
-          display: block;
-        }
-        .card-img {
-          margin: 0 auto 24px auto;
-          will-change: border-radius;
-          background: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .card-img {
-          width: 100%;
-          height: 95%;
-          display: flex;
-          align-items: stretch;
-          justify-content: stretch;
-        }
-        .card-img img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          will-change: transform;
-          border-radius: inherit;
         }
       `}</style>
 
-    <div className="cards" style={{ minHeight: '100vh', padding: 0, margin: 0, background: 'rgb(14, 2, 42)' }}>
-
-  <div className="card ek" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
-      <div className="card-content">
-        <div className="card-title"><h1>Curved Horizon</h1></div>
-        <div className="card-description"><p>A futuristic residence that plays with curvature and flow, blending bold geometry with natural topography.</p></div>
+      <div className="cards">
+        {cardsData.map((card, i) => (
+          <div key={card.class} className={`card ${card.class}`}>
+            <div className="card-wrapper">
+              <div className="card-content">
+                <h1>{card.title}</h1>
+                <p>{card.desc}</p>
+              </div>
+              <div className="card-img">
+                <iframe
+                  src={videoSrc(i === 0)}
+                  title="YouTube video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-      <div className="card-img">
-        <Image src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Card 1" width={400} height={300} />
-      </div>
-    </div>
-  </div>
-  <div className="card doo" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
-      <div className="card-content">
-        <div className="card-title"><h1>Indigo Vista</h1></div>
-        <div className="card-description"><p>Modern living space inspired by the night sky, with deep indigo tones and serene lines for relaxation.</p></div>
-      </div>
-      <div className="card-img">
-        <Image src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Card 2" width={400} height={300} />
-      </div>
-    </div>
-  </div>
-  <div className="card tin" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
-      <div className="card-content">
-        <div className="card-title"><h1>Green Capsule</h1></div>
-        <div className="card-description"><p>Eco-friendly design with lush green accents, merging indoor comfort and outdoor freshness seamlessly.</p></div>
-      </div>
-      <div className="card-img">
-        <Image src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c8b?auto=format&fit=crop&w=400&q=80" alt="Card 3" width={400} height={300} />
-      </div>
-    </div>
-  </div>
-  <div className="card char" style={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 32, margin: '2vh auto', background: 'transparent', boxShadow: 'none' }}>
-    <div className="card-wrapper" style={{ background: 'rgb(14, 2, 42)', borderRadius: 32 }}>
-      <div className="card-content">
-        <div className="card-title"><h1>Midnight Minimal</h1></div>
-        <div className="card-description"><p>Minimalist black space for creative minds, where simplicity and contrast spark inspiration.</p></div>
-      </div>
-      <div className="card-img">
-        <Image src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Card 4" width={400} height={300} />
-      </div>
-    </div>
-  </div>
-    </div>
-
     </>
   );
 }
-

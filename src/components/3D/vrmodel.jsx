@@ -45,7 +45,7 @@ const PortalScrollDemo = () => {
         })
         .to(modelRef.current, {
           x: '0vw',
-          y: '300vh',
+          y: '340vh',
           ease: "none",
         })
     // }, mainRef);
@@ -91,7 +91,7 @@ const PortalScrollDemo = () => {
         <div className="w-[50%]"></div>
         <div className="w-[50%] flex items-center justify-end">
           <div className="bg-black/70 border border-white/20 rounded-2xl shadow-lg overflow-hidden h-[70vh] w-[70%] md:w-[600px] mr-[-10%] mt-[30vh] filter: drop-shadow(0 0 24px #a259ffcc)">
-            <iframe
+            {/* <iframe
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/QVmUMTNZ5KE?si=UBAsNmN5-NWfO0pN"
@@ -100,7 +100,7 @@ const PortalScrollDemo = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
-            ></iframe>
+            ></iframe> */}
           </div>
         </div>
       </section>
@@ -108,7 +108,7 @@ const PortalScrollDemo = () => {
       <section className="relative flex items-center justify-evenly h-[100vh]">
         <div className="w-[50%] flex items-center justify-center">
           <div className="bg-black/70 border border-white/20 rounded-2xl shadow-lg overflow-hidden h-[70vh] w-[70%] md:w-[600px] ml-[-30%] mt-[30vh]">
-            <iframe
+            {/* <iframe
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/KjkAxVuiGG8?si=e7QtYA1fDnlTyKbE"
@@ -117,7 +117,7 @@ const PortalScrollDemo = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
-            ></iframe>
+            ></iframe> */}
           </div>
         </div>
         <div className="w-[50%]"></div>
@@ -126,8 +126,8 @@ const PortalScrollDemo = () => {
       <section className="relative flex items-center justify-evenly h-[140vh] z-30">
         <div className="w-[100%]"></div>
         <div className="w-[100%] flex items-center justify-center">
-          <div className="bg-black/70 border border-white/20 rounded-2xl shadow-lg overflow-hidden h-[70vh] w-[100vw] mt-[20vh]">
-            <iframe
+          <div className="bg-black/70 border border-white/20 rounded-2xl shadow-lg overflow-hidden h-[70vh] w-[100vw] mt-[48vh]">
+            {/* <iframe
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/CWriE2pWOZw?si=ZRYQnzda2CyIFp7K"
@@ -136,7 +136,7 @@ const PortalScrollDemo = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="w-full h-full"
-            ></iframe>
+            ></iframe> */}
           </div>
         </div>
         <div className="w-[50%]"></div>

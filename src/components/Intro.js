@@ -352,7 +352,7 @@ const ScrollHero = () => {
         <circle
           cx="85%"
           cy="15%"
-          r="35%"
+          r="45%"
           fill="url(#whiteRight)"
           mask="url(#logoRevealMask)"
         />
@@ -370,7 +370,7 @@ const ScrollHero = () => {
 
      <div className="overlay-copy">
 
-      <div className="shadow-2xl rounded-2xl" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%', boxShadow: '0 8px 48px 0 rgba(0,0,0,0.45), 0 1.5px 12px 0 rgba(0,0,0,0.25)', borderRadius: '1.25rem' }}>
+      <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%',  borderRadius: '1.25rem' }}>
         
       <div style={{
           margin: '0px auto 0 auto',
@@ -380,6 +380,7 @@ const ScrollHero = () => {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 16,
+          boxShadow: '0 4px 24px 0 rgba(0,0,0,0.35), 0 1px 8px 0 rgba(0,0,0,0.15)',
           backgroundColor: 'rgba(255,255,255,0.04)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
