@@ -45,7 +45,7 @@ const PortalScrollDemo = () => {
         })
         .to(modelRef.current, {
           x: '0vw',
-          y: '340vh',
+          y: '300vh',
           ease: "none",
         })
     // }, mainRef);
