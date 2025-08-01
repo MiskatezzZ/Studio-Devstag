@@ -374,7 +374,7 @@ const ScrollHero = () => {
         
       <div style={{
           margin: '0px auto 0 auto',
-          width: '100vw',
+          width: '100%',
           height: '90vh',
           display: 'flex',
           alignItems: 'center',
