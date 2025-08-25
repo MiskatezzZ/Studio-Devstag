@@ -21,16 +21,18 @@ export default function Capsules() {
   const introCard = cards[0];
 
   const titles = gsap.utils.toArray(".card-title h1");
-  titles.forEach((title) => {
-    const split = new SplitText(title, {
-      type: "chars",
-      charsClass: "char",
-      tag: "div",
+  if (titles.length) {
+    titles.forEach((title) => {
+      const split = new SplitText(title, {
+        type: "chars",
+        charsClass: "char",
+        tag: "div",
+      });
+      split.chars.forEach((char) => {
+        char.innerHTML = `<span>${char.textContent}</span>`;
+      });
     });
-    split.chars.forEach((char) => {
-      char.innerHTML = `<span>${char.textContent}</span>`;
-    });
-  });
+  }
 
   const cardImgWrapper = introCard.querySelector(".card-img");
   const cardImg = introCard.querySelector(".card-img img");
@@ -158,6 +160,27 @@ export default function Capsules() {
       onLeaveBack: () => animateContentOut(cardTitleChars, cardDescription),
     });
   });
+  // Play/pause YouTube iframes per card visibility
+  function sendYTCommand(iframe, func) {
+    if (!iframe || !iframe.contentWindow) return;
+    iframe.contentWindow.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*"
+    );
+  }
+  cards.forEach((card) => {
+    const iframe = card.querySelector("iframe");
+    if (!iframe) return;
+    ScrollTrigger.create({
+      trigger: card,
+      start: "top center",
+      end: "bottom center",
+      onEnter: () => sendYTCommand(iframe, "playVideo"),
+      onEnterBack: () => sendYTCommand(iframe, "playVideo"),
+      onLeave: () => sendYTCommand(iframe, "pauseVideo"),
+      onLeaveBack: () => sendYTCommand(iframe, "pauseVideo"),
+    });
+  });
     // setupMarqueeAnimation();
 
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
@@ -274,7 +297,22 @@ section {
 }
 
 .card-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
   transform: scale(2);
+}
+
+.card-img iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .card-content {
@@ -355,72 +393,130 @@ section {
         </div> */}
         <div className="card-wrapper">
           <div className="card-content">
-            <div className="card-title">
-              <h1>Curved Horizon</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                A futuristic residence that plays with curvature and flow,
-                blending bold geometry with natural topography.
-              </p>
-            </div>
+            <div className="card-title"></div>
+            <div className="card-description"></div>
           </div>
           <div className="card-img">
             <img src="/card-img-1.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/y5jTAbAfY4E?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Eclipse Horizon"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>
       <div className="card">
         <div className="card-wrapper">
           <div className="card-content">
-            <div className="card-title">
-              <h1>Glass Haven</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                A sleek pavilion of pure transparency, openness and light,
-                designed to dissolve into its environment.
-              </p>
-            </div>
+            <div className="card-title"></div>
+            <div className="card-description"></div>
           </div>
           <div className="card-img">
             <img src="/card-img-2.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/Xn369QC2-rI?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Vision Link"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>
       <div className="card">
         <div className="card-wrapper">
           <div className="card-content">
-            <div className="card-title">
-              <h1>Moss Cube</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                A minimalist cube home crowned with a living moss dome, merging
-                micro-architecture with ecological design.
-              </p>
-            </div>
+            <div className="card-title"></div>
+            <div className="card-description"></div>
           </div>
           <div className="card-img">
             <img src="/card-img-3.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/oWjwktvc2VM?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Iro Bond"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>
       <div className="card">
         <div className="card-wrapper">
           <div className="card-content">
-            <div className="card-title">
-              <h1>Floating Shelter</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                This design explores an ethereal structure perched on a grassy
-                islet, seemingly hovering above water.
-              </p>
-            </div>
+            <div className="card-title"></div>
+            <div className="card-description"></div>
           </div>
           <div className="card-img">
             <img src="/card-img-4.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/RkiChK5t48U?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Golden Case"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section className="cards">
+      <div className="card">
+        <div className="card-wrapper">
+          <div className="card-content">
+            <div className="card-title"></div>
+            <div className="card-description"></div>
+          </div>
+          <div className="card-img">
+            <img src="/card-img-2.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/90EcLpzlm5Y?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Virtual Space"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="card-wrapper">
+          <div className="card-content">
+            <div className="card-title"></div>
+            <div className="card-description"></div>
+          </div>
+          <div className="card-img">
+            <img src="/card-img-3.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/Xn369QC2-rI?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Smart Vision"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="card-wrapper">
+          <div className="card-content">
+            <div className="card-title"></div>
+            <div className="card-description"></div>
+          </div>
+          <div className="card-img">
+            <img src="/card-img-4.jpg" alt="" />
+            <iframe
+              src="https://www.youtube.com/embed/FpuanQiVlkA?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              title="Desert Tunnel"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>

@@ -112,3 +112,4 @@ body {
 .group:hover .group-hover\:pause-animation {
   animation-play-state: paused;
 }
+
