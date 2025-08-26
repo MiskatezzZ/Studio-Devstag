@@ -399,7 +399,7 @@ section {
           <div className="card-img">
             <img src="/card-img-1.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/y5jTAbAfY4E?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/y5jTAbAfY4E?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=y5jTAbAfY4E"
               title="Eclipse Horizon"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -417,7 +417,7 @@ section {
           <div className="card-img">
             <img src="/card-img-2.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/Xn369QC2-rI?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/Xn369QC2-rI?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=Xn369QC2-rI"
               title="Vision Link"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -435,7 +435,7 @@ section {
           <div className="card-img">
             <img src="/card-img-3.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/oWjwktvc2VM?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/oWjwktvc2VM?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=oWjwktvc2VM"
               title="Iro Bond"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -453,7 +453,7 @@ section {
           <div className="card-img">
             <img src="/card-img-4.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/RkiChK5t48U?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/RkiChK5t48U?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=RkiChK5t48U"
               title="Golden Case"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -473,7 +473,7 @@ section {
           <div className="card-img">
             <img src="/card-img-2.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/90EcLpzlm5Y?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/90EcLpzlm5Y?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=90EcLpzlm5Y"
               title="Virtual Space"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -492,7 +492,7 @@ section {
           <div className="card-img">
             <img src="/card-img-3.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/Xn369QC2-rI?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/Xn369QC2-rI?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=Xn369QC2-rI"
               title="Smart Vision"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -511,7 +511,7 @@ section {
           <div className="card-img">
             <img src="/card-img-4.jpg" alt="" />
             <iframe
-              src="https://www.youtube.com/embed/FpuanQiVlkA?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/FpuanQiVlkA?enablejsapi=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0&loop=1&playlist=FpuanQiVlkA"
               title="Desert Tunnel"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

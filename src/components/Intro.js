@@ -2,18 +2,36 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import intro from "@/assets/introbg.png";
-import studioDevstag from "@/assets/logo.png";
-import mountain from "@/assets/mountain.png";
+import studioDevstag from "@/assets/logo3.png";
 import gsap from "gsap";
 import { FaArrowUpRightFromSquare, FaGlobe } from "react-icons/fa6";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Navbar from "@/components/Navbar";
-import { logoData } from "@/lib/intropath";
+import { logoData } from "@/lib/intropath3";
+import { useMediaQuery } from "react-responsive";
 
 const ScrollHero = () => {
+  // Breakpoint queries aligned with Tailwind defaults
+  const isSmall = useMediaQuery({ maxWidth: 640 });
+  const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 1023 });
+  const isLarge = useMediaQuery({ minWidth: 1024, maxWidth: 1279 });
+  const isLarger = useMediaQuery({ minWidth: 1280, maxWidth: 2100})
+
+  const offset = isSmall
+    ? { x: 3, y: 25 }
+    : isMedium
+    ? { x: 5, y: 35 }
+    : isLarge
+    ? { x: 5, y: 35 }
+    : isLarger
+    ? { x: 10, y: 40}
+    : { x: 15, y: 45 };
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    // Kill existing triggers when breakpoints change to avoid stacking
+    ScrollTrigger.getAll().forEach((t) => t.kill());
     const lenis = new Lenis();
 
     // DOM element selections
@@ -44,14 +62,14 @@ const ScrollHero = () => {
       const logoHorizontalPosition =
         logoDimensions.left +
         (logoDimensions.width - logoBoundingBox.width * logoScaleFactor) / 2 -
-        logoBoundingBox.x * logoScaleFactor
-        + 5;
+        logoBoundingBox.x * logoScaleFactor +
+        offset.x;
 
       const logoVerticalPosition =
         logoDimensions.top +
         (logoDimensions.height - logoBoundingBox.height * logoScaleFactor) / 2 -
-        logoBoundingBox.y * logoScaleFactor
-        + 60; // Shifts the mask logo 60px lower
+        logoBoundingBox.y * logoScaleFactor +
+        offset.y; // responsive vertical offset
 
       // Set logoMask transform
       if (logoMask) {
@@ -145,11 +163,13 @@ const ScrollHero = () => {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      // Cleanup triggers and GSAP ticker when effect re-runs/unmounts
+      ScrollTrigger.getAll().forEach((t) => t.kill());
       gsap.ticker.remove(raf);
       lenis.on("scroll", ScrollTrigger.update);
       lenis.destroy();
     };
-  }, []);
+  }, [isSmall, isMedium, isLarge, offset.x, offset.y]);
 
   return (
   <div>
@@ -307,16 +327,6 @@ const ScrollHero = () => {
   <stop offset="90%" stop-color="#652fff" stop-opacity="0.1" />
   <stop offset="100%" stop-color="#7f3cff" stop-opacity="0" />
           </radialGradient>
-          <pattern id="mountainPattern" patternUnits="userSpaceOnUse" width="100%" height="100%">
-            <image
-              href={mountain.src}
-              x="0"
-              y="0"
-              width="100vw"
-              height="100vh"
-              preserveAspectRatio="xMidYMid slice"
-            />
-          </pattern>
         {/* <linearGradient id="tabGradient" x1="0" y1="0" x2="1" y2="1" gradientTransform="rotate(120)">
           <stop offset="0%" stop-color="rgba(109, 79, 232, 0.3)" />
           <stop offset="100%" stop-color="rgba(121, 76, 225, 0.2)" />
