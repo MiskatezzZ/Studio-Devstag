@@ -26,7 +26,7 @@ const ScrollHero = () => {
     ? { x: 5, y: 35 }
     : isLarger
     ? { x: 10, y: 40}
-    : { x: 15, y: 45 };
+    : { x: 5, y: 48 };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
