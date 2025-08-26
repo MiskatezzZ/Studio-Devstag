@@ -12,21 +12,45 @@ import { logoData } from "@/lib/intropath3";
 import { useMediaQuery } from "react-responsive";
 
 const ScrollHero = () => {
-  // Breakpoint queries aligned with Tailwind defaults
-  const isSmall = useMediaQuery({ maxWidth: 640 });
-  const isMedium = useMediaQuery({ minWidth: 641, maxWidth: 1023 });
-  const isLarge = useMediaQuery({ minWidth: 1024, maxWidth: 1279 });
-  const isLarger = useMediaQuery({ minWidth: 1280, maxWidth: 2100})
+  // Width breakpoints with md representing laptop screens:
+  // xs: <640 (phones), sm: 640-1023 (tablets/small), md: 1024-1439 (laptops),
+  // lg: 1440-1919 (large desktops), xl+: >=1920 (ultra-wide/4k)
+  const isWidthXS = useMediaQuery({ maxWidth: 639 });
+  const isWidthSM = useMediaQuery({ minWidth: 640, maxWidth: 1023 });
+  const isWidthMD = useMediaQuery({ minWidth: 1024, maxWidth: 1439 });
+  const isWidthLG = useMediaQuery({ minWidth: 1440, maxWidth: 1919 });
+  const isWidthXLPlus = useMediaQuery({ minWidth: 1920 });
 
-  const offset = isSmall
-    ? { x: 3, y: 25 }
-    : isMedium
-    ? { x: 5, y: 35 }
-    : isLarge
-    ? { x: 5, y: 35 }
-    : isLarger
-    ? { x: 10, y: 40}
-    : { x: 5, y: 48 };
+  // Height tiers (practical ranges)
+  const isHeightXS = useMediaQuery({ maxHeight: 639 });
+  const isHeightSM = useMediaQuery({ minHeight: 640, maxHeight: 767 });
+  const isHeightMD = useMediaQuery({ minHeight: 768, maxHeight: 899 });
+  const isHeightLG = useMediaQuery({ minHeight: 900, maxHeight: 1079 });
+  const isHeightXL = useMediaQuery({ minHeight: 1080 });
+
+  // Base offset from width
+  const widthOffset = isWidthXS
+    ? { x: 3, y: 22 } // phones
+    : isWidthSM
+    ? { x: 5, y: 28 } // tablets
+    : isWidthMD
+    ? { x: 5, y: 44 } // laptops (md)
+    : isWidthLG
+    ? { x: 1, y: 36 } // large desktops
+    : { x: 12, y: 46 }; // ultra-wide/4k
+
+  // Y adjustment from height
+  const yAdjust = isHeightXS
+    ? -8
+    : isHeightSM
+    ? -4
+    : isHeightMD
+    ? 0
+    : isHeightLG
+    ? 4
+    : 8; // height XL
+
+  const offset = { x: widthOffset.x, y: widthOffset.y + yAdjust };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -169,7 +193,20 @@ const ScrollHero = () => {
       lenis.on("scroll", ScrollTrigger.update);
       lenis.destroy();
     };
-  }, [isSmall, isMedium, isLarge, offset.x, offset.y]);
+  }, [
+    isWidthXS,
+    isWidthSM,
+    isWidthMD,
+    isWidthLG,
+    isWidthXLPlus,
+    isHeightXS,
+    isHeightSM,
+    isHeightMD,
+    isHeightLG,
+    isHeightXL,
+    offset.x,
+    offset.y,
+  ]);
 
   return (
   <div>
