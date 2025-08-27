@@ -9,48 +9,10 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Navbar from "@/components/Navbar";
 import { logoData } from "@/lib/intropath3";
-import { useMediaQuery } from "react-responsive";
 
 const ScrollHero = () => {
-  // Width breakpoints with md representing laptop screens:
-  // xs: <640 (phones), sm: 640-1023 (tablets/small), md: 1024-1439 (laptops),
-  // lg: 1440-1919 (large desktops), xl+: >=1920 (ultra-wide/4k)
-  const isWidthXS = useMediaQuery({ maxWidth: 639 });
-  const isWidthSM = useMediaQuery({ minWidth: 640, maxWidth: 1023 });
-  const isWidthMD = useMediaQuery({ minWidth: 1024, maxWidth: 1439 });
-  const isWidthLG = useMediaQuery({ minWidth: 1440, maxWidth: 1919 });
-  const isWidthXLPlus = useMediaQuery({ minWidth: 1920 });
-
-  // Height tiers (practical ranges)
-  const isHeightXS = useMediaQuery({ maxHeight: 639 });
-  const isHeightSM = useMediaQuery({ minHeight: 640, maxHeight: 767 });
-  const isHeightMD = useMediaQuery({ minHeight: 768, maxHeight: 899 });
-  const isHeightLG = useMediaQuery({ minHeight: 900, maxHeight: 1079 });
-  const isHeightXL = useMediaQuery({ minHeight: 1080 });
-
-  // Base offset from width
-  const widthOffset = isWidthXS
-    ? { x: 3, y: 22 } // phones
-    : isWidthSM
-    ? { x: 5, y: 28 } // tablets
-    : isWidthMD
-    ? { x: 5, y: 44 } // laptops (md)
-    : isWidthLG
-    ? { x: 1, y: 36 } // large desktops
-    : { x: 12, y: 46 }; // ultra-wide/4k
-
-  // Y adjustment from height
-  const yAdjust = isHeightXS
-    ? -8
-    : isHeightSM
-    ? -4
-    : isHeightMD
-    ? 0
-    : isHeightLG
-    ? 4
-    : 8; // height XL
-
-  const offset = { x: widthOffset.x, y: widthOffset.y + yAdjust };
+  // Use a single percentage-based offset that scales with the logo container size.
+  // This keeps the mask aligned consistently across all widths without branching.
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -67,7 +29,7 @@ const ScrollHero = () => {
     const overlayCopy = document.querySelector(".overlay-copy div");
 
     // Overlay and logo mask logic
-    const initialOverlayScale = 350;
+    const initialOverlayScale = 5000;
     const logoContainer = document.querySelector(".logo-container");
     const logoMask = document.getElementById("logoMask");
     // If logoData is defined/imported, set the d attribute
@@ -79,6 +41,13 @@ const ScrollHero = () => {
 
     // Scale and position calculations
     if (logoDimensions && logoBoundingBox) {
+      // Single offset applied for all widths (percentage of container size)
+      // Chosen as a balanced midpoint of prior values.
+      const pct = { x: 0.02, y: 0.21 };
+
+      const offsetX = logoDimensions.width * pct.x;
+      const offsetY = logoDimensions.height * pct.y;
+
       const horizontalScaleRatio = logoDimensions.width / logoBoundingBox.width;
       const verticalScaleRatio = logoDimensions.height / logoBoundingBox.height;
       const logoScaleFactor = Math.min(horizontalScaleRatio, verticalScaleRatio);
@@ -87,13 +56,13 @@ const ScrollHero = () => {
         logoDimensions.left +
         (logoDimensions.width - logoBoundingBox.width * logoScaleFactor) / 2 -
         logoBoundingBox.x * logoScaleFactor +
-        offset.x;
+        offsetX;
 
       const logoVerticalPosition =
         logoDimensions.top +
         (logoDimensions.height - logoBoundingBox.height * logoScaleFactor) / 2 -
         logoBoundingBox.y * logoScaleFactor +
-        offset.y; // responsive vertical offset
+        offsetY; // responsive vertical offset
 
       // Set logoMask transform
       if (logoMask) {
@@ -193,20 +162,7 @@ const ScrollHero = () => {
       lenis.on("scroll", ScrollTrigger.update);
       lenis.destroy();
     };
-  }, [
-    isWidthXS,
-    isWidthSM,
-    isWidthMD,
-    isWidthLG,
-    isWidthXLPlus,
-    isHeightXS,
-    isHeightSM,
-    isHeightMD,
-    isHeightLG,
-    isHeightXL,
-    offset.x,
-    offset.y,
-  ]);
+  }, []);
 
   return (
   <div>
