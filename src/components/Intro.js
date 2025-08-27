@@ -27,6 +27,7 @@ const ScrollHero = () => {
     const fadeOverlay = document.querySelector(".fade-overlay");
     const svgOverlay = document.querySelector(".overlay");
     const overlayCopy = document.querySelector(".overlay-copy div");
+    const overlayCard = document.getElementById("overlayCard");
 
     // Overlay and logo mask logic
     const initialOverlayScale = 5000;
@@ -72,6 +73,13 @@ const ScrollHero = () => {
         );
       }
 
+      // Make the overlay card fully transparent initially (avoid initial color flash)
+      if (overlayCard) gsap.set(overlayCard, { opacity: 0 });
+
+      // Make overlays fully transparent initially so the image shows through
+      if (svgOverlay) gsap.set(svgOverlay, { opacity: 0 });
+      if (fadeOverlay) gsap.set(fadeOverlay, { opacity: 0 });
+
       // ScrollTrigger pinning and fade effect
       ScrollTrigger.create({
         trigger: ".hero",
@@ -90,7 +98,30 @@ const ScrollHero = () => {
             gsap.set([heroImgLogo, heroImgCopy], { opacity: 0 });
           }
 
-          if (fadeOverlay) fadeOverlay.style.opacity = fadeOpacity;
+          // Do NOT show the white fade overlay at start; it will be handled by the later block
+          // if (fadeOverlay) fadeOverlay.style.opacity = fadeOpacity;
+
+          // Fade in the SVG overlay (gradients + mask) after a small scroll
+          if (svgOverlay) {
+            const ovStart = 0.05; // 5%
+            const ovEnd = 0.15;   // 15%
+            let ovOpacity = 0;
+            if (scrollProgress > ovStart) {
+              ovOpacity = Math.min(1, (scrollProgress - ovStart) / (ovEnd - ovStart));
+            }
+            gsap.set(svgOverlay, { opacity: ovOpacity });
+          }
+
+          // Make the overlay card (line ~378 div) transparent until a little scroll (0-5%)
+          if (overlayCard) {
+            const start = 0.0; // start hidden at 0%
+            const end = 0.50;  // fully visible by 5%
+            let cardOpacity = 0;
+            if (scrollProgress > start) {
+              cardOpacity = Math.min(1, (scrollProgress - start) / (end - start));
+            }
+            gsap.set(overlayCard, { opacity: cardOpacity });
+          }
 
           // Scaling logic for heroImgContainer and svgOverlay
           let fadeOverlayOpacity = 0;
@@ -178,7 +209,7 @@ const ScrollHero = () => {
       position: relative;
       width: 100vw;
       height: 100vh;
-      background: #171e3a;
+      background: transparent;
       overflow: hidden;
       }
 
@@ -211,6 +242,7 @@ const ScrollHero = () => {
       .fade-overlay {
         background-color: #fff;
         will-change: opacity;
+        opacity: 0; /* start fully transparent */
       }
       .overlay {
           position: absolute;
@@ -220,6 +252,7 @@ const ScrollHero = () => {
           width: 100%;
           height: 200%;
           z-index: 1;
+          opacity: 0; /* start fully transparent */
         }
 
         .logo-container {
@@ -373,7 +406,7 @@ const ScrollHero = () => {
 
      <div className="overlay-copy">
 
-      <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%',  borderRadius: '1.25rem' }}>
+      <div id="overlayCard" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%',  borderRadius: '1.25rem', opacity: 0 }}>
         
       <div style={{
           margin: '0px auto 0 auto',
