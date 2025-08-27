@@ -9,6 +9,7 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 import Intro from "@/components/Intro";
 import FloatingGallery from "@/components/FloatingGallery";
 import Capsules from "@/components/capsules";
+import PortalScrollDemo from "@/components/3D/vrmodel";
 
 export default function Home() {
   // const [isLoaded, setIsLoaded] = useState(false);
@@ -140,9 +141,9 @@ export default function Home() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* Intro Section */}
-        {/* <section style={{ position: 'relative', zIndex: 2000 }}>
+        <section style={{ position: 'relative', zIndex: 2000 }}>
           <Intro />
-        </section> */}
+        </section>
 
         {/* Introducing Studio Devstag Section */}
         <section id="studio" className="relative min-h-screen w-full overflow-hidden" style={{ position: 'sticky', top: 0, zIndex: 10 }}>
@@ -251,7 +252,7 @@ export default function Home() {
       />
     </motion.div>
   </div>
-</section>
+        </section>
 
         {/* 3d VR rotation section */}
         <section
