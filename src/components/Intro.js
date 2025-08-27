@@ -45,7 +45,7 @@ const ScrollHero = () => {
       // Single offset applied for all widths (percentage of container size)
       // Chosen as a balanced midpoint of prior values.
       // const pct = { x: 0.02, y: 0.21 };
-      const pct = { x: 0, y: -0.1 };
+      const pct = { x: 0, y: -0.24 };
 
       const offsetX = logoDimensions.width * pct.x;
       const offsetY = logoDimensions.height * pct.y;
@@ -215,7 +215,7 @@ const ScrollHero = () => {
       }
 
       .hero-img-container,
-      .hero-img-container img,
+      .hero-img-container-img,
       .fade-overlay {
         position: absolute;
         top: 0;
@@ -261,8 +261,8 @@ const ScrollHero = () => {
           top: 30%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 200px;
-          height: 150px;
+          width: 18vw;
+          height: 10vh;
           z-index: 2;
         }
 

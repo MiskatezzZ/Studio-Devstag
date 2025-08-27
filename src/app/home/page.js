@@ -3,37 +3,12 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect, useCallback, useMemo, useState } from "react";
 import useLenis from "@/hooks/useLenis";
-import intro from "@/assets/introbg.png";
-
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { FloatingDock } from "@/components/ui/floating-dock";
-import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
-import { Spotlight } from "@/components/ui/spotlight";
 import { StickyScroll } from "@/components/ui/stcikyreveal";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { HeroParallax } from "@/components/ui/hero-parallax";
-import cameraImg from "../../assets/back.png";
-import Image from "next/image";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import Sticky from "@/components/Sticky";
 import Intro from "@/components/Intro";
-import Loader from "@/components/Loader";
-import PortalScrollDemo from "@/components/3D/vrmodel";
 import FloatingGallery from "@/components/FloatingGallery";
 import Capsules from "@/components/capsules";
-
-// import gsap from "gsap";
-// import { CustomEase } from "gsap/CustomEase";
-// import { SplitText } from "gsap/SplitText";
-
-
-// import { useRef, useEffect, useCallback, useMemo, useState } from "react";
-import gsap from "gsap";
-import { CustomEase } from "gsap/CustomEase";
-import { SplitText } from "gsap/SplitText";
-
-
 
 export default function Home() {
   // const [isLoaded, setIsLoaded] = useState(false);
@@ -354,7 +329,7 @@ export default function Home() {
 
           </motion.div>
 
-        </section>  
+        </section> 
 
         {/* Violet 3 boxes section */}
         {/* <TestimonialsSection /> */}
