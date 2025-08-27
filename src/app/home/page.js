@@ -140,95 +140,118 @@ export default function Home() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* Intro Section */}
-        <section style={{ position: 'relative', zIndex: 2000 }}>
+        {/* <section style={{ position: 'relative', zIndex: 2000 }}>
           <Intro />
-        </section>
+        </section> */}
 
         {/* Introducing Studio Devstag Section */}
         <section id="studio" className="relative min-h-screen w-full overflow-hidden" style={{ position: 'sticky', top: 0, zIndex: 10 }}>
-          <div
-            className="absolute inset-0 w-full h-[105vh] z-0"
-            style={{
-              background: "#000",
-              backgroundImage: "url('/hands.png')",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundBlendMode: "normal"
-            }}
-          />
+  <div
+    className="absolute inset-0 w-full h-full z-0"
+    style={{
+      background: "#000",
+      backgroundImage: "url('/hands.png')",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundBlendMode: "normal",
+      minHeight: '100vh'
+    }}
+  />
 
-          <div className="min-h-screen flex flex-col items-start justify-center text-white text-left px-4 pt-0 pb-20 container mx-auto max-w-7xl relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl relative z-10 mt-[130px] ml-0 md:ml-2 lg:ml-6"
-            >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="mb-4 mt-[-120px]"
-              >
-                <span className="inline-block py-1 px-4 text-xs font-medium text-yellow-300 tracking-widest uppercase bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
-                  NOW LIVE
-                </span>
-              </motion.div>
+  <div className="min-h-screen flex flex-col items-start justify-center text-white text-left relative z-10" style={{ paddingLeft: '6%', paddingRight: '6%' }}>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="relative z-10 w-[88%] md:w-[62%] xl:w-[42%]"
+      style={{
+        marginTop: '18vh',
+        marginLeft: '6%'
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="mb-4 md:mb-6 lg:mb-8"
+        style={{ marginTop: '-6vh' }}
+      >
+        <span className="inline-block py-2 px-4 sm:px-6 text-xs sm:text-sm font-medium text-yellow-300 tracking-widest uppercase bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
+          NOW LIVE
+        </span>
+      </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tighter"
-              >
-                <span className="block">Introducing</span>
-                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">DevStag Studio</span>
-              </motion.h1>
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+        className="font-bold mb-6 md:mb-8 lg:mb-10 tracking-tighter leading-[1.12] text-[clamp(2.4rem,6.8vh,5.2rem)] lg:text-[clamp(3rem,7.2vh,6.5rem)] xl:text-[clamp(3.4rem,7.8vh,7.2rem)]"
+      >
+        <span className="block">Introducing</span>
+        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">
+          DevStag Studio
+        </span>
+      </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="text-lg md:text-xl text-blue-100/80 max-w-2xl mx-auto mb-12 font-light tracking-wide"
-              >
-                Every project is artistically curated but grounded in real-time
-                performance, ensuring both aesthetics and usability.
-              </motion.p>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="text-blue-100/80 max-w-2xl mb-8 md:mb-10 lg:mb-12 font-light tracking-wide leading-[1.6] text-[clamp(1rem,2.2vh,1.25rem)] lg:text-[clamp(1.05rem,2.4vh,1.35rem)] xl:text-[clamp(1.1rem,2.6vh,1.45rem)]"
+      >
+        Every project is artistically curated but grounded in real-time
+        performance, ensuring both aesthetics and usability.
+      </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.8 }}
-                className="flex flex-col sm:flex-row justify-start gap-5 ml-0 md:ml-1 lg:ml-1"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(56, 189, 248, 0.4)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-medium text-sm uppercase tracking-wider hover:opacity-90 transition-all"
-                >
-                  Start free trial
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-8 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full font-medium text-sm uppercase tracking-wider hover:bg-white/20 transition-all"
-                >
-                  Watch the Keynote
-                </motion.button>
-              </motion.div>
-            </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, duration: 0.8 }}
+        className="flex flex-col sm:flex-row justify-start gap-4 md:gap-5 lg:gap-6 w-full"
+        style={{ marginLeft: '1%' }}
+      >
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(56, 189, 248, 0.4)" }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-medium uppercase tracking-wider hover:opacity-90 transition-all w-full sm:w-auto"
+          style={{
+            padding: '0.9rem 2rem',
+            fontSize: '0.95rem'
+          }}
+        >
+          Start free trial
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-full font-medium uppercase tracking-wider hover:bg-white/20 transition-all w-full sm:w-auto"
+          style={{
+            padding: '0.9rem 2rem',
+            fontSize: '0.95rem'
+          }}
+        >
+          Watch the Keynote
+        </motion.button>
+      </motion.div>
+    </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 1.5 }}
-              className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent"
-            >
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-8 bg-blue-500/20 blur-xl" />
-            </motion.div>
-          </div>
-        </section>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1, duration: 1.5 }}
+      className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+    >
+      <div 
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-blue-500/20 blur-xl" 
+        style={{
+          width: '50%',
+          height: '2vh'
+        }}
+      />
+    </motion.div>
+  </div>
+</section>
 
         {/* 3d VR rotation section */}
         <section
