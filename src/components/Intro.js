@@ -44,7 +44,8 @@ const ScrollHero = () => {
     if (logoDimensions && logoBoundingBox) {
       // Single offset applied for all widths (percentage of container size)
       // Chosen as a balanced midpoint of prior values.
-      const pct = { x: 0.02, y: 0.21 };
+      // const pct = { x: 0.02, y: 0.21 };
+      const pct = { x: 0, y: 0 };
 
       const offsetX = logoDimensions.width * pct.x;
       const offsetY = logoDimensions.height * pct.y;
@@ -257,7 +258,7 @@ const ScrollHero = () => {
 
         .logo-container {
           position: fixed;
-          top: 25%;
+          top: 30%;
           left: 50%;
           transform: translate(-50%, -50%);
           width: 200px;
@@ -268,7 +269,7 @@ const ScrollHero = () => {
         .overlay-copy {
   z-index: 10 !important;
   position: absolute;
-  top: 70%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
@@ -408,24 +409,28 @@ const ScrollHero = () => {
 
       <div id="overlayCard" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '90%',  borderRadius: '1.25rem', opacity: 0 }}>
         
-      <div style={{
-          margin: '0px auto 0 auto',
-          width: '100%',
+      <div id="glassCard" style={{
+          margin: '0 auto',
+          width: '98vw',
+          maxWidth: '100%',
           height: '90vh',
+          minHeight: '90vh',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: 16,
-          boxShadow: '0 4px 24px 0 rgba(0,0,0,0.35), 0 1px 8px 0 rgba(0,0,0,0.15)',
+          borderRadius: '1.5vw',
+          boxShadow: '0 0.4vh 2.4vh 0 rgba(0,0,0,0.35), 0 0.1vh 0.8vh 0 rgba(0,0,0,0.15)',
           backgroundColor: 'rgba(255,255,255,0.04)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          backdropFilter: 'blur(2vh)',
+          WebkitBackdropFilter: 'blur(2vh)',
           backgroundImage: 'linear-gradient(120deg, rgba(4, 4, 4, 0.22), rgba(127,60,255,0.11), rgba(0,0,0,0.09))',
           // backgroundImage: "linear-gradient(180deg, rgba(25, 13, 66, 0) 4%, #190D42 33%, #4F34C7 67%, #7A6ECA 100%)",
-          backgroundSize: '30px',
+          backgroundSize: '3vh',
           // boxShadow: '0 4px 32px 0 rgba(127,60,255,0.10)',
           // border: '1.5px solid rgba(255,255,255,0.13)',
-          marginBottom: 320,
+          padding: '4vh 4vw',
+          position: 'relative',
         }} >
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90 }}>
