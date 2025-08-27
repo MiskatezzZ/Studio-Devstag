@@ -30,7 +30,7 @@ const ScrollHero = () => {
     const overlayCard = document.getElementById("overlayCard");
 
     // Overlay and logo mask logic
-    const initialOverlayScale = 5000;
+    const initialOverlayScale = 700;
     const logoContainer = document.querySelector(".logo-container");
     const logoMask = document.getElementById("logoMask");
     // If logoData is defined/imported, set the d attribute
@@ -45,7 +45,7 @@ const ScrollHero = () => {
       // Single offset applied for all widths (percentage of container size)
       // Chosen as a balanced midpoint of prior values.
       // const pct = { x: 0.02, y: 0.21 };
-      const pct = { x: 0, y: 0 };
+      const pct = { x: 0, y: -0.1 };
 
       const offsetX = logoDimensions.width * pct.x;
       const offsetY = logoDimensions.height * pct.y;
@@ -229,7 +229,7 @@ const ScrollHero = () => {
         top: 20%;
         left: 50%;
         transform: translate(-50%, 0);
-        width: 250px;
+        width: 250vw;
         height: auto;
         object-fit: contain;
       }
@@ -308,9 +308,17 @@ const ScrollHero = () => {
     <div className="hero-img-container">
       <Image src={intro} alt="Intro All" style={{ width: '100vw', height: '100vh', objectFit: 'fill' }} />
 
-      <div className="hero-img-logo">
-        <Image src={studioDevstag} alt="Studio DevStag" width={500} height={120} />
-      </div>
+      <div className="hero-img-logo w-[400vw] h-auto">
+  <Image
+    src={studioDevstag}
+    alt="Studio DevStag"
+    layout="responsive"
+    width={1000}
+    height={24}
+  />
+</div>
+
+
        
       <Image src={intro} alt="Intro Removed" style={{ width: '100vw', height: '100vh', objectFit: 'cover' }} />
 
