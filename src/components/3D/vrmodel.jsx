@@ -80,7 +80,7 @@ const PortalScrollDemo = () => {
             const endPx = Math.round(window.innerHeight * values.endMult);
             return `bottom+=${endPx} top`;
           },
-          scrub: 1,
+          scrub: 2,
           onUpdate: (self) => setProgress(self.progress),
         },
       });
@@ -154,11 +154,11 @@ const PortalScrollDemo = () => {
         }
 
         .chand-svg-vr {
-          position: fixed;
+          position: absolute;
           top: 0;
           left: 50%;
           transform: translateX(-50%);
-          z-index: 8;
+          z-index: 5;
           pointer-events: none;
           object-fit: cover;
           width: 100vw;
@@ -170,7 +170,8 @@ const PortalScrollDemo = () => {
           display: grid;
           place-items: center;
           height: 100vh;
-          z-index: 20;
+          z-index: 10;
+          background: transparent;
         }
 
         .vr-canvas {
@@ -180,8 +181,11 @@ const PortalScrollDemo = () => {
           overflow: hidden;
           background: transparent;
           position: relative;
-          will-change: transform;
-          z-index: 30;
+          z-index: 15;
+        }
+        
+        .vr-canvas canvas {
+          background: transparent !important;
         }
 
         .vr-section {
@@ -248,7 +252,7 @@ const PortalScrollDemo = () => {
           .vr-col, .vr-spacer { width: 100%; }
           .vr-spacer { display: none; }
           .vr-col--right { justify-content: center; }
-          .vr-canvas { min-height: 300px; }
+          .vr-canvas { min-height: 35vh; }
         }
 
         /* SM ≤640px */
@@ -270,7 +274,7 @@ const PortalScrollDemo = () => {
           .vr-col, .vr-spacer { width: 100%; }
           .vr-spacer { display: none; }
           .vr-col--right { justify-content: center; }
-          .vr-canvas { min-height: 350px; }
+          .vr-canvas { min-height: 42vh; }
         }
 
         /* MD ≤1024px */
@@ -291,7 +295,7 @@ const PortalScrollDemo = () => {
           .vr-col, .vr-spacer { width: 100%; }
           .vr-spacer { display: none; }
           .vr-col--right { justify-content: center; }
-          .vr-canvas { min-height: 400px; }
+          .vr-canvas { min-height: 50vh; }
         }
 
         /* LG 1025–1440px */
@@ -312,7 +316,7 @@ const PortalScrollDemo = () => {
           .vr-col, .vr-spacer { width: 50%; }
           .vr-spacer { display: block; }
           .vr-col--right { justify-content: flex-end; }
-          .vr-canvas { min-height: 500px; }
+          .vr-canvas { min-height: 58vh; }
         }
 
         /* XL ≥1441px */
@@ -333,7 +337,7 @@ const PortalScrollDemo = () => {
           .vr-col, .vr-spacer { width: 50%; }
           .vr-spacer { display: block; }
           .vr-col--right { justify-content: flex-end; }
-          .vr-canvas { min-height: 550px; }
+          .vr-canvas { min-height: 62vh; }
         }
 
         /* Landscape mobile optimization */
@@ -371,7 +375,7 @@ const PortalScrollDemo = () => {
         </div>
       </section>
 
-      <section className="vr-section vr-flex">
+      <section className="vr-section vr-flex" style={{ marginTop: '7vh' }}>
         <div className="vr-col">
           <div className="vr-frame vr-frame--left">
             {/* Video iframe content */}

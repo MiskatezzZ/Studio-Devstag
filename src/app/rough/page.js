@@ -1,439 +1,393 @@
 "use client";
-// import { useGSAP } from "@gsap/react";
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
-import Lenis from "lenis";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 
+import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Canvas } from "@react-three/fiber";
+import Scene from "@/components/3D/Scene";
 
-export default function Capsules() {
-  const container = useRef();
-    useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    
-  const lenis = new Lenis();
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+gsap.registerPlugin(ScrollTrigger);
 
-  const cards = gsap.utils.toArray(".card");
-  const introCard = cards[0];
+const PortalScrollDemo = () => {
+  const modelRef = useRef();
+  const mainRef = useRef();
+  const [progress, setProgress] = useState(0);
 
-  const titles = gsap.utils.toArray(".card-title h1");
-  titles.forEach((title) => {
-    const split = new SplitText(title, {
-      type: "chars",
-      charsClass: "char",
-      tag: "div",
-    });
-    split.chars.forEach((char) => {
-      char.innerHTML = `<span>${char.textContent}</span>`;
-    });
-  });
-
-  const cardImgWrapper = introCard.querySelector(".card-img");
-  const cardImg = introCard.querySelector(".card-img img");
-  gsap.set(cardImgWrapper, { scale: 0.5, borderRadius: "400px" });
-  gsap.set(cardImg, { scale: 1.5 });
-
-  function animateContentIn(titleChars, description) {
-    gsap.to(titleChars, { x: "0%", duration: 0.75, ease: "power4.out" });
-    gsap.to(description, {
-      x: 0,
-      opacity: 1,
-      duration: 0.75,
-      delay: 0.1,
-      ease: "power4.out",
-    });
-  }
-
-  function animateContentOut(titleChars, description) {
-    gsap.to(titleChars, { x: "100%", duration: 0.5, ease: "power4.out" });
-    gsap.to(description, {
-      x: "40px",
-      opacity: 0,
-      duration: 0.5,
-      ease: "power4.out",
-    });
-  }
-
-  const marquee = introCard.querySelector(".card-marquee .marquee");
-  const titleChars = introCard.querySelectorAll(".char span");
-  const description = introCard.querySelector(".card-description");
-
-  ScrollTrigger.create({
-    trigger: introCard,
-    start: "top top",
-    end: "+=300vh",
-    onUpdate: (self) => {
-      const progress = self.progress;
-      const imgScale = 0.5 + progress * 0.5;
-      const borderRadius = 400 - progress * 375;
-      const innerImgScale = 1.5 - progress * 0.5;
-
-      gsap.set(cardImgWrapper, {
-        scale: imgScale,
-        borderRadius: borderRadius + "px",
-      });
-      gsap.set(cardImg, { scale: innerImgScale });
-
-      if (imgScale >= 0.5 && imgScale <= 0.75) {
-        const fadeProgress = (imgScale - 0.5) / (0.75 - 0.5);
-        gsap.set(marquee, { opacity: 1 - fadeProgress });
-      } else if (imgScale < 0.5) {
-        gsap.set(marquee, { opacity: 1 });
-      } else if (imgScale > 0.75) {
-        gsap.set(marquee, { opacity: 0 });
+  useEffect(() => {
+    const getResponsiveValues = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      
+      // Extra small devices
+      if (w <= 480) {
+        return {
+          x1: '0vw', y1: '25vh',
+          x2: '-15vw', y2: '45vh',
+          x3: '15vw', y3: '100vh',
+          x4: '0vw', y4: '150vh',
+          endMult: 0.8,
+        };
       }
-
-      if (progress >= 1 && !introCard.contentRevealed) {
-        introCard.contentRevealed = true;
-        animateContentIn(titleChars, description);
+      // Small devices (your original SM)
+      else if (w <= 640) {
+        return {
+          x1: '0vw', y1: '30vh',
+          x2: '-20vw', y2: '50vh',
+          x3: '20vw', y3: '120vh',
+          x4: '0vw', y4: '180vh',
+          endMult: 0.9,
+        };
       }
-      if (progress < 1 && introCard.contentRevealed) {
-        introCard.contentRevealed = false;
-        animateContentOut(titleChars, description);
+      // Medium devices - tablets
+      else if (w <= 1024) {
+        return {
+          x1: '0vw', y1: '40vh',
+          x2: '-25vw', y2: '65vh',
+          x3: '25vw', y3: '170vh',
+          x4: '0vw', y4: '240vh',
+          endMult: 1.1,
+        };
       }
-    },
-  });
+      // Large devices
+      else if (w <= 1440) {
+        return {
+          x1: '0vw', y1: '20vh',
+          x2: '-30vw', y2: '60vh',
+          x3: '40vw', y3: '198vh',
+          x4: '0vw', y4: '250vh',
+          endMult: 1.25,
+        };
+      }
+      // Extra large devices
+      else {
+        return {
+          x1: '0vw', y1: '15vh',
+          x2: '-35vw', y2: '55vh',
+          x3: '35vw', y3: '160vh',
+          x4: '0vw', y4: '250vh',
+          endMult: 0.8,
+        };
+      }
+    };
 
-  cards.forEach((card, index) => {
-    const isLastCard = index === cards.length - 1;
-    ScrollTrigger.create({
-      trigger: card,
-      start: "top top",
-      end: isLastCard ? "+=100vh" : "top top",
-      endTrigger: isLastCard ? null : cards[cards.length - 1],
-      pin: true,
-      pinSpacing: isLastCard,
-    });
-  });
-
-  cards.forEach((card, index) => {
-    if (index < cards.length - 1) {
-      const cardWrapper = card.querySelector(".card-wrapper");
-      ScrollTrigger.create({
-        trigger: cards[index + 1],
-        start: "top bottom",
-        end: "top top",
-        onUpdate: (self) => {
-          const progress = self.progress;
-          gsap.set(cardWrapper, {
-            scale: 1 - progress * 0.25,
-            opacity: 1 - progress,
-          });
+    const buildTimeline = () => {
+      const values = getResponsiveValues();
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: mainRef.current,
+          start: "top top",
+          end: () => {
+            const endPx = Math.round(window.innerHeight * values.endMult);
+            return `bottom+=${endPx} top`;
+          },
+          scrub: 1,
+          onUpdate: (self) => setProgress(self.progress),
         },
       });
-    }
-  });
+      tl
+        .to(modelRef.current, { x: values.x1, y: values.y1, ease: "none" })
+        .to(modelRef.current, { x: values.x2, y: values.y2, ease: "none" })
+        .to(modelRef.current, { x: values.x3, y: values.y3, duration: 2.5, ease: "none" })
+        .to(modelRef.current, { x: values.x4, y: values.y4, ease: "none" });
+      return tl;
+    };
 
-  cards.forEach((card, index) => {
-    if (index > 0) {
-      const cardImg = card.querySelector(".card-img img");
-      const imgContainer = card.querySelector(".card-img");
-      ScrollTrigger.create({
-        trigger: card,
-        start: "top bottom",
-        end: "top top",
-        onUpdate: (self) => {
-          const progress = self.progress;
-          gsap.set(cardImg, { scale: 2 - progress });
-          gsap.set(imgContainer, { borderRadius: 150 - progress * 125 + "px" });
-        },
-      });
-    }
-  });
+    let tl = buildTimeline();
 
-  cards.forEach((card, index) => {
-    if (index === 0) return;
+    const handleResize = () => {
+      if (tl?.scrollTrigger) tl.scrollTrigger.kill();
+      if (tl) tl.kill();
+      tl = buildTimeline();
+      ScrollTrigger.refresh();
+    };
 
-    const cardDescription = card.querySelector(".card-description");
-    const cardTitleChars = card.querySelectorAll(".char span");
+    window.addEventListener('resize', handleResize);
 
-    ScrollTrigger.create({
-      trigger: card,
-      start: "top top",
-      onEnter: () => animateContentIn(cardTitleChars, cardDescription),
-      onLeaveBack: () => animateContentOut(cardTitleChars, cardDescription),
-    });
-  });
-    // setupMarqueeAnimation();
-
-    return () => ScrollTrigger.getAll().forEach(t => t.kill());
-  }, { scope: container });
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (tl?.scrollTrigger) tl.scrollTrigger.kill();
+      if (tl) tl.kill();
+    };
+  }, []);
 
   return (
-    <>
-      <div ref={container}>
-      {/* Global styles */}
+    <div className="vr-root">
+      {/* CHAND.svg at the top - now responsive */}
+      <img 
+        src="/CHAND.svg" 
+        alt="Chand" 
+        className="chand-svg-vr" 
+      />
+
+      <section ref={mainRef} className="vr-stage">
+        <div ref={modelRef} className="vr-canvas">
+          <Canvas>
+            <Scene progress={progress} />
+          </Canvas>
+        </div>
+      </section>
+
       <style jsx>{`
- @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+        .vr-root {
+          --container-max: 100vw;
+          --vr-bg: #000;
+          --vr-px: 4vw;
+          --vr-section-py: 6vh;
+          --vr-canvas-h: 64vh;
+          --vr-frame-bw: 0.35vw;
+          --vr-frame-radius: 1.25vw;
+          --vr-frame-shadow-blur: 2.4vw;
+          --vr-frame-shadow-color: rgba(162, 89, 255, 0.8);
+          --vr-gap-x: 2vw;
+          --vr-shift: 1.5vw;
+          --vr-frame-max-w: 44vw;
+          --vr-frame-max-w-wide: 80vw;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+          background: var(--vr-bg);
+          min-height: 100vh;
+          max-width: var(--container-max);
+          padding: 0 var(--vr-px);
+          position: relative;
+          overflow-x: clip;
+          margin: 0 auto;
+          width: 100%;
+        }
 
-body {
-  font-family: "Inter", sans-serif;
-}
+        .chand-svg-vr {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 5;
+          pointer-events: none;
+          object-fit: cover;
+          width: 100vw;
+          height: 100vh;
+        }
 
-img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  will-change: transform;
-}
+        .vr-stage {
+          position: relative;
+          display: grid;
+          place-items: center;
+          height: 100vh;
+          z-index: 15;
+        }
 
-h1 {
-  font-size: 5rem;
-  font-weight: 500;
-  letter-spacing: -0.1rem;
-  line-height: 1.25;
-}
+        .vr-canvas {
+          width: 100%;
+          height: var(--vr-canvas-h);
+          border-radius: var(--vr-frame-radius);
+          overflow: hidden;
+          background: transparent;
+          position: relative;
+        }
 
-p {
-  font-size: 1.125rem;
-  font-weight: 400;
-  line-height: 1.25;
-}
+        .vr-section {
+          position: relative;
+          padding-block: var(--vr-section-py);
+        }
 
-section {
-  position: relative;
-  width: 100vw;
-  background-color: #0f0f0f;
-  color: #fff;
-}
+        /* Add a little extra space before the final box */
+        .vr-section:last-of-type {
+          margin-top: 40vh;
+        }
 
-.intro,
-.outro {
-  height: 100svh;
-  padding: 1.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+        .vr-frame {
+          background: rgba(0, 0, 0, 0.7);
+          border: var(--vr-frame-bw) solid #fff;
+          border-radius: var(--vr-frame-radius);
+          box-shadow: 0 0 var(--vr-frame-shadow-blur) var(--vr-frame-shadow-color);
+          overflow: hidden;
+          width: 100%;
+          max-width: var(--vr-frame-max-w);
+          aspect-ratio: 16 / 9;
+        }
 
-.intro h1,
-.outro h1 {
-  width: 60%;
-  text-align: center;
-  line-height: 1.1;
-}
+        .vr-frame--right { margin-right: var(--vr-gap-x); }
+        .vr-frame--left { margin-left: calc(-1 * var(--vr-shift)); }
+        .vr-frame--center { max-width: var(--vr-frame-max-w-wide); }
 
-.cards {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 25svh;
-}
+        /* Layout helpers */
+        .vr-flex {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          gap: var(--vr-gap-x);
+        }
+        .vr-col {
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .vr-col--right { justify-content: flex-end; }
+        .vr-spacer { width: 50%; }
+        .vr-center { display: flex; align-items: center; justify-content: center; }
+        .vr-top { z-index: 30; position: relative; }
+        .vr-center-row { width: 100%; display: flex; align-items: center; justify-content: center; }
 
-.card-marquee {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  overflow: hidden;
-}
+        /* Extra Small ≤480px */
+        @media (max-width: 480px) {
+          .vr-root {
+            --vr-px: 3vw;
+            --vr-section-py: 5vh;
+            --vr-canvas-h: 40vh;
+            --vr-frame-bw: 1vw;
+            --vr-frame-radius: 4vw;
+            --vr-frame-shadow-blur: 5vw;
+            --vr-gap-x: 0vw;
+            --vr-shift: 0vw;
+            --vr-frame-max-w: 90vw;
+            --vr-frame-max-w-wide: 90vw;
+          }
+          .chand-svg-vr { height: 70vh; }
+          .vr-flex { flex-direction: column; }
+          .vr-col, .vr-spacer { width: 100%; }
+          .vr-spacer { display: none; }
+          .vr-col--right { justify-content: center; }
+          .vr-canvas { min-height: 300px; }
+        }
 
-.card-marquee .marquee {
-  display: flex;
-}
+        /* SM ≤640px */
+        @media (min-width: 481px) and (max-width: 640px) {
+          .vr-root {
+            --vr-px: 4vw;
+            --vr-section-py: 8vh;
+            --vr-canvas-h: 48vh;
+            --vr-frame-bw: 0.8vw;
+            --vr-frame-radius: 3vw;
+            --vr-frame-shadow-blur: 4vw;
+            --vr-gap-x: 0vw;
+            --vr-shift: 0vw;
+            --vr-frame-max-w: 92vw;
+            --vr-frame-max-w-wide: 92vw;
+          }
+          .chand-svg-vr { height: 80vh; }
+          .vr-flex { flex-direction: column; }
+          .vr-col, .vr-spacer { width: 100%; }
+          .vr-spacer { display: none; }
+          .vr-col--right { justify-content: center; }
+          .vr-canvas { min-height: 350px; }
+        }
 
-.card-marquee .marquee h1 {
-  white-space: nowrap;
-  font-size: 10vw;
-  font-weight: 600;
-  margin-right: 30px;
-}
+        /* MD ≤1024px */
+        @media (min-width: 641px) and (max-width: 1024px) {
+          .vr-root {
+            --vr-px: 5vw;
+            --vr-section-py: 7vh;
+            --vr-canvas-h: 56vh;
+            --vr-frame-bw: 0.6vw;
+            --vr-frame-radius: 2vw;
+            --vr-frame-shadow-blur: 3vw;
+            --vr-gap-x: 2vw;
+            --vr-shift: 0.5vw;
+            --vr-frame-max-w: 70vw;
+            --vr-frame-max-w-wide: 84vw;
+          }
+          .vr-flex { flex-direction: column; }
+          .vr-col, .vr-spacer { width: 100%; }
+          .vr-spacer { display: none; }
+          .vr-col--right { justify-content: center; }
+          .vr-canvas { min-height: 400px; }
+        }
 
-.card {
-  position: relative;
-  width: 100vw;
-  height: 100svh;
-  padding: 1.5em;
-}
+        /* LG 1025–1440px */
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          .vr-root {
+            --vr-px: 4vw;
+            --vr-section-py: 6vh;
+            --vr-canvas-h: 64vh;
+            --vr-frame-bw: 0.35vw;
+            --vr-frame-radius: 1.25vw;
+            --vr-frame-shadow-blur: 2.4vw;
+            --vr-gap-x: 2vw;
+            --vr-shift: 1.5vw;
+            --vr-frame-max-w: 44vw;
+            --vr-frame-max-w-wide: 80vw;
+          }
+          .vr-flex { flex-direction: row; }
+          .vr-col, .vr-spacer { width: 50%; }
+          .vr-spacer { display: block; }
+          .vr-col--right { justify-content: flex-end; }
+          .vr-canvas { min-height: 500px; }
+        }
 
-.card-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  will-change: transform;
-}
+        /* XL ≥1441px */
+        @media (min-width: 1441px) {
+          .vr-root {
+            --vr-px: 3vw;
+            --vr-section-py: 5vh;
+            --vr-canvas-h: 68vh;
+            --vr-frame-bw: 0.25vw;
+            --vr-frame-radius: 1vw;
+            --vr-frame-shadow-blur: 1.8vw;
+            --vr-gap-x: 1.5vw;
+            --vr-shift: 1.2vw;
+            --vr-frame-max-w: 40vw;
+            --vr-frame-max-w-wide: 72vw;
+          }
+          .vr-flex { flex-direction: row; }
+          .vr-col, .vr-spacer { width: 50%; }
+          .vr-spacer { display: block; }
+          .vr-col--right { justify-content: flex-end; }
+          .vr-canvas { min-height: 550px; }
+        }
 
-.card-img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 150px;
-  overflow: hidden;
-}
+        /* Landscape mobile optimization */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .vr-root {
+            --vr-canvas-h: 70vh;
+            --vr-section-py: 3vh;
+          }
+          .chand-svg-vr { height: 90vh; }
+        }
 
-.card-img img {
-  transform: scale(2);
-}
+        /* Ultra-wide screens */
+        @media (min-aspect-ratio: 21/9) {
+          .vr-root {
+            --vr-frame-max-w: 35vw;
+            --vr-frame-max-w-wide: 60vw;
+          }
+        }
 
-.card-content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 1;
-}
-
-.card-content .card-title {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.card-content .card-description {
-  text-align: center;
-  width: 40%;
-  margin-bottom: 3em;
-  position: relative;
-  transform: translateX(40px);
-  opacity: 0;
-}
-
-.card:nth-child(2) {
-  margin-top: 50vh;
-}
-
-.char {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.char span {
-  transform: translateX(100%);
-  display: inline-block;
-  will-change: transform;
-}
-
-@media (max-width: 900px) {
-  h1 {
-    font-size: 2rem;
-    letter-spacing: 0;
-  }
-
-  .intro h1,
-  .outro h1 {
-    width: 100%;
-  }
-
-  .card-content .card-description {
-    width: 90%;
-  }
-}
-
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          .vr-canvas {
+            transform: none !important;
+          }
+        }
       `}</style>
 
-      {/* Sections */}
-      <section className="intro">
-      <h1>We design spaces that don’t just exist.</h1>
-    </section>
-    <section className="cards">
-      <div className="card">
-        {/* <div className="card-marquee">
-          <div className="marquee">
-            <h1>Design Beyond Boundaries</h1>
-            <h1>Built for Tomorrow</h1>
-            <h1>Real Impact</h1>
-            <h1>Digital Visions</h1>
-          </div>
-        </div> */}
-        <div className="card-wrapper">
-          <div className="card-content">
-            <div className="card-title">
-              <h1>Curved Horizon</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                A futuristic residence that plays with curvature and flow,
-                blending bold geometry with natural topography.
-              </p>
-            </div>
-          </div>
-          <div className="card-img">
-            <img src="/card-img-1.jpg" alt="" />
+      {/* Video sections */}
+      <section className="vr-section vr-flex">
+        <div className="vr-spacer"></div>
+        <div className="vr-col vr-col--right">
+          <div className="vr-frame vr-frame--right">
+            {/* Video iframe content */}
           </div>
         </div>
-      </div>
-      <div className="card">
-        <div className="card-wrapper">
-          <div className="card-content">
-            <div className="card-title">
-              <h1>Glass Haven</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                A sleek pavilion of pure transparency, openness and light,
-                designed to dissolve into its environment.
-              </p>
-            </div>
-          </div>
-          <div className="card-img">
-            <img src="/card-img-2.jpg" alt="" />
+      </section>
+
+      <section className="vr-section vr-flex" style={{ marginTop: '7vh' }}>
+        <div className="vr-col">
+          <div className="vr-frame vr-frame--left">
+            {/* Video iframe content */}
           </div>
         </div>
-      </div>
-      <div className="card">
-        <div className="card-wrapper">
-          <div className="card-content">
-            <div className="card-title">
-              <h1>Moss Cube</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                A minimalist cube home crowned with a living moss dome, merging
-                micro-architecture with ecological design.
-              </p>
-            </div>
-          </div>
-          <div className="card-img">
-            <img src="/card-img-3.jpg" alt="" />
+        <div className="vr-spacer"></div>
+      </section>
+
+      <section className="vr-section vr-center vr-top">
+        <div className="vr-center-row">
+          <div className="vr-frame vr-frame--center">
+            {/* Video iframe content */}
           </div>
         </div>
-      </div>
-      <div className="card">
-        <div className="card-wrapper">
-          <div className="card-content">
-            <div className="card-title">
-              <h1>Floating Shelter</h1>
-            </div>
-            <div className="card-description">
-              <p>
-                This design explores an ethereal structure perched on a grassy
-                islet, seemingly hovering above water.
-              </p>
-            </div>
-          </div>
-          <div className="card-img">
-            <img src="/card-img-4.jpg" alt="" />
-          </div>
-        </div>
-      </div>
-    </section>
-    <section className="outro">
-      <h1>Architecture reimagined for the virtual age.</h1>
-    </section>
-      </div>
-    </>
+      </section>
+
+    </div>
   );
-}
+};
 
-
-
-
-
+export default PortalScrollDemo;

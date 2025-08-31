@@ -21,18 +21,19 @@ const Scene = ({ progress = 0 }) => {
   };
 
   useFrame(() => {
-    // console.log(cameraRef.current.position);
+    console.log(cameraRef.current.position);
     cameraRef.current.lookAt(0, 0, 0);
   });
 
   useEffect(() => {
     const positions = [
       [1.1016113946574677, 0.341597825920753, -0.061003699489932],
-      [0.39095081730859516, 0.43213159585076133, 1.54782459334164],
+      [0.8368812620715087,0.27446767123988347, 0.7471649359426317],
       [1.1016113946574677, 0.341597825920753, -0.061003699489932],
-      [0.34406418831632557, 1.548152928981351, -0.6863082583138185],
-    ];
+      [1.00266029217015, 0.3828536186119205, -0.5711089762902671],
 
+    ];
+    
     const p = clampNum(progress, 0, 1);
     const segCount = positions.length - 1; // 3 segments
     const segLen = 1 / segCount;
@@ -57,8 +58,8 @@ const Scene = ({ progress = 0 }) => {
       x,
       y,
       z,
-      duration: 0.35,
-      ease: "power1.out",
+      duration: 1.2,
+      ease: "power2.out",
     });
   }, [progress, aspect]);
 
@@ -75,7 +76,7 @@ const Scene = ({ progress = 0 }) => {
   return (
   <>
     
-    {/* <OrbitControls /> */}
+    { /*<OrbitControls /> */}
     <PerspectiveCamera 
     fov={45} 
     near={0.1} 
