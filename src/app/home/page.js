@@ -299,18 +299,19 @@ export default function Home() {
 
 
                 {/* Magic Bento Box Section */}
-        <section style={{ 
-          background: 'transparent', 
-          zIndex: 21, 
-          position: 'relative', 
-          paddingTop: '80px', 
-          paddingBottom: '80px', 
-          width: '100vw', 
-          marginLeft: 'calc(50% - 50vw)', 
-          marginRight: 'calc(50% - 50vw)', 
-          isolation: 'isolate', 
-          overflow: 'hidden' 
-        }}>
+        <section
+          className="relative w-full overflow-hidden"
+          style={{
+            background: 'transparent',
+            zIndex: 21,
+            position: 'relative',
+            paddingTop: 'clamp(48px, 6vh, 96px)',
+            paddingBottom: 'clamp(48px, 6vh, 96px)',
+            width: '100%',
+            minHeight: '100vh',
+            isolation: 'isolate'
+          }}
+        >
           <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
             <DarkVeil 
               resolutionScale={1} 
@@ -320,7 +321,7 @@ export default function Home() {
               warpAmount={0.03} 
             />
           </div>
-          <div className="w-full max-w-6xl mx-auto px-4 relative z-10">
+          <div className="w-full mx-auto px-4 relative z-10">
             <MagicBento 
               textAutoHide={true} 
               enableStars={true} 

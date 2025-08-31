@@ -61,27 +61,44 @@ const createParticleElement = (
   el.className = "particle";
   el.style.cssText = `
     position: absolute;
-    width: 0.2vw;
-    height: 0.2vw;
-    min-width: 2px;
-    min-height: 2px;
-    max-width: 6px;
-    max-height: 6px;
+    width: clamp(0.15vmin, 0.2vw, 0.35vmin);
+    height: clamp(0.15vmin, 0.2vw, 0.35vmin);
     border-radius: 50%;
     background: rgba(${color}, 1);
-    box-shadow: 0 0 0.3vw rgba(${color}, 0.6);
+    box-shadow: 0 0 clamp(0.2vmin, 0.35vw, 0.6vmin) rgba(${color}, 0.6);
     pointer-events: none;
     z-index: 100;
-    left: ${x}px;
-    top: ${y}px;
+    left: ${x}%;
+    top: ${y}%;
   `;
   return el;
 };
 
-const calculateSpotlightValues = (radius) => ({
-  proximity: radius * 0.5,
-  fadeDistance: radius * 0.75,
-});
+const calculateSpotlightValues = (radius) => {
+  const toPx = (r) => {
+    if (typeof r === 'number') return r;
+    if (typeof r !== 'string') return 0;
+    const n = parseFloat(r);
+    if (Number.isNaN(n)) return 0;
+    if (typeof window === 'undefined') return n;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const vmin = Math.min(vw, vh);
+    const vmax = Math.max(vw, vh);
+    if (r.endsWith('vw')) return (n / 100) * vw;
+    if (r.endsWith('vh')) return (n / 100) * vh;
+    if (r.endsWith('vmin')) return (n / 100) * vmin;
+    if (r.endsWith('vmax')) return (n / 100) * vmax;
+    if (r.endsWith('%')) return (n / 100) * vmin;
+    return n; // assume px-like numeric fallback
+  };
+
+  const radiusPx = toPx(radius);
+  return {
+    proximity: radiusPx * 0.5,
+    fadeDistance: radiusPx * 0.75,
+  };
+};
 
 const updateCardGlowProperties = (
   card,
@@ -97,7 +114,14 @@ const updateCardGlowProperties = (
   card.style.setProperty("--glow-x", `${relativeX}%`);
   card.style.setProperty("--glow-y", `${relativeY}%`);
   card.style.setProperty("--glow-intensity", glow.toString());
-  card.style.setProperty("--glow-radius", typeof radius === 'string' ? radius : `${radius}px`);
+  card.style.setProperty(
+    "--glow-radius",
+    typeof radius === 'string'
+      ? radius
+      : (typeof window !== 'undefined'
+          ? `${(radius / Math.max(Math.min(window.innerWidth, window.innerHeight), 1)) * 100}vmin`
+          : `${radius}`)
+  );
 };
 
 const ParticleCard = ({
@@ -125,8 +149,8 @@ const ParticleCard = ({
     const { width, height } = cardRef.current.getBoundingClientRect();
     memoizedParticles.current = Array.from({ length: particleCount }, () =>
       createParticleElement(
-        Math.random() * width,
-        Math.random() * height,
+        Math.random() * 100,
+        Math.random() * 100,
         glowColor
       )
     );
@@ -174,8 +198,8 @@ const ParticleCard = ({
         );
 
         gsap.to(clone, {
-          x: (Math.random() - 0.5) * 100,
-          y: (Math.random() - 0.5) * 100,
+          x: `${((Math.random() - 0.5) * 4).toFixed(2)}vmin`,
+          y: `${((Math.random() - 0.5) * 4).toFixed(2)}vmin`,
           rotation: Math.random() * 360,
           duration: 2 + Math.random() * 2,
           ease: "none",
@@ -231,8 +255,8 @@ const ParticleCard = ({
 
       if (enableMagnetism) {
         gsap.to(element, {
-          x: 0,
-          y: 0,
+          xPercent: 0,
+          yPercent: 0,
           duration: 0.3,
           ease: "power2.out",
         });
@@ -262,12 +286,14 @@ const ParticleCard = ({
       }
 
       if (enableMagnetism) {
-        const magnetX = (x - centerX) * 0.05;
-        const magnetY = (y - centerY) * 0.05;
+        const dx = x - centerX;
+        const dy = y - centerY;
+        const magnetXPercent = (dx / rect.width) * 5; // ±5% of width
+        const magnetYPercent = (dy / rect.height) * 5; // ±5% of height
 
         magnetismAnimationRef.current = gsap.to(element, {
-          x: magnetX,
-          y: magnetY,
+          xPercent: magnetXPercent,
+          yPercent: magnetYPercent,
           duration: 0.3,
           ease: "power2.out",
         });
@@ -289,14 +315,18 @@ const ParticleCard = ({
       );
 
       const ripple = document.createElement("div");
+      const widthPct = ((maxDistance * 2) / rect.width) * 100;
+      const heightPct = ((maxDistance * 2) / rect.height) * 100;
+      const leftPct = ((x - maxDistance) / rect.width) * 100;
+      const topPct = ((y - maxDistance) / rect.height) * 100;
       ripple.style.cssText = `
         position: absolute;
-        width: ${maxDistance * 2}px;
-        height: ${maxDistance * 2}px;
+        width: ${widthPct}%;
+        height: ${heightPct}%;
         border-radius: 50%;
         background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
-        left: ${x - maxDistance}px;
-        top: ${y - maxDistance}px;
+        left: ${leftPct}%;
+        top: ${topPct}%;
         pointer-events: none;
         z-index: 1000;
       `;
@@ -370,12 +400,8 @@ const GlobalSpotlight = ({
     spotlight.className = "global-spotlight";
     spotlight.style.cssText = `
       position: fixed;
-      width: 40vw;
-      height: 40vw;
-      min-width: 300px;
-      min-height: 300px;
-      max-width: 1000px;
-      max-height: 1000px;
+      width: clamp(24vmin, 40vw, 60vmin);
+      height: clamp(24vmin, 40vw, 60vmin);
       border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle,
@@ -455,8 +481,8 @@ const GlobalSpotlight = ({
       });
 
       gsap.to(spotlightRef.current, {
-        left: e.clientX,
-        top: e.clientY,
+        left: `${(e.clientX / window.innerWidth) * 100}vw`,
+        top: `${(e.clientY / window.innerHeight) * 100}vh`,
         duration: 0.1,
         ease: "power2.out",
       });
@@ -566,7 +592,7 @@ const useResponsiveDetection = () => {
                 --glow-x: 50%;
                 --glow-y: 50%;
                 --glow-intensity: 0;
-                --glow-radius: 12rem;
+                --glow-radius: clamp(8vmin, 14vw, 18vmin);
                 --glow-color: ${glowColor};
                 --border-color: #392e4e;
                 --background-dark: #060010;
@@ -574,15 +600,19 @@ const useResponsiveDetection = () => {
                 --purple-primary: rgba(132, 0, 255, 1);
                 --purple-glow: rgba(132, 0, 255, 0.2);
                 --purple-border: rgba(132, 0, 255, 0.8);
-                --card-padding: 1.5rem;
-                --card-gap: 1.25rem;
-                --card-border-radius: 1.25rem;
-                --card-min-height: 18rem;
-                --spacing-xs: 0.375rem;
-                --spacing-sm: 0.75rem;
-                --spacing-md: 1rem;
-                --spacing-lg: 1.5rem;
-                --spacing-xl: 2.5rem;
+                --card-padding: clamp(1rem, 2.2vmin, 2.25rem);
+                --card-gap: clamp(0.75rem, 1.8vmin, 1.25rem);
+                --card-border-radius: clamp(0.75rem, 1.5vmin, 1.25rem);
+                --card-min-height: clamp(18rem, 30vmin, 44rem);
+                --spacing-xs: clamp(0.25rem, 1vmin, 0.5rem);
+                --spacing-sm: clamp(0.5rem, 1.2vmin, 0.875rem);
+                --spacing-md: clamp(0.75rem, 1.6vmin, 1.25rem);
+                --spacing-lg: clamp(1rem, 2.2vmin, 1.75rem);
+                --spacing-xl: clamp(1.5rem, 3vmin, 3rem);
+                /* Fluid typography tokens */
+                --title-size: clamp(1rem, 2.2vmin, 1.5rem);
+                --desc-size: clamp(0.875rem, 1.6vmin, 1.125rem);
+                --label-size: clamp(0.75rem, 1.2vmin, 0.9375rem);
               }
               
               /* Zoom-stable grid system */
@@ -591,7 +621,7 @@ const useResponsiveDetection = () => {
                 grid-template-columns: 1fr;
                 gap: var(--card-gap);
                 width: 100%;
-                max-width: 1200px;
+                max-width: 96vw;
                 margin: 0 auto;
                 padding: 0 var(--card-padding);
                 box-sizing: border-box;
@@ -601,7 +631,7 @@ const useResponsiveDetection = () => {
               @media (min-width: 30rem) {
                 .card-responsive {
                   grid-template-columns: 1fr;
-                  max-width: 1200px;
+                  max-width: 96vw;
                 }
               }
               
@@ -609,7 +639,7 @@ const useResponsiveDetection = () => {
               @media (min-width: 48rem) {
                 .card-responsive {
                   grid-template-columns: repeat(2, 1fr);
-                  max-width: 1200px;
+                  max-width: 94vw;
                 }
               }
               
@@ -617,7 +647,7 @@ const useResponsiveDetection = () => {
               @media (min-width: 64rem) {
                 .card-responsive {
                   grid-template-columns: repeat(4, 1fr);
-                  max-width: 1200px;
+                  max-width: 92vw;
                 }
                 
                 .card-responsive .card:nth-child(3) {
@@ -639,7 +669,7 @@ const useResponsiveDetection = () => {
               /* Large Desktop (1441px and up) */
               @media (min-width: 90rem) {
                 .card-responsive {
-                  max-width: 1400px;
+                  max-width: 90vw;
                 }
               }
               
@@ -674,10 +704,10 @@ const useResponsiveDetection = () => {
               .particle::before {
                 content: '';
                 position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
+                top: -0.25vmin;
+                left: -0.25vmin;
+                right: -0.25vmin;
+                bottom: -0.25vmin;
                 background: rgba(${glowColor}, 0.2);
                 border-radius: 50%;
                 z-index: -1;
@@ -707,7 +737,7 @@ const useResponsiveDetection = () => {
               }
               
               /* Enhanced Mobile Styles */
-              @media (max-width: 480px) {
+              @media (max-width: 30rem) {
                 .card-responsive {
                   grid-template-columns: 1fr;
                   width: 100%;
@@ -736,7 +766,7 @@ const useResponsiveDetection = () => {
               
               /* Fixed zoom-stable text styles */
               .card__title {
-                font-size: 1.125rem !important;
+                font-size: var(--title-size) !important;
                 line-height: 1.3 !important;
                 letter-spacing: -0.01em !important;
                 word-wrap: break-word !important;
@@ -744,7 +774,7 @@ const useResponsiveDetection = () => {
               }
               
               .card__description {
-                font-size: 0.875rem !important;
+                font-size: var(--desc-size) !important;
                 line-height: 1.5 !important;
                 color: rgba(255, 255, 255, 0.92) !important;
                 word-wrap: break-word !important;
@@ -752,33 +782,43 @@ const useResponsiveDetection = () => {
               }
               
               .card__label {
-                font-size: 0.75rem !important;
+                font-size: var(--label-size) !important;
                 word-wrap: break-word !important;
               }
               
               /* Responsive text scaling for different screen sizes */
               @media (min-width: 30rem) {
-                .card__title { font-size: 1.125rem !important; }
-                .card__description { font-size: 0.875rem !important; }
-                .card__label { font-size: 0.75rem !important; }
+                .bento-section {
+                  --title-size: clamp(1.0625rem, 2.2vmin, 1.5rem);
+                  --desc-size: clamp(0.9rem, 1.6vmin, 1.125rem);
+                  --label-size: clamp(0.75rem, 1.2vmin, 0.9375rem);
+                }
               }
               
               @media (min-width: 48rem) {
-                .card__title { font-size: 1.25rem !important; }
-                .card__description { font-size: 0.9375rem !important; }
-                .card__label { font-size: 0.8125rem !important; }
+                .bento-section {
+                  --title-size: clamp(1.125rem, 2.3vmin, 1.625rem);
+                  --desc-size: clamp(0.9375rem, 1.7vmin, 1.1875rem);
+                  --label-size: clamp(0.8125rem, 1.3vmin, 1rem);
+                }
               }
               
               @media (min-width: 64rem) {
-                .card__title { font-size: 1.375rem !important; }
-                .card__description { font-size: 1rem !important; }
-                .card__label { font-size: 0.875rem !important; }
+                .bento-section {
+                  --title-size: clamp(1.25rem, 2.4vmin, 1.75rem);
+                  --desc-size: clamp(1rem, 1.9vmin, 1.25rem);
+                  --label-size: clamp(0.875rem, 1.4vmin, 1.0625rem);
+                  --card-min-height: clamp(20rem, 32vmin, 48rem);
+                }
               }
               
               @media (min-width: 90rem) {
-                .card__title { font-size: 1.5rem !important; }
-                .card__description { font-size: 1.0625rem !important; }
-                .card__label { font-size: 0.9375rem !important; }
+                .bento-section {
+                  --title-size: clamp(1.5rem, 2.6vmin, 1.875rem);
+                  --desc-size: clamp(1.0625rem, 2vmin, 1.3125rem);
+                  --label-size: clamp(0.9375rem, 1.5vmin, 1.125rem);
+                  --card-min-height: clamp(24rem, 36vmin, 56rem);
+                }
               }
               
               /* Zoom-friendly responsive overrides */
@@ -887,11 +927,11 @@ const useResponsiveDetection = () => {
             />
           )}
 
-          <div className="mx-auto max-w-4xl text-center mb-[var(--spacing-xl)]" style={{paddingInline: 'var(--card-padding)'}}>
+          <div className="mx-auto max-w-4xl text-center mb-[var(--spacing-xl)]" style={{paddingInline: 'var(--card-padding)', maxWidth: 'min(84vw, 90ch)'}}>
             <span 
               className="inline-block py-[var(--spacing-xs)] px-[var(--spacing-sm)] font-medium tracking-widest uppercase text-yellow-300 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full"
               style={{
-                fontSize: '0.75rem',
+                fontSize: 'clamp(0.6875rem, 1.2vmin, 0.875rem)',
                 letterSpacing: '0.1em',
                 wordWrap: 'break-word'
               }}
@@ -917,7 +957,7 @@ const useResponsiveDetection = () => {
               {cardData.map((card, index) => {
                 const hoverLift = shouldDisableAnimations || !enableHoverLift ? "" : "hover:-translate-y-[0.2vh] hover:shadow-[0_clamp(0.3rem,1.5vw,0.8rem)_clamp(1rem,4vw,2rem)_rgba(0,0,0,0.15)]";
                 const transitionClasses = shouldDisableAnimations ? "" : "transition-all duration-300 ease-in-out";
-                const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[var(--card-min-height)] w-full max-w-full p-[var(--card-padding)] rounded-[var(--card-border-radius)] border border-solid font-light overflow-hidden ${transitionClasses} ${hoverLift} ${enableBorderGlow ? "card--border-glow" : ""}`;
+                const baseClassName = `card flex flex-col justify-between relative min-h-[var(--card-min-height)] w-full max-w-full p-[var(--card-padding)] rounded-[var(--card-border-radius)] border border-solid font-light overflow-hidden ${transitionClasses} ${hoverLift} ${enableBorderGlow ? "card--border-glow" : ""}`;
 
                 const cardStyle = {
                   backgroundColor: card.color || "var(--background-dark)",
@@ -988,12 +1028,14 @@ const useResponsiveDetection = () => {
                         }
 
                         if (enableMagnetism) {
-                          const magnetX = (x - centerX) * 0.05;
-                          const magnetY = (y - centerY) * 0.05;
+                          const dx = x - centerX;
+                          const dy = y - centerY;
+                          const magnetXPercent = (dx / rect.width) * 5; // ±5% of width
+                          const magnetYPercent = (dy / rect.height) * 5; // ±5% of height
 
                           gsap.to(el, {
-                            x: magnetX,
-                            y: magnetY,
+                            xPercent: magnetXPercent,
+                            yPercent: magnetYPercent,
                             duration: 0.3,
                             ease: "power2.out",
                           });
@@ -1014,8 +1056,8 @@ const useResponsiveDetection = () => {
 
                         if (enableMagnetism) {
                           gsap.to(el, {
-                            x: 0,
-                            y: 0,
+                            xPercent: 0,
+                            yPercent: 0,
                             duration: 0.3,
                             ease: "power2.out",
                           });
@@ -1037,14 +1079,18 @@ const useResponsiveDetection = () => {
                         );
 
                         const ripple = document.createElement("div");
+                        const widthPct = ((maxDistance * 2) / rect.width) * 100;
+                        const heightPct = ((maxDistance * 2) / rect.height) * 100;
+                        const leftPct = ((x - maxDistance) / rect.width) * 100;
+                        const topPct = ((y - maxDistance) / rect.height) * 100;
                         ripple.style.cssText = `
                           position: absolute;
-                          width: ${maxDistance * 2}px;
-                          height: ${maxDistance * 2}px;
+                          width: ${widthPct}%;
+                          height: ${heightPct}%;
                           border-radius: 50%;
                           background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
-                          left: ${x - maxDistance}px;
-                          top: ${y - maxDistance}px;
+                          left: ${leftPct}%;
+                          top: ${topPct}%;
                           pointer-events: none;
                           z-index: 1000;
                         `;

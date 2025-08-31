@@ -64,7 +64,7 @@ const PortalScrollDemo = () => {
           x1: '0vw', y1: '15vh',
           x2: '-35vw', y2: '55vh',
           x3: '35vw', y3: '160vh',
-          x4: '0vw', y4: '200vh',
+          x4: '0vw', y4: '250vh',
           endMult: 0.8,
         };
       }
@@ -154,11 +154,11 @@ const PortalScrollDemo = () => {
         }
 
         .chand-svg-vr {
-          position: absolute;
+          position: fixed;
           top: 0;
           left: 50%;
           transform: translateX(-50%);
-          z-index: 20;
+          z-index: 8;
           pointer-events: none;
           object-fit: cover;
           width: 100vw;
@@ -170,7 +170,7 @@ const PortalScrollDemo = () => {
           display: grid;
           place-items: center;
           height: 100vh;
-          z-index: 10;
+          z-index: 20;
         }
 
         .vr-canvas {
@@ -180,6 +180,8 @@ const PortalScrollDemo = () => {
           overflow: hidden;
           background: transparent;
           position: relative;
+          will-change: transform;
+          z-index: 30;
         }
 
         .vr-section {

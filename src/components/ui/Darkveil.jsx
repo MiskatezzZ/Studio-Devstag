@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Renderer, Program, Mesh, Triangle, Vec2 } from "ogl";
 
 const vertex = `
@@ -85,6 +85,8 @@ export default function DarkVeil({
   resolutionScale = 1,
 }) {
   const ref = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
   useEffect(() => {
     const canvas = ref.current;
     const parent = canvas.parentElement;
@@ -113,14 +115,29 @@ export default function DarkVeil({
 
     const mesh = new Mesh(gl, { geometry, program });
 
-    const resize = () => {
-      const w = parent.clientWidth,
-        h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
-      program.uniforms.uResolution.value.set(w, h);
+    const getResponsiveScale = () => {
+      const vw = window.innerWidth;
+      if (vw >= 1441) return resolutionScale * 1.2; // XL screens - higher quality
+      if (vw <= 1440 && vw > 1024) return resolutionScale * 1.1; // LG screens
+      if (vw <= 1024 && vw > 640) return resolutionScale * 1.0; // MD screens
+      return resolutionScale * 0.8; // SM screens - optimize performance
     };
 
-    window.addEventListener("resize", resize);
+    const resize = () => {
+      const w = parent.clientWidth;
+      const h = parent.clientHeight;
+      const scale = getResponsiveScale();
+      
+      renderer.setSize(w * scale, h * scale);
+      program.uniforms.uResolution.value.set(w, h);
+      setDimensions({ width: w, height: h });
+    };
+
+    const handleResize = () => {
+      resize();
+    };
+
+    window.addEventListener("resize", handleResize);
     resize();
 
     const start = performance.now();
@@ -142,7 +159,7 @@ export default function DarkVeil({
 
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [
     hueShift,
@@ -155,19 +172,90 @@ export default function DarkVeil({
   ]);
 
   return (
-    <canvas 
-      ref={ref} 
-      className="w-full h-full block" 
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        display: 'block',
-        objectFit: 'cover',
-        pointerEvents: 'none'
-      }}
-    />
+    <>
+      <canvas ref={ref} className="darkveil-canvas" />
+      <style jsx>{`
+        :global(.darkveil-canvas) {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+          pointer-events: none;
+          z-index: var(--canvas-z-index, 0);
+          opacity: var(--canvas-opacity, 1);
+          transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+        }
+
+        /* XL Screens (≥1441px) - 4K and large displays */
+        @media screen and (min-width: 1441px) {
+          :global(.darkveil-canvas) {
+            
+          }
+        }
+
+        /* LG Screens (≤1440px) - Large desktops */
+        @media screen and (max-width: 1440px) {
+          :global(.darkveil-canvas) {
+            
+          }
+        }
+
+        /* MD Screens (≤1024px) - Tablets and small desktops */
+        @media screen and (max-width: 1024px) {
+          :global(.darkveil-canvas) {
+            
+          }
+        }
+
+        /* SM Screens (≤640px) - Mobile devices */
+        @media screen and (max-width: 640px) {
+          :global(.darkveil-canvas) {
+            
+          }
+        }
+
+        /* High DPI optimization */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          :global(.darkveil-canvas) {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+          }
+        }
+
+        /* Orientation-specific adjustments */
+        @media screen and (orientation: portrait) and (max-width: 640px) {
+          :global(.darkveil-canvas) {
+            --canvas-width: 100vw;
+            --canvas-height: 100vh;
+          }
+        }
+
+        @media screen and (orientation: landscape) and (max-width: 640px) {
+          :global(.darkveil-canvas) {
+            --canvas-width: 100vw;
+            --canvas-height: 100vh;
+          }
+        }
+
+        /* Ultra-wide displays (≥2560px) */
+        @media screen and (min-width: 2560px) {
+          :global(.darkveil-canvas) {
+            --canvas-width: 100vw;
+            --canvas-height: 100vh;
+          }
+        }
+
+        /* Performance optimization for smaller screens */
+        @media screen and (max-width: 640px) {
+          :global(.darkveil-canvas) {
+            will-change: transform;
+            transform: translateZ(0);
+          }
+        }
+      `}</style>
+    </>
   );
 }
