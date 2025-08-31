@@ -445,7 +445,7 @@ const ScrollHero = () => {
           <Navbar />
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 90, gap: 700 }}>
+        <div className="flex w-full items-end justify-between sm:mt-[12vh] md:mt-[15vh] lg:mt-[18vh] xl:mt-[22vh] sm:mb-[8vh] md:mb-[10vh] lg:mb-[12vh] xl:mb-[14vh]" style={{ display: 'flex' }}>
 
         <button onClick={() => {
           const target = document.getElementById('studio');
@@ -473,69 +473,52 @@ const ScrollHero = () => {
             
             window.requestAnimationFrame(step);
           }
-        }} style={{
-          marginTop: 295,
-          marginLeft: 100,
-          padding: '5px 20px 5px 20px',
-          borderRadius: '999px',
+        }} className="rounded-full inline-flex items-center sm:ml-[4vw] md:ml-[4vw] lg:ml-[4vw] xl:ml-[4vw] sm:w-[44vw] md:w-[34vw] lg:w-[24vw] xl:w-[20vw] sm:px-[4vw] md:px-[3vw] lg:px-[2.4vw] xl:px-[2vw] sm:py-[1.6vh] md:py-[1.4vh] lg:py-[1.2vh] xl:py-[1.1vh] sm:text-[2.6vw] md:text-[1.9vw] lg:text-[1.1vw] xl:text-[1vw] gap-[1.2vw]" style={{
+          borderRadius: '50vh',
           fontWeight: 700,
-          width: '300px',
-          fontSize: '1.1rem',
           background: '#fff',
           color: '#181818',
           border: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          boxShadow: '0 2px 16px 0 rgba(0,0,0,0.06)',
+          boxShadow: '0 0.5vh 4vh 0 rgba(0,0,0,0.06)',
           cursor: 'pointer',
-          gap: '12px',
         }}>
           LETS GET STARTED
-          <span style={{
+          <span className="shrink-0 sm:ml-[1.5vw] sm:w-[3vh] sm:h-[3vh] md:ml-[1.2vw] md:w-[2.8vh] md:h-[2.8vh] lg:ml-[1vw] lg:w-[2.5vh] lg:h-[2.5vh] xl:ml-[0.8vw] xl:w-[2.2vh] xl:h-[2.2vh]" style={{
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginLeft: 12,
-            width: 22,
-            height: 22,
             borderRadius: '50%',
             background: 'linear-gradient(135deg,#ff4ecd 0%,#b983ff 100%)',
-            boxShadow: '0 2px 8px 0 rgba(186,131,255,0.10)',
+            boxShadow: '0 0.5vh 2vh 0 rgba(186,131,255,0.10)',
           }}>
-            <FaArrowUpRightFromSquare style={{ color: '#fff', width: 13, height: 13 }} />
+            <FaArrowUpRightFromSquare className="sm:w-[1.8vw] sm:h-[1.8vw] md:w-[1.5vw] md:h-[1.5vw] lg:w-[1.2vw] lg:h-[1.2vw] xl:w-[1vw] xl:h-[1vw]" style={{ color: '#fff' }} />
           </span>
         </button>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: 60, marginTop: 200, maxWidth: 340}}>
-          <p style={{ margin: 0, marginBottom: 10, fontSize: '1.08rem', color: '#fff', maxWidth: 320, textAlign: 'right', fontWeight: 400 }}>
-            Explore how we transform digital brands with our creative vision.
-            We craft unique digital experiences that captivate.
+        <div className="sm:mr-[6vw] md:mr-[8vw] lg:mr-[10vw] xl:mr-[12vw]" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+          <p className="sm:text-[2.5vw] sm:max-w-[40vw] sm:mb-[2vh] md:text-[2.2vw] md:max-w-[35vw] md:mb-[1.8vh] lg:text-[1.8vw] lg:max-w-[30vw] lg:mb-[1.5vh] xl:text-[1.5vw] xl:max-w-[25vw] xl:mb-[1.2vh]" style={{ margin: 0, color: '#fff', textAlign: 'right', fontWeight: 400 }}>
+            Explore how we transform digital brands with our creative vision. We craft unique digital experiences that captivate.
           </p>
-          <div style={{
+          <div className="sm:w-[28vw] sm:px-[3vw] sm:py-[0.8vh] sm:text-[1.8vw] md:w-[25vw] md:px-[2.5vw] md:py-[0.7vh] md:text-[1.6vw] lg:w-[22vw] lg:px-[2vw] lg:py-[0.6vh] lg:text-[1.4vw] xl:w-[18vw] xl:px-[1.8vw] xl:py-[0.5vh] xl:text-[1.2vw]" style={{
             boxSizing: 'border-box',
-            width: '220px',
-            padding: '3px 22px',
-            borderRadius: '999px',
+            borderRadius: '50vh',
             background: 'rgba(255,255,255,0.12)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1.5px solid rgba(255, 255, 255, 0.25)',
+            backdropFilter: 'blur(2vh)',
+            WebkitBackdropFilter: 'blur(2vh)',
+            border: '0.2vh solid rgba(255, 255, 255, 0.25)',
             color: '#fff',
             fontWeight: 400,
-            
             textTransform: 'uppercase',
-            letterSpacing: '1px',
-            fontSize: '1.02rem',
-            boxShadow: '0 2px 12px 0 rgba(186,131,255,0.10)',
+            letterSpacing: '0.1vw',
+            boxShadow: '0 0.5vh 3vh 0 rgba(186,131,255,0.10)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: 4,
-            // marginRight: 30,
+            marginTop: '1vh',
             cursor: 'default',
             userSelect: 'none',
           }}>
-            <FaGlobe style={{ color: '#fff', fontSize: '1.2em', marginRight: 10 }} />
+            <FaGlobe className="sm:text-[1.8vw] sm:mr-[1.5vw] md:text-[1.6vw] md:mr-[1.2vw] lg:text-[1.4vw] lg:mr-[1vw] xl:text-[1.2vw] xl:mr-[0.8vw]" style={{ color: '#fff' }} />
             WORLD CLASS AGENCY
           </div>
         </div>

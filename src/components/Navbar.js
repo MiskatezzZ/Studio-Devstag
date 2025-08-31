@@ -11,8 +11,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 px-6 py-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+    <nav className="absolute top-0 left-0 right-0 z-50">
+      <div className="mx-auto w-[95vw] max-w-[95vw] flex justify-between items-center px-[3vw] py-[2vh]">
         {/* Premium Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -22,7 +22,13 @@ export default function Navbar() {
         >
           <Link href="/" className="flex items-center group">
             <div>
-            <Image src="/logo.png" alt="Logo" width={50} height={50} className="w-12 h-12 mr-3 overflow-hidden mt-2 ml-4" />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={50}
+              height={50}
+              className="h-auto object-contain shrink-0 w-[12vw] sm:w-[9vw] md:w-[3vw] lg:w-[2.4vw] xl:w-[2vw] mr-[1vw] sm:mr-[0.8vw] md:mr-[0.4vw] lg:mr-[0.3vw] xl:mr-[0.2vw] mt-[1vh] sm:mt-[0.8vh] md:mt-[0.6vh] lg:mt-[0.4vh] xl:mt-[0.2vh] ml-[1.5vw] sm:ml-[1.2vw] md:ml-[0.8vw] lg:ml-[0.6vw] xl:ml-[0.5vw]"
+            />
             </div>
           </Link>
 
@@ -34,31 +40,31 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="hidden md:flex space-x-12 absolute left-1/2 transform -translate-x-1/2"
+          className="hidden sm:hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-full max-w-[60vw] md:max-w-[56vw] lg:max-w-[52vw] xl:max-w-[48vw] justify-center flex-wrap gap-[4vw] md:gap-[3.5vw] lg:gap-[3vw] xl:gap-[2.4vw]"
         >
           <Link href="/" className="group relative">
-            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
+            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 md:text-[1.6vh] lg:text-[1.8vh] xl:text-[2vh] uppercase tracking-wider font-montserrat">
               [  Home  ]
             </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-[0.5vh] md:-bottom-[0.4vh] lg:-bottom-[0.3vh] xl:-bottom-[0.2vh] left-0 w-0 h-[0.2vh] md:h-[0.18vh] lg:h-[0.16vh] xl:h-[0.14vh] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link href="/about" className="group relative">
-            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
+            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 md:text-[1.6vh] lg:text-[1.8vh] xl:text-[2vh] uppercase tracking-wider font-montserrat">
               [  About  ]
             </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-[0.5vh] md:-bottom-[0.4vh] lg:-bottom-[0.3vh] xl:-bottom-[0.2vh] left-0 w-0 h-[0.2vh] md:h-[0.18vh] lg:h-[0.16vh] xl:h-[0.14vh] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link href="/services" className="group relative">
-            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
+            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 md:text-[1.6vh] lg:text-[1.8vh] xl:text-[2vh] uppercase tracking-wider font-montserrat">
               [  Services  ]
             </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-[0.5vh] md:-bottom-[0.4vh] lg:-bottom-[0.3vh] xl:-bottom-[0.2vh] left-0 w-0 h-[0.2vh] md:h-[0.18vh] lg:h-[0.16vh] xl:h-[0.14vh] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link href="/contact" className="group relative">
-            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
+            <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 md:text-[1.6vh] lg:text-[1.8vh] xl:text-[2vh] uppercase tracking-wider font-montserrat">
               [  Contact  ]
             </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-[0.5vh] md:-bottom-[0.4vh] lg:-bottom-[0.3vh] xl:-bottom-[0.2vh] left-0 w-0 h-[0.2vh] md:h-[0.18vh] lg:h-[0.16vh] xl:h-[0.14vh] bg-gradient-to-r from-cyan-300 to-blue-400 group-hover:w-full transition-all duration-300"></span>
           </Link>
         </motion.div>
         
@@ -88,8 +94,8 @@ export default function Navbar() {
           animate={{ rotate: isOpen ? 90 : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <div className="absolute -inset-2 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-full opacity-0 group-hover:opacity-100 blur transition duration-200"></div>
-          <div className="relative p-2">
+          <div className="absolute -inset-[1vh] bg-gradient-to-r from-cyan-600/20 to-blue-600/20 rounded-full opacity-0 group-hover:opacity-100 blur transition duration-200"></div>
+          <div className="relative p-[1.2vw]">
             <motion.div
               initial={false}
               animate={{ opacity: isOpen ? 1 : 0, scale: isOpen ? 1 : 0.8 }}
@@ -107,7 +113,7 @@ export default function Navbar() {
               transition={{ duration: 0.2 }}
               className={`flex items-center justify-center ${isOpen && 'pointer-events-none'}`}
             >
-              <div className="relative mr-2">
+              <div className="relative mr-[1vw]">
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05887 27.9411 0 18 0C8.05887 0 0 8.05887 0 18C0 27.9411 8.05887 36 18 36Z" fill="url(#paint0_linear)" />
                   <path d="M25.5 18.5L16.5 27.5L10.5 21.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -137,20 +143,20 @@ export default function Navbar() {
             ease: [0.23, 1, 0.32, 1],
             opacity: { duration: 0.2 }
           }}
-          className="md:hidden absolute top-full left-0 right-0 mt-2 mx-4 overflow-hidden"
+          className="md:hidden absolute top-full left-0 right-0 mt-[1.2vh] mx-[3vw] overflow-hidden"
         >
-          <div className="bg-black/80 backdrop-blur-xl py-6 px-6 rounded-2xl border border-white/10 shadow-xl">
+          <div className="bg-black/80 backdrop-blur-xl py-[3vh] px-[4vw] rounded-[2vw] border border-white/10 shadow-xl">
             <div className="relative">
               {/* Decorative elements */}
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-full blur-xl"></div>
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full blur-xl"></div>
+              <div className="absolute -top-[3vh] -right-[3vw] w-[12vw] h-[12vw] bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-full blur-xl"></div>
+              <div className="absolute -bottom-[3vh] -left-[3vw] w-[12vw] h-[12vw] bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full blur-xl"></div>
               
               {/* Menu items */}
-              <div className="relative flex flex-col space-y-5 z-10">
+              <div className="relative flex flex-col space-y-[2vh] z-10">
                 {/* Menu header */}
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xs uppercase tracking-widest text-white/60 font-montserrat">Navigation</h3>
-                  <div className="h-px flex-grow ml-4 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                <div className="flex items-center justify-between mb-[1.2vh]">
+                  <h3 className="text-[2.8vw] uppercase tracking-widest text-white/60 font-montserrat">Navigation</h3>
+                  <div className="h-[0.1vh] flex-grow ml-[2vw] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                 </div>
                 
                 {/* Menu links */}
@@ -161,7 +167,7 @@ export default function Navbar() {
                     visible: { transition: { staggerChildren: 0.07 } },
                     hidden: {}
                   }}
-                  className="flex flex-col space-y-4"
+                  className="flex flex-col space-y-[1.6vh]"
                 >
                   {['Home', 'About', 'Services', 'Contact'].map((item, index) => (
                     <motion.div
@@ -174,11 +180,11 @@ export default function Navbar() {
                     >
                       <Link 
                         href={item === 'Home' ? '/' : `/${item.toLowerCase()}`} 
-                        className="group flex items-center space-x-2 py-1"
+                        className="group flex items-center space-x-[2vw] py-[1.2vh]"
                         onClick={() => setIsOpen(false)}
                       >
-                        <div className="w-1 h-6 bg-gradient-to-b from-cyan-400 to-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                        <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-sm uppercase tracking-wider font-montserrat">
+                        <div className="w-[0.4vw] h-[3.2vh] bg-gradient-to-b from-cyan-400 to-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                        <span className="text-white group-hover:text-transparent bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-blue-400 transition-all duration-300 text-[3.8vw] uppercase tracking-wider font-montserrat">
                           {item}
                         </span>
                       </Link>
@@ -187,12 +193,12 @@ export default function Navbar() {
                 </motion.div>
                 
                 {/* Divider */}
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-2"></div>
+                <div className="h-[0.1vh] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-[1.2vh]"></div>
                 
                 {/* Icons section header */}
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="text-xs uppercase tracking-widest text-white/60 font-montserrat">Quick Access</h3>
-                  <div className="h-px flex-grow ml-4 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                <div className="flex items-center justify-between mb-[1vh]">
+                  <h3 className="text-[2.8vw] uppercase tracking-widest text-white/60 font-montserrat">Quick Access</h3>
+                  <div className="h-[0.1vh] flex-grow ml-[2vw] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                 </div>
                 
                 {/* Icons */}
@@ -203,7 +209,7 @@ export default function Navbar() {
                     visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
                     hidden: {}
                   }}
-                  className="flex space-x-4 pt-2"
+                  className="flex gap-[2.4vw] pt-[1vh]"
                 >
                   <motion.button 
                     variants={{
@@ -211,10 +217,10 @@ export default function Navbar() {
                       visible: { opacity: 1, scale: 1 }
                     }}
                     transition={{ duration: 0.3 }}
-                    className="relative group p-2"
+                    className="relative group p-[1.6vw]"
                   >
                     <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full opacity-0 group-hover:opacity-30 blur transition duration-200"></div>
-                    <FontAwesomeIcon icon={faGlobe} className="w-5 h-5 group-hover:text-cyan-300 transition-colors duration-200" />
+                    <FontAwesomeIcon icon={faGlobe} className="w-[4vw] h-[4vw] group-hover:text-cyan-300 transition-colors duration-200" />
                   </motion.button>
                   <motion.button 
                     variants={{
@@ -222,14 +228,14 @@ export default function Navbar() {
                       visible: { opacity: 1, scale: 1 }
                     }}
                     transition={{ duration: 0.3 }}
-                    className="relative group p-2"
+                    className="relative group p-[1.6vw]"
                   >
                     <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full opacity-0 group-hover:opacity-30 blur transition duration-200"></div>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white group-hover:text-cyan-300 transition-colors duration-200">
                       <path d="M9 22L12 20L15 22V18L19.2 15.2C19.6765 14.9333 20.0701 14.5557 20.3487 14.1003C20.6273 13.6449 20.7827 13.1272 20.8021 12.5956C20.8215 12.064 20.7043 11.5368 20.4624 11.0612C20.2204 10.5856 19.8616 10.1782 19.41 9.88L19.18 9.73L19.93 6.34C20.0432 5.78107 20.0115 5.20311 19.8379 4.66053C19.6644 4.11795 19.3543 3.62793 18.9367 3.23201C18.5191 2.83608 18.0078 2.54591 17.4536 2.38585C16.8994 2.22579 16.3176 2.20044 15.75 2.31L12.58 3.00996C12.3395 3.00338 12.0989 3.00002 11.8584 3.00002C9.71023 3.00002 7.64882 3.84287 6.11359 5.35361C4.57837 6.86436 3.72314 8.90266 3.71001 11.05C3.68989 13.7565 4.86723 16.3455 6.94001 18.15L9 20V22Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                       <path d="M7 11C7 11.7956 7.31607 12.5587 7.87868 13.1213C8.44129 13.6839 9.20435 14 10 14C10.7956 14 11.5587 13.6839 12.1213 13.1213C12.6839 12.5587 13 11.7956 13 11C13 10.2044 12.6839 9.44129 12.1213 8.87868C11.5587 8.31607 10.7956 8 10 8C9.20435 8 8.44129 8.31607 7.87868 8.87868C7.31607 9.44129 7 10.2044 7 11Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    <span className="absolute top-0 right-0 -mt-1 -mr-1 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-[10px] font-bold text-white">3</span>
+                    <span className="absolute top-0 right-0 -mt-[0.6vh] -mr-[0.6vh] flex h-[1.8vh] w-[1.8vh] items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-[2.8vw] font-bold text-white">3</span>
                   </motion.button>
                 </motion.div>
               </div>

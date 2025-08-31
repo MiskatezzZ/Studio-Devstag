@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import MagicBento from "@/components/ui/Magicbento";
+import DarkVeil from "@/components/ui/Darkveil";
 import { useRef, useEffect, useCallback, useMemo, useState } from "react";
 import useLenis from "@/hooks/useLenis";
 import Footer from "@/components/Footer";
@@ -144,14 +146,13 @@ export default function Home() {
         <section style={{ position: 'relative', zIndex: 2000 }}>
           <Intro />
         </section>
-
         {/* Introducing Studio Devstag Section */}
         <section id="studio" className="relative min-h-screen w-full overflow-hidden" style={{ position: 'sticky', top: 0, zIndex: 10 }}>
   <div
     className="absolute inset-0 w-full h-full z-0"
     style={{
       background: "#000",
-      backgroundImage: "url('/hands.png')",
+      backgroundImage: "url('/Devkia2.png')",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
       backgroundSize: "cover",
@@ -165,7 +166,7 @@ export default function Home() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="relative z-10 w-[88%] md:w-[62%] xl:w-[42%]"
+      className="relative z-10 w-[88%] sm:w-[84%] md:w-[62%] lg:w-[48%] xl:w-[42%]"
       style={{
         marginTop: '18vh',
         marginLeft: '6%'
@@ -175,10 +176,10 @@ export default function Home() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="mb-4 md:mb-6 lg:mb-8"
+        className="mb-[2vh] sm:mb-[2.4vh] md:mb-[3vh] lg:mb-[3.6vh] xl:mb-[4vh]"
         style={{ marginTop: '-6vh' }}
       >
-        <span className="inline-block py-2 px-4 sm:px-6 text-xs sm:text-sm font-medium text-yellow-300 tracking-widest uppercase bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
+        <span className="inline-block whitespace-nowrap py-[1.2vh] px-[4vw] sm:px-[3.2vw] md:px-[2.4vw] lg:px-[2vw] xl:px-[1.6vw] text-[clamp(1.4vh,3vw,2.2vh)] sm:text-[clamp(1.4vh,2.4vw,2.1vh)] md:text-[clamp(1.3vh,1.6vw,1.8vh)] lg:text-[clamp(1.2vh,1.2vw,1.6vh)] xl:text-[clamp(1.1vh,1vw,1.5vh)] font-medium text-yellow-300 tracking-widest uppercase bg-white/5 backdrop-blur-sm border-[0.2vw] md:border-[0.15vw] lg:border-[0.12vw] xl:border-[0.1vw] border-white/10 rounded-full">
           NOW LIVE
         </span>
       </motion.div>
@@ -187,7 +188,7 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.8 }}
-        className="font-bold mb-6 md:mb-8 lg:mb-10 tracking-tighter leading-[1.12] text-[clamp(2.4rem,6.8vh,5.2rem)] lg:text-[clamp(3rem,7.2vh,6.5rem)] xl:text-[clamp(3.4rem,7.8vh,7.2rem)]"
+        className="font-bold tracking-tighter leading-[1.12] mb-[4vh] sm:mb-[4.8vh] md:mb-[5.6vh] lg:mb-[6.4vh] xl:mb-[7vh] text-[clamp(3.8vh,9vw,7.2vh)] sm:text-[clamp(4vh,8vw,7.4vh)] md:text-[clamp(4.4vh,5.6vw,7.6vh)] lg:text-[clamp(4.8vh,4.6vw,7.8vh)] xl:text-[clamp(5vh,4vw,8vh)]"
       >
         <span className="block">Introducing</span>
         <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-white">
@@ -199,7 +200,7 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
-        className="text-blue-100/80 max-w-2xl mb-8 md:mb-10 lg:mb-12 font-light tracking-wide leading-[1.6] text-[clamp(1rem,2.2vh,1.25rem)] lg:text-[clamp(1.05rem,2.4vh,1.35rem)] xl:text-[clamp(1.1rem,2.6vh,1.45rem)]"
+        className="text-blue-100/80 font-light tracking-wide leading-[1.6] mb-[4vh] sm:mb-[4.8vh] md:mb-[5.6vh] lg:mb-[6.4vh] xl:mb-[7vh] text-[clamp(1.8vh,3.6vw,2.8vh)] sm:text-[clamp(1.8vh,3vw,2.6vh)] md:text-[clamp(1.7vh,2vw,2.4vh)] lg:text-[clamp(1.6vh,1.6vw,2.2vh)] xl:text-[clamp(1.5vh,1.4vw,2vh)] w-[92%] sm:w-[88%] md:w-[85%] lg:w-[82%] xl:w-[78%]"
       >
         Every project is artistically curated but grounded in real-time
         performance, ensuring both aesthetics and usability.
@@ -209,28 +210,20 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.8 }}
-        className="flex flex-col sm:flex-row justify-start gap-4 md:gap-5 lg:gap-6 w-full"
+        className="flex flex-col sm:flex-row justify-start w-full gap-[4vw] sm:gap-[3.4vw] md:gap-[2.6vw] lg:gap-[2vw] xl:gap-[1.6vw]"
         style={{ marginLeft: '1%' }}
       >
         <motion.button
-          whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(56, 189, 248, 0.4)" }}
+          whileHover={{ scale: 1.05, boxShadow: "0 0 3vw rgba(255, 46, 203, 0.45)" }}
           whileTap={{ scale: 0.98 }}
-          className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-medium uppercase tracking-wider hover:opacity-90 transition-all w-full sm:w-auto"
-          style={{
-            padding: '0.9rem 2rem',
-            fontSize: '0.95rem'
-          }}
+          className="bg-gradient-to-r from-[#ff2ecb] to-[#d94cf7] rounded-full font-medium uppercase tracking-wider hover:opacity-90 transition-all w-full sm:w-auto py-[1.8vh] sm:py-[1.8vh] md:py-[1.6vh] lg:py-[1.4vh] xl:py-[1.2vh] px-[6vw] sm:px-[5vw] md:px-[4vw] lg:px-[3.2vw] xl:px-[2.8vw] text-[clamp(1.6vh,3.2vw,2.6vh)] sm:text-[clamp(1.6vh,2.6vw,2.4vh)] md:text-[clamp(1.5vh,1.8vw,2.2vh)] lg:text-[clamp(1.4vh,1.5vw,2vh)] xl:text-[clamp(1.3vh,1.3vw,1.8vh)]"
         >
           Start free trial
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
           whileTap={{ scale: 0.98 }}
-          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-full font-medium uppercase tracking-wider hover:bg-white/20 transition-all w-full sm:w-auto"
-          style={{
-            padding: '0.9rem 2rem',
-            fontSize: '0.95rem'
-          }}
+          className="bg-white/5 backdrop-blur-sm border-white/10 rounded-full font-medium uppercase tracking-wider hover:bg-white/20 transition-all w-full sm:w-auto border-[0.2vw] md:border-[0.15vw] lg:border-[0.12vw] xl:border-[0.1vw] py-[1.8vh] sm:py-[1.8vh] md:py-[1.6vh] lg:py-[1.4vh] xl:py-[1.2vh] px-[6vw] sm:px-[5vw] md:px-[4vw] lg:px-[3.2vw] xl:px-[2.8vw] text-[clamp(1.6vh,3.2vw,2.6vh)] sm:text-[clamp(1.6vh,2.6vw,2.4vh)] md:text-[clamp(1.5vh,1.8vw,2.2vh)] lg:text-[clamp(1.4vh,1.5vw,2vh)] xl:text-[clamp(1.3vh,1.3vw,1.8vh)]"
         >
           Watch the Keynote
         </motion.button>
@@ -295,7 +288,7 @@ export default function Home() {
           >
 
             <div className="relative w-[100vw]" >
-              {/* <PortalScrollDemo /> */}
+              <PortalScrollDemo />
               {/* <span className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold text-yellow-300 bg-black/20 backdrop-blur-sm rounded-full border border-white/10">
                 PREMIUM PROJECT 2
               </span> */}
@@ -305,54 +298,44 @@ export default function Home() {
         </section>
 
 
-        {/* Sticky Videos 1by1 showing section */}
-        <section style={{ position: 'relative', zIndex: 2000, }}>
-          <Capsules />
-        </section>
-
-
-        {/* As Seen in & Our clients section */}
-        <section
-          style={{ background: 'linear-gradient(180deg, rgb(14, 2, 42) 0%, #190D42 33%, #4F34C7 67%,rgb(1, 1, 1) 100%)', zIndex: 21, position: 'relative', paddingTop: '80px', paddingBottom: '80px', overflowX: 'clip' }}
-        >
-          {/* Spotlight Background Layer */}
-
-          {/* Bottom left and right radial gradient balls */}
-          {/* <div style={{position: 'absolute', left: '-10vw', bottom: '-25vw', width: '40vw', height: '40vw', pointerEvents: 'none', zIndex: 1, background: 'radial-gradient(circle, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0) 70%)'}} /> */}
-          <div style={{ position: 'absolute', right: '-10vw', bottom: '-42vw', width: '40vw', height: '40vw', pointerEvents: 'none', zIndex: 1, background: 'radial-gradient(circle, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0) 70%)' }} />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 1 }}
-            className="w-full max-w-6xl mx-auto px-4 relative z-10"
-          >
-            <div className="text-center mb-12">
-              <span className="inline-block py-1 px-4 text-xs font-medium text-yellow-400 bg-white/10 tracking-widest uppercase rounded-full mb-4">
-                FEATURED IN
-              </span>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-3xl md:text-4xl font-bold mb-6 leading-tight tracking-tighter text-white"
-              >
-                As Seen In
-              </motion.h2>
-            </div>
-
-            {/* StickyScroll placed between heading and marquee, inside container */}
-            <div className="mb-10">
-              <TracingBeam>
-                <StickyScroll contentClassName="w-full" content={[
-                  { title: "Sticky Card 1", description: "This is the first sticky card." },
-                  { title: "Sticky Card 2", description: "This is the second sticky card." },
-                  { title: "Sticky Card 3", description: "This is the third sticky card." },
-                ]} />
-              </TracingBeam>
-            </div>
-
-          </motion.div>
-
+                {/* Magic Bento Box Section */}
+        <section style={{ 
+          background: 'transparent', 
+          zIndex: 21, 
+          position: 'relative', 
+          paddingTop: '80px', 
+          paddingBottom: '80px', 
+          width: '100vw', 
+          marginLeft: 'calc(50% - 50vw)', 
+          marginRight: 'calc(50% - 50vw)', 
+          isolation: 'isolate', 
+          overflow: 'hidden' 
+        }}>
+          <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+            <DarkVeil 
+              resolutionScale={1} 
+              noiseIntensity={0.02} 
+              scanlineIntensity={0.06} 
+              scanlineFrequency={6} 
+              warpAmount={0.03} 
+            />
+          </div>
+          <div className="w-full max-w-6xl mx-auto px-4 relative z-10">
+            <MagicBento 
+              textAutoHide={true} 
+              enableStars={true} 
+              enableSpotlight={true} 
+              enableBorderGlow={true} 
+              disableAnimations={false} 
+              enableTilt={false} 
+              enableMagnetism={false} 
+              enableHoverLift={false} 
+              clickEffect={true} 
+              spotlightRadius={300} 
+              particleCount={12} 
+              glowColor="132, 0, 255" 
+            />
+          </div>
         </section> 
 
         {/* Violet 3 boxes section */}

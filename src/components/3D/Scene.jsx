@@ -1,17 +1,24 @@
 "use client";
 import React, {useEffect, useRef} from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import {Environment, PerspectiveCamera, OrbitControls} from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { VR } from "@/components/3D/VR";
 import { axesHelper } from 'three';
-import { Canvas } from "@react-three/fiber";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Scene = ({ progress = 0 }) => {
   const cameraRef = useRef();
+  const { size } = useThree();
+  const aspect = (size?.width || 1) / (size?.height || 1);
+
+  const clampNum = (v, min, max) => Math.min(max, Math.max(min, v));
+  const mapRange = (v, inMin, inMax, outMin, outMax) => {
+    const t = (clampNum(v, inMin, inMax) - inMin) / (inMax - inMin);
+    return outMin + t * (outMax - outMin);
+  };
 
   useFrame(() => {
     // console.log(cameraRef.current.position);
@@ -19,54 +26,51 @@ const Scene = ({ progress = 0 }) => {
   });
 
   useEffect(() => {
-    const updateCamPos = () => {
-        const position = [
-         [1.1016113946574677, 0.341597825920753, -0.061003699489932] ,
-         [0.39095081730859516, 0.43213159585076133, 1.54782459334164] ,
-        //  [-0.13, 0.15, 0.2],
-        [1.1016113946574677, 0.341597825920753, -0.061003699489932],
-        //  [-0.1170116580489911, 0.20437905257615763, -1.8173659300516234] ,
-         [0.34406418831632557, 1.548152928981351, -0.6863082583138185] 
-        ];
+    const positions = [
+      [1.1016113946574677, 0.341597825920753, -0.061003699489932],
+      [0.39095081730859516, 0.43213159585076133, 1.54782459334164],
+      [1.1016113946574677, 0.341597825920753, -0.061003699489932],
+      [0.34406418831632557, 1.548152928981351, -0.6863082583138185],
+    ];
 
-        if(progress>=1){
-            gsap.to(cameraRef.current.position, {
-                x:0.34406418831632557,
-                y:1.548152928981351,
-                z:-0.6863082583138185,
-                duration: 0.5,
-                ease: "power1.out"
-            });
-        }
-        else{
-          const segmentProgress = 1/3;
+    const p = clampNum(progress, 0, 1);
+    const segCount = positions.length - 1; // 3 segments
+    const segLen = 1 / segCount;
+    const rawIndex = Math.floor(p / segLen);
+    const segmentIndex = clampNum(rawIndex, 0, segCount - 1);
+    const segStart = segmentIndex * segLen;
+    const local = (p - segStart) / segLen; // 0..1 within segment
 
-        if (isNaN(progress)) return;
-        const segmentIndex = Math.floor(progress / segmentProgress);
-        console.log(segmentIndex);
+    // Aspect-aware scaling to keep subject centered across ratios
+    const xScale = mapRange(aspect, 0.6, 2.4, 0.85, 1.05);
+    const yScale = mapRange(aspect, 0.6, 2.4, 0.90, 1.05);
+    const zScale = mapRange(aspect, 0.6, 2.4, 1.25, 0.95);
 
-        const percentage = progress % segmentProgress;
-        // console.log(percentage);
+    const [sx, sy, sz] = positions[segmentIndex];
+    const [ex, ey, ez] = positions[segmentIndex + 1];
 
-        const [startX, startY, startZ] = position[segmentIndex];
-        const [endX, endY, endZ] = position[segmentIndex + 1];
+    const x = (sx + (ex - sx) * local) * xScale;
+    const y = (sy + (ey - sy) * local) * yScale;
+    const z = (sz + (ez - sz) * local) * zScale;
 
-        const x=startX + (endX-startX)*percentage;
-        const y=startY + (endY-startY)*percentage;
-        const z=startZ + (endZ-startZ)*percentage;
-        
-        gsap.to(cameraRef.current.position, {
-            x,
-            y,
-            z,
-            duration: 0.5,
-            ease: "power1.out"
-        });
-        }
-        
+    gsap.to(cameraRef.current.position, {
+      x,
+      y,
+      z,
+      duration: 0.35,
+      ease: "power1.out",
+    });
+  }, [progress, aspect]);
+
+  // Adjust FOV based on aspect so object stays in frame on tall/ultrawide screens
+  useEffect(() => {
+    if (!cameraRef.current) return;
+    const fov = mapRange(aspect, 0.6, 2.4, 58, 40); // taller -> larger FOV, wider -> smaller FOV
+    if (Math.abs(cameraRef.current.fov - fov) > 0.1) {
+      cameraRef.current.fov = fov;
+      cameraRef.current.updateProjectionMatrix();
     }
-    updateCamPos();
-  }, [progress, cameraRef.current]);
+  }, [aspect]);
   
   return (
   <>
